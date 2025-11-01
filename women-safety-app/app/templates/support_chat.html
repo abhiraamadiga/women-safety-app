@@ -1,0 +1,461 @@
+{% extends 'base.html' %}
+
+{% block title %}Support Chat - SafeSpace{% endblock %}
+
+{% block extra_css %}
+<style>
+    .chat-container {
+        max-width: 900px;
+        margin: 0 auto;
+        height: calc(100vh - 180px);
+        display: flex;
+        flex-direction: column;
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        overflow: hidden;
+    }
+    
+    .chat-header {
+        background: linear-gradient(135deg, #6B7FD7 0%, #9B7EDE 100%);
+        color: white;
+        padding: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+    
+    .chat-header-icon {
+        width: 48px;
+        height: 48px;
+        background: rgba(255,255,255,0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+    }
+    
+    .chat-header-text h2 {
+        margin: 0;
+        font-size: 1.3rem;
+        font-weight: 700;
+    }
+    
+    .chat-header-text p {
+        margin: 0;
+        font-size: 0.9rem;
+        opacity: 0.9;
+    }
+    
+    .chat-messages {
+        flex: 1;
+        overflow-y: auto;
+        padding: 1.5rem;
+        background: #F7FAFC;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .message {
+        display: flex;
+        gap: 0.75rem;
+        animation: fadeInUp 0.3s ease;
+    }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .message-avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        font-size: 1.2rem;
+    }
+    
+    .message-content {
+        max-width: 70%;
+        padding: 1rem 1.25rem;
+        border-radius: 16px;
+        line-height: 1.5;
+        font-size: 0.95rem;
+    }
+    
+    .message.user {
+        flex-direction: row-reverse;
+    }
+    
+    .message.user .message-avatar {
+        background: linear-gradient(135deg, #6B7FD7 0%, #9B7EDE 100%);
+        color: white;
+    }
+    
+    .message.user .message-content {
+        background: linear-gradient(135deg, #6B7FD7 0%, #9B7EDE 100%);
+        color: white;
+        border-bottom-right-radius: 4px;
+    }
+    
+    .message.ai .message-avatar {
+        background: #E6F7FF;
+    }
+    
+    .message.ai .message-content {
+        background: white;
+        color: #2D3748;
+        border: 1px solid #E2E8F0;
+        border-bottom-left-radius: 4px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    
+    .typing-indicator {
+        display: none;
+        padding: 1rem 1.25rem;
+        background: white;
+        border: 1px solid #E2E8F0;
+        border-radius: 16px;
+        border-bottom-left-radius: 4px;
+        max-width: fit-content;
+    }
+    
+    .typing-indicator.active {
+        display: flex;
+        gap: 0.4rem;
+        align-items: center;
+    }
+    
+    .typing-dot {
+        width: 8px;
+        height: 8px;
+        background: #CBD5E0;
+        border-radius: 50%;
+        animation: typing 1.4s infinite;
+    }
+    
+    .typing-dot:nth-child(2) {
+        animation-delay: 0.2s;
+    }
+    
+    .typing-dot:nth-child(3) {
+        animation-delay: 0.4s;
+    }
+    
+    @keyframes typing {
+        0%, 60%, 100% {
+            transform: translateY(0);
+            opacity: 0.5;
+        }
+        30% {
+            transform: translateY(-10px);
+            opacity: 1;
+        }
+    }
+    
+    .chat-input-area {
+        padding: 1.25rem;
+        background: white;
+        border-top: 1px solid #E2E8F0;
+        display: flex;
+        gap: 0.75rem;
+        align-items: center;
+    }
+    
+    .chat-input {
+        flex: 1;
+        border: 2px solid #E2E8F0;
+        border-radius: 24px;
+        padding: 0.875rem 1.25rem;
+        font-size: 0.95rem;
+        outline: none;
+        transition: all 0.2s ease;
+    }
+    
+    .chat-input:focus {
+        border-color: #6B7FD7;
+        box-shadow: 0 0 0 3px rgba(107,127,215,0.1);
+    }
+    
+    .send-btn {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #6B7FD7 0%, #9B7EDE 100%);
+        color: white;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        flex-shrink: 0;
+    }
+    
+    .send-btn:hover:not(:disabled) {
+        transform: scale(1.05);
+        box-shadow: 0 4px 12px rgba(107,127,215,0.35);
+    }
+    
+    .send-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+    
+    .welcome-message {
+        text-align: center;
+        padding: 2rem;
+        color: #718096;
+    }
+    
+    .welcome-message h3 {
+        color: #2D3748;
+        margin-bottom: 0.5rem;
+    }
+    
+    .quick-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 1rem;
+        justify-content: center;
+    }
+    
+    .quick-action-btn {
+        padding: 0.6rem 1rem;
+        background: white;
+        border: 1.5px solid #E2E8F0;
+        border-radius: 20px;
+        font-size: 0.875rem;
+        color: #4A5568;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+    
+    .quick-action-btn:hover {
+        background: #F7FAFC;
+        border-color: #6B7FD7;
+        color: #6B7FD7;
+    }
+    
+    .helpline-info {
+        background: linear-gradient(135deg, #FFF5F5 0%, #FED7D7 100%);
+        border-left: 4px solid #F56565;
+        padding: 1rem;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        margin-top: 1rem;
+    }
+    
+    @media (max-width: 768px) {
+        .chat-container {
+            height: calc(100vh - 140px);
+            border-radius: 0;
+            margin-top: -1rem;
+        }
+        
+        .message-content {
+            max-width: 80%;
+        }
+        
+        .chat-header {
+            padding: 1rem;
+        }
+        
+        .chat-header-text h2 {
+            font-size: 1.1rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0 py-3">
+    <div class="chat-container">
+        <div class="chat-header">
+            <div class="chat-header-icon">💬</div>
+            <div class="chat-header-text">
+                <h2>SafeSpace Support</h2>
+                <p>Your compassionate AI companion for support and guidance</p>
+            </div>
+        </div>
+        
+        <div class="chat-messages" id="chatMessages">
+            <div class="welcome-message">
+                <h3>👋 Welcome to SafeSpace Support</h3>
+                <p>I'm here to listen, support you, and provide guidance during difficult times.</p>
+                <p>You can talk to me about anything you're going through.</p>
+                
+                <div class="quick-actions">
+                    <button class="quick-action-btn" onclick="sendQuickMessage('I need someone to talk to')">💭 I need to talk</button>
+                    <button class="quick-action-btn" onclick="sendQuickMessage('I feel unsafe, what should I do?')">🛡️ Safety tips</button>
+                    <button class="quick-action-btn" onclick="sendQuickMessage('I am feeling anxious and overwhelmed')">😔 Feeling anxious</button>
+                    <button class="quick-action-btn" onclick="sendQuickMessage('How do I cope with what happened?')">💪 Coping strategies</button>
+                </div>
+                
+                <div class="helpline-info">
+                    <strong>⚠️ In immediate danger?</strong><br>
+                    Call <strong>181</strong> (Women Helpline) or <strong>100</strong> (Police Emergency)
+                </div>
+            </div>
+        </div>
+        
+        <div class="chat-input-area">
+            <input 
+                type="text" 
+                class="chat-input" 
+                id="chatInput" 
+                placeholder="Type your message here..."
+                autocomplete="off"
+            >
+            <button class="send-btn" id="sendBtn" onclick="sendMessage()">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+const chatMessages = document.getElementById('chatMessages');
+const chatInput = document.getElementById('chatInput');
+const sendBtn = document.getElementById('sendBtn');
+
+// Auto-scroll to bottom
+function scrollToBottom() {
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+// Add user message to UI
+function addUserMessage(text) {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = 'message user';
+    messageDiv.innerHTML = `
+        <div class="message-avatar">👤</div>
+        <div class="message-content">${escapeHtml(text)}</div>
+    `;
+    chatMessages.appendChild(messageDiv);
+    scrollToBottom();
+}
+
+// Add AI message to UI
+function addAIMessage(text) {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = 'message ai';
+    messageDiv.innerHTML = `
+        <div class="message-avatar">💙</div>
+        <div class="message-content">${escapeHtml(text)}</div>
+    `;
+    chatMessages.appendChild(messageDiv);
+    scrollToBottom();
+}
+
+// Show typing indicator
+function showTyping() {
+    const typingDiv = document.createElement('div');
+    typingDiv.className = 'message ai';
+    typingDiv.id = 'typingIndicator';
+    typingDiv.innerHTML = `
+        <div class="message-avatar">💙</div>
+        <div class="typing-indicator active">
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+        </div>
+    `;
+    chatMessages.appendChild(typingDiv);
+    scrollToBottom();
+}
+
+// Remove typing indicator
+function hideTyping() {
+    const typingIndicator = document.getElementById('typingIndicator');
+    if (typingIndicator) {
+        typingIndicator.remove();
+    }
+}
+
+// Escape HTML to prevent XSS
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML.replace(/\n/g, '<br>');
+}
+
+// Send message
+async function sendMessage() {
+    const message = chatInput.value.trim();
+    if (!message) return;
+    
+    // Clear input
+    chatInput.value = '';
+    sendBtn.disabled = true;
+    
+    // Remove welcome message if present
+    const welcomeMsg = document.querySelector('.welcome-message');
+    if (welcomeMsg) welcomeMsg.remove();
+    
+    // Add user message
+    addUserMessage(message);
+    
+    // Show typing
+    showTyping();
+    
+    try {
+        const response = await fetch('{{ url_for("main.chat_api") }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ message: message })
+        });
+        
+        const data = await response.json();
+        
+        hideTyping();
+        
+        if (data.success && data.message) {
+            addAIMessage(data.message);
+        } else {
+            addAIMessage(data.message || "I'm here for you, but I'm having trouble responding. Please try again or call 181 for immediate support.");
+        }
+    } catch (error) {
+        console.error('Chat error:', error);
+        hideTyping();
+        addAIMessage("I'm experiencing connection issues. Please check your internet or call 181 (Women Helpline) for immediate support.");
+    } finally {
+        sendBtn.disabled = false;
+        chatInput.focus();
+    }
+}
+
+// Quick message
+function sendQuickMessage(text) {
+    chatInput.value = text;
+    sendMessage();
+}
+
+// Enter to send
+chatInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+    }
+});
+
+// Focus input on load
+chatInput.focus();
+</script>
+{% endblock %}

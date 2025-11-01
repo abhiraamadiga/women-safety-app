@@ -1,0 +1,231 @@
+{% extends "base.html" %}
+
+{% block title %}Mark as Safe{% endblock %}
+
+{% block content %}
+<style>
+:root {
+    --danger: #ff6b6b;
+    --success: #51cf66;
+}
+
+.safe-container {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+}
+
+.alert-active {
+    background: linear-gradient(135deg, #ff6b6b, #ff4d4d);
+    color: white;
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.alert-active h3 {
+    margin: 0 0 10px 0;
+    font-size: 24px;
+}
+
+.pin-input {
+    font-size: 32px;
+    text-align: center;
+    letter-spacing: 10px;
+    padding: 20px;
+    border: 3px solid #ddd;
+    border-radius: 15px;
+    width: 100%;
+    margin: 20px 0;
+}
+
+.pin-input:focus {
+    border-color: var(--success);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(81, 207, 102, 0.1);
+}
+
+.btn-mark-safe {
+    background: var(--success);
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 700;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.btn-mark-safe:hover {
+    background: #37b24d;
+    transform: translateY(-2px);
+}
+
+.btn-mark-safe:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.info-text {
+    text-align: center;
+    color: #666;
+    font-size: 14px;
+    margin-top: 20px;
+}
+
+.error-msg {
+    background: #ffe3e3;
+    color: #d63031;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 15px;
+    display: none;
+}
+
+.success-msg {
+    background: #e3ffe3;
+    color: #27ae60;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 15px;
+    display: none;
+}
+
+.duration-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+    margin-top: 5px;
+}
+</style>
+
+<div class="safe-container">
+    {% if alert %}
+    <div class="alert-active">
+        <h3>🚨 ACTIVE EMERGENCY ALERT</h3>
+        <p style="margin: 0; font-size: 16px;">Alert ID: {{ alert.id }}</p>
+        <span class="duration-badge" id="durationBadge">Active for: calculating...</span>
+    </div>
+
+    <h4 style="text-align: center; margin-bottom: 20px;">Enter PIN to Mark as Safe</h4>
+
+    <form id="deactivateForm">
+        <input 
+            type="password" 
+            id="pinInput" 
+            class="pin-input" 
+            maxlength="6" 
+            placeholder="••••••"
+            pattern="[0-9]*"
+            inputmode="numeric"
+            required
+        >
+        
+        <button type="submit" class="btn-mark-safe" id="submitBtn">
+            ✓ Mark as Safe
+        </button>
+    </form>
+
+    <div class="error-msg" id="errorMsg"></div>
+    <div class="success-msg" id="successMsg"></div>
+
+    <p class="info-text">
+        Entering your PIN will deactivate the emergency alert and send an "All Clear" message to your emergency contacts.
+    </p>
+    {% else %}
+    <div style="text-align: center; padding: 40px;">
+        <h3>No Active Alert</h3>
+        <p style="color: #666;">You don't have any active emergency alerts to deactivate.</p>
+        <a href="{{ url_for('main.sos_center') }}" class="btn btn-primary mt-3">Go to SOS Center</a>
+    </div>
+    {% endif %}
+</div>
+
+{% if alert %}
+<script>
+const alertId = {{ alert.id }};
+const triggerTime = new Date("{{ alert.trigger_time.isoformat() }}");
+
+// Update duration badge
+function updateDuration() {
+    const now = new Date();
+    const diff = now - triggerTime;
+    const minutes = Math.floor(diff / 60000);
+    const seconds = Math.floor((diff % 60000) / 1000);
+    document.getElementById('durationBadge').textContent = `Active for: ${minutes}m ${seconds}s`;
+}
+
+setInterval(updateDuration, 1000);
+updateDuration();
+
+// Handle form submission
+document.getElementById('deactivateForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const pin = document.getElementById('pinInput').value;
+    const submitBtn = document.getElementById('submitBtn');
+    const errorMsg = document.getElementById('errorMsg');
+    const successMsg = document.getElementById('successMsg');
+    
+    errorMsg.style.display = 'none';
+    successMsg.style.display = 'none';
+    
+    if (!pin || pin.length < 4) {
+        errorMsg.textContent = 'Please enter a valid PIN';
+        errorMsg.style.display = 'block';
+        return;
+    }
+    
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Verifying...';
+    
+    try {
+        const response = await fetch('/api/sos-deactivate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                alert_id: alertId, 
+                pin: pin 
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            successMsg.textContent = data.message || 'Alert deactivated successfully! Your contacts have been notified.';
+            successMsg.style.display = 'block';
+            submitBtn.textContent = '✓ Deactivated';
+            
+            // Redirect after 2 seconds
+            setTimeout(() => {
+                window.location.href = '/sos-center';
+            }, 2000);
+        } else {
+            errorMsg.textContent = data.error || 'Failed to deactivate alert';
+            errorMsg.style.display = 'block';
+            submitBtn.disabled = false;
+            submitBtn.textContent = '✓ Mark as Safe';
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        errorMsg.textContent = 'Network error. Please try again.';
+        errorMsg.style.display = 'block';
+        submitBtn.disabled = false;
+        submitBtn.textContent = '✓ Mark as Safe';
+    }
+});
+
+// Allow only numbers in PIN input
+document.getElementById('pinInput').addEventListener('input', (e) => {
+    e.target.value = e.target.value.replace(/[^0-9]/g, '');
+});
+</script>
+{% endif %}
+{% endblock %}

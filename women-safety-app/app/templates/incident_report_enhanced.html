@@ -1,0 +1,763 @@
+{% extends 'base.html' %}
+
+{% block title %}Report Incident - SafeSpace{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/enhanced-style.css') }}">
+<style>
+    /* Drag & drop file upload */
+    .drag-drop-zone {
+        border: 3px dashed #E2E8F0;
+        border-radius: 16px;
+        padding: 3rem 2rem;
+        text-align: center;
+        background: linear-gradient(135deg, #F7FAFC 0%, #EDF2F7 100%);
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    
+    .drag-drop-zone:hover,
+    .drag-drop-zone.drag-over {
+        border-color: #6B7FD7;
+        background: rgba(107, 127, 215, 0.05);
+        transform: scale(1.02);
+    }
+    
+    .file-preview-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 1rem;
+        margin-top: 1.5rem;
+    }
+    
+    .file-preview-item {
+        position: relative;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.07);
+    }
+    
+    .file-preview-item img {
+        width: 100%;
+        height: 120px;
+        object-fit: cover;
+    }
+    
+    .file-remove-btn {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: rgba(245, 101, 101, 0.9);
+        color: white;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+    }
+    
+    /* Save Draft Toast */
+    .toast-container {
+        position: fixed;
+        top: 5rem;
+        right: 1.5rem;
+        z-index: 9998;
+    }
+    
+    .custom-toast {
+        min-width: 300px;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        border-left: 4px solid #48BB78;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <!-- Privacy Badge -->
+    <div class="alert alert-info text-center mb-4" style="background: #E6F7FF; border: 1px solid #91D5FF; border-radius: 8px;">
+        <svg width="20" height="20" fill="currentColor" class="me-2" viewBox="0 0 16 16">
+            <path d="M5.338 1.59a61.44 61.44 0 0 0-2.837.856.481.481 0 0 0-.328.39c-.554 4.157.726 7.19 2.253 9.188a10.725 10.725 0 0 0 2.287 2.233c.346.244.652.42.893.533.12.057.218.095.293.118a.55.55 0 0 0 .101.025.615.615 0 0 0 .1-.025c.076-.023.174-.061.294-.118.24-.113.547-.29.893-.533a10.726 10.726 0 0 0 2.287-2.233c1.527-1.997 2.807-5.031 2.253-9.188a.48.48 0 0 0-.328-.39c-.651-.213-1.75-.56-2.837-.855C9.552 1.29 8.531 1.067 8 1.067c-.53 0-1.552.223-2.662.524zM5.072.56C6.157.265 7.31 0 8 0s1.843.265 2.928.56c1.11.3 2.229.655 2.887.87a1.54 1.54 0 0 1 1.044 1.262c.596 4.477-.787 7.795-2.465 9.99a11.775 11.775 0 0 1-2.517 2.453 7.159 7.159 0 0 1-1.048.625c-.28.132-.581.24-.829.24s-.548-.108-.829-.24a7.158 7.158 0 0 1-1.048-.625 11.777 11.777 0 0 1-2.517-2.453C1.928 10.487.545 7.169 1.141 2.692A1.54 1.54 0 0 1 2.185 1.43 62.456 62.456 0 0 1 5.072.56z"/>
+            <path d="M10.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+        </svg>
+        <strong style="color: #1A202C; font-weight: 600;">Confidential & Anonymous:</strong>
+        <span style="color: #4A5568;"> Your identity and information are protected.</span>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="mb-3" style="font-weight: 700; color: #1A202C; font-size: 1.75rem;">
+                        Incident Report Form
+                    </h2>
+                    <p class="mb-4" style="color: #4A5568; font-size: 1.05rem; font-weight: 500;">
+                        Please provide details about the incident. All information is confidential and will be handled with care.
+                    </p>
+
+
+
+                    <form id="incidentForm" method="POST" action="{{ url_for('main.submit_report') }}" enctype="multipart/form-data">
+                        
+                        <!-- Question 1: Who was involved? -->
+                        <div class="question-section">
+                            <label class="form-label">
+                                1. Who was involved?
+                            </label>
+                            <small class="form-text text-secondary d-block mb-3">
+                                Select the person or group involved in this incident
+                            </small>
+                            <select class="form-select" name="who_involved" id="whoInvolved" required onchange="showSubOptions('who')" autofocus>
+                                <option value="">Choose an option...</option>
+                                <option value="family">Family Member</option>
+                                <option value="strangers">Stranger(s)</option>
+                                <option value="friends">Friend(s)</option>
+                                <option value="partner">Partner/Ex-Partner</option>
+                                <option value="colleagues">Colleague(s)/Classmate(s)</option>
+                                <option value="authority">Authority Figure</option>
+                                <option value="others">Others</option>
+                                <option value="prefer_not_say">Prefer not to say</option>
+                            </select>
+                            
+                            <div id="who_sub_options" class="sub-options mt-3" style="display: none;">
+                                <label class="form-label">Please specify:</label>
+                                <select class="form-select" name="who_sub_option" id="whoSubOption">
+                                    <option value="">Select relationship...</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Question 2: What kind of incident? -->
+                        <div class="question-section">
+                            <label class="form-label">
+                                2. What kind of incident happened?
+                            </label>
+                            <small class="form-text text-secondary d-block mb-3">
+                                Select the type that best describes what happened
+                            </small>
+                            <select class="form-select" name="incident_type" id="incidentType" required onchange="showSubOptions('incident')">
+                                <option value="">Choose an option...</option>
+                                <option value="verbal_abuse">Verbal Abuse/Insults</option>
+                                <option value="physical_threat">Physical Threat/Violence</option>
+                                <option value="harassment">Harassment</option>
+                                <option value="stalking">Stalking/Following</option>
+                                <option value="online_bullying">Online Bullying/Trolling</option>
+                                <option value="discrimination">Discrimination</option>
+                                <option value="unwanted_contact">Unwanted Contact</option>
+                                <option value="others">Others</option>
+                                <option value="prefer_not_say">Prefer not to say</option>
+                            </select>
+                            
+                            <div id="incident_sub_options" class="sub-options mt-3" style="display: none;">
+                                <label class="form-label">Additional details:</label>
+                                <select class="form-select" name="incident_sub_type" id="incidentSubType">
+                                    <option value="">Select specific details...</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Question 3: Where did it happen? -->
+                        <div class="question-section">
+                            <label class="form-label">
+                                3. Where did it happen?
+                            </label>
+                            <small class="form-text text-secondary d-block mb-3">
+                                Where did this incident take place?
+                            </small>
+                            <select class="form-select" name="location" id="location" required onchange="showSubOptions('location')">
+                                <option value="">Choose an option...</option>
+                                <option value="home">Home</option>
+                                <option value="school">School/College/University</option>
+                                <option value="workplace">Workplace</option>
+                                <option value="public_transport">Public Transport</option>
+                                <option value="public_place">Public Place (street, park, mall)</option>
+                                <option value="online">Online/Social Media</option>
+                                <option value="others">Others</option>
+                                <option value="prefer_not_say">Prefer not to say</option>
+                            </select>
+                            
+                            <div id="location_sub_options" class="sub-options mt-3" style="display: none;">
+                                <label class="form-label">Specific location:</label>
+                                <input type="text" class="form-control" name="location_detail" id="locationDetail" placeholder="City, area, or specific place...">
+                            </div>
+                        </div>
+
+                        <!-- Question 4: Impact (Simplified) -->
+                        <div class="question-section">
+                            <label class="form-label">
+                                4. How did this affect you? (Optional)
+                            </label>
+                            <small class="form-text text-secondary d-block mb-3">
+                                Select all that apply
+                            </small>
+                            
+                            <div class="row g-2">
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="impact" value="emotional_distress" id="impact1">
+                                        <label class="form-check-label" for="impact1">Emotional distress</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="impact" value="physical_harm" id="impact2">
+                                        <label class="form-check-label" for="impact2">Physical harm</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="impact" value="fear" id="impact3">
+                                        <label class="form-check-label" for="impact3">Fear/Anxiety</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="impact" value="financial_loss" id="impact4">
+                                        <label class="form-check-label" for="impact4">Financial impact</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Question 5: When did this happen? (Simplified) -->
+                        <div class="question-section">
+                            <label class="form-label">
+                                5. When did this happen?
+                            </label>
+                            <small class="form-text text-secondary d-block mb-3">
+                                Provide the date and approximate time
+                            </small>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Date:</label>
+                                    <input type="date" class="form-control" name="incident_date" id="incidentDate" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Time of Day:</label>
+                                    <select class="form-select" name="incident_time" id="incidentTime" required>
+                                        <option value="">-- Select --</option>
+                                        <option value="morning">Morning</option>
+                                        <option value="afternoon">Afternoon</option>
+                                        <option value="evening">Evening</option>
+                                        <option value="night">Night</option>
+                                        <option value="dont_remember">Don't remember</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Question 6: Evidence Upload -->
+                        <div class="question-section">
+                            <label class="form-label">
+                                <span class="icon-wrapper icon-shield" style="width: 36px; height: 36px; font-size: 1.2rem; margin-bottom: 0; margin-right: 0.5rem;">📎</span>
+                                6. Upload Evidence (Optional)
+                                <span class="tooltip-icon" title="Screenshots, photos, or documents">?</span>
+                            </label>
+                            <small class="form-text text-secondary d-block mb-3">
+                                Upload any evidence such as screenshots, photos, messages, or documents. Drag and drop or click to browse.
+                            </small>
+                            
+                            <div class="drag-drop-zone" id="dragDropZone">
+                                <div class="file-upload-icon">
+                                    <svg width="64" height="64" fill="currentColor" viewBox="0 0 16 16">
+                                        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                                        <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
+                                    </svg>
+                                </div>
+                                <p class="mb-2"><strong>Drag & drop files here</strong></p>
+                                <p class="text-secondary mb-3">or</p>
+                                <input type="file" class="d-none" id="evidenceFiles" name="evidence_files" multiple accept="image/*,.pdf,.doc,.docx,.txt">
+                                <button type="button" class="btn btn-primary" onclick="document.getElementById('evidenceFiles').click()">
+                                    Browse Files
+                                </button>
+                                <p class="text-secondary mt-3 mb-0 small">Supported: Images, PDF, Documents (Max 16MB per file)</p>
+                            </div>
+                            
+                            <div id="filePreviewContainer" class="file-preview-container"></div>
+                        </div>
+
+                        <!-- Question 7: Additional details (Optional) -->
+                        <div class="question-section">
+                            <label class="form-label">
+                                7. Additional details (Optional)
+                            </label>
+                            <small class="form-text text-secondary d-block mb-2">
+                                Add anything important we didn't ask for. Avoid sharing names or private info unless necessary.
+                            </small>
+                            <textarea class="form-control" id="additionalDetails" name="additional_details" rows="4" maxlength="1000" placeholder="Write any extra context, sequence of events, or details you want responders to know..."></textarea>
+                            <div class="text-end mt-1"><small class="text-muted"><span id="additionalCount">0</span>/1000</small></div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="d-grid gap-3 mt-4">
+                            <button type="submit" class="btn btn-primary" id="submitBtn" style="padding: 1rem; font-size: 1.1rem; font-weight: 600; border-radius: 8px; box-shadow: 0 4px 12px rgba(74, 85, 104, 0.3);">
+                                <svg width="18" height="18" fill="currentColor" class="me-2" viewBox="0 0 16 16">
+                                    <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/>
+                                </svg>
+                                Submit Report
+                            </button>
+                            <button type="button" class="btn btn-outline-secondary" id="saveDraftBtn" style="padding: 0.875rem; font-weight: 600; border-radius: 8px;">
+                                <svg width="16" height="16" fill="currentColor" class="me-2" viewBox="0 0 16 16">
+                                    <path d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v7.293l2.646-2.647a.5.5 0 0 1 .708.708l-3.5 3.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L7.5 9.293V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h2.5a.5.5 0 0 1 0 1H2z"/>
+                                </svg>
+                                Save Draft
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            
+        </div>
+    </div>
+</div>
+
+<!-- Loading Overlay -->
+<div class="loading-overlay" id="loadingOverlay" style="display: none;">
+    <div class="loading-spinner"></div>
+    <div class="loading-text">Processing your report securely...</div>
+    <p class="text-secondary mt-2">Please wait, this may take a moment</p>
+</div>
+
+<!-- Toast Container -->
+<div class="toast-container"></div>
+
+<script>
+// Auto-focus next field
+document.querySelectorAll('select, input, textarea').forEach((field, index, fields) => {
+    field.addEventListener('change', function() {
+        if (index < fields.length - 1) {
+            setTimeout(() => fields[index + 1].focus(), 100);
+        }
+    });
+});
+
+// Character counter for Additional details
+const additional = document.getElementById('additionalDetails');
+const additionalCount = document.getElementById('additionalCount');
+if (additional && additionalCount) {
+    additional.addEventListener('input', () => {
+        additionalCount.textContent = additional.value.length;
+    });
+}
+
+// Drag & Drop functionality
+const dragDropZone = document.getElementById('dragDropZone');
+const fileInput = document.getElementById('evidenceFiles');
+const filePreviewContainer = document.getElementById('filePreviewContainer');
+let selectedFiles = [];
+
+['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+    dragDropZone.addEventListener(eventName, preventDefaults, false);
+});
+
+function preventDefaults(e) {
+    e.preventDefault();
+    e.stopPropagation();
+}
+
+['dragenter', 'dragover'].forEach(eventName => {
+    dragDropZone.addEventListener(eventName, () => {
+        dragDropZone.classList.add('drag-over');
+    });
+});
+
+['dragleave', 'drop'].forEach(eventName => {
+    dragDropZone.addEventListener(eventName, () => {
+        dragDropZone.classList.remove('drag-over');
+    });
+});
+
+dragDropZone.addEventListener('drop', (e) => {
+    const files = e.dataTransfer.files;
+    handleFiles(files);
+});
+
+fileInput.addEventListener('change', (e) => {
+    handleFiles(e.target.files);
+});
+
+function handleFiles(files) {
+    selectedFiles = [...selectedFiles, ...Array.from(files)];
+    displayFilePreviews();
+}
+
+function displayFilePreviews() {
+    filePreviewContainer.innerHTML = '';
+    selectedFiles.forEach((file, index) => {
+        const fileItem = document.createElement('div');
+        fileItem.className = 'file-preview-item';
+        
+        if (file.type.startsWith('image/')) {
+            const img = document.createElement('img');
+            img.src = URL.createObjectURL(file);
+            fileItem.appendChild(img);
+        } else {
+            const icon = document.createElement('div');
+            icon.style.cssText = 'width:100%;height:120px;display:flex;align-items:center;justify-content:center;background:#EDF2F7;font-size:2rem;';
+            icon.textContent = '📄';
+            fileItem.appendChild(icon);
+        }
+        
+        const removeBtn = document.createElement('button');
+        removeBtn.className = 'file-remove-btn';
+        removeBtn.innerHTML = '×';
+        removeBtn.onclick = () => removeFile(index);
+        fileItem.appendChild(removeBtn);
+        
+        filePreviewContainer.appendChild(fileItem);
+    });
+}
+
+function removeFile(index) {
+    selectedFiles.splice(index, 1);
+    displayFilePreviews();
+}
+
+// Sub-options logic with proper dropdown population for ALL questions
+function showSubOptions(type) {
+    const subOptionsDiv = document.getElementById(type + '_sub_options');
+    const selectElement = document.getElementById(type === 'who' ? 'whoInvolved' : type === 'incident' ? 'incidentType' : 'location');
+    
+    if (selectElement.value && selectElement.value !== 'prefer_not_say') {
+        subOptionsDiv.style.display = 'block';
+        
+        // Populate sub-options based on selection
+        if (type === 'who') {
+            const whoSubSelect = document.getElementById('whoSubOption');
+            const value = selectElement.value;
+            let options = [];
+            
+            switch(value) {
+                case 'family':
+                    options = ['Father', 'Mother', 'Brother', 'Sister', 'Uncle', 'Aunt', 'Cousin', 'Grandfather', 'Grandmother', 'Spouse', 'In-law', 'Other Family Member'];
+                    break;
+                case 'strangers':
+                    options = ['Unknown Person', 'Group of People', 'Online User'];
+                    break;
+                case 'friends':
+                    options = ['Close Friend', 'Acquaintance', 'Friend Group'];
+                    break;
+                case 'partner':
+                    options = ['Current Partner', 'Ex-Partner', 'Dating Partner'];
+                    break;
+                case 'colleagues':
+                    options = ['Coworker', 'Supervisor/Boss', 'Classmate', 'Teacher/Professor'];
+                    break;
+                case 'authority':
+                    options = ['Police Officer', 'Security Guard', 'Government Official', 'Medical Professional'];
+                    break;
+                case 'others':
+                    options = ['Neighbor', 'Service Provider', 'Other'];
+                    break;
+            }
+            
+            whoSubSelect.innerHTML = '<option value="">Select relationship...</option>';
+            options.forEach(opt => {
+                whoSubSelect.innerHTML += `<option value="${opt}">${opt}</option>`;
+            });
+        } else if (type === 'incident') {
+            // Populate incident sub-options based on incident type
+            const incidentSubSelect = document.getElementById('incidentSubType');
+            const value = selectElement.value;
+            let options = [];
+            
+            switch(value) {
+                case 'sexual_assault':
+                    options = ['Unwanted touching', 'Attempted assault', 'Completed assault', 'Groping in public', 'Sexual coercion', 'Other'];
+                    break;
+                case 'domestic_violence':
+                    options = ['Physical violence', 'Emotional abuse', 'Financial control', 'Isolation from family/friends', 'Threats', 'Property damage'];
+                    break;
+                case 'verbal_abuse':
+                    options = ['Name calling', 'Threats', 'Humiliation in public', 'Continuous criticism', 'Gaslighting', 'Other'];
+                    break;
+                case 'physical_threat':
+                    options = ['Direct threat to harm', 'Threatening with weapon', 'Physical intimidation', 'Threatening family members', 'Other'];
+                    break;
+                case 'harassment':
+                    options = ['Following/stalking', 'Repeated unwanted contact', 'Unwanted messages/calls', 'Workplace harassment', 'Street harassment', 'Other'];
+                    break;
+                case 'stalking':
+                    options = ['Following in person', 'Watching/surveillance', 'Repeated unwanted visits', 'Tracking location', 'Online stalking', 'Other'];
+                    break;
+                case 'online_bullying':
+                    options = ['Abusive messages', 'Fake profiles', 'Spreading rumors online', 'Sharing private information', 'Threatening messages', 'Other'];
+                    break;
+                case 'discrimination':
+                    options = ['Gender discrimination', 'Denied opportunities', 'Unequal treatment', 'Hostile environment', 'Exclusion', 'Other'];
+                    break;
+                case 'unwanted_contact':
+                    options = ['Repeated calls/texts', 'Unwanted visits', 'Following on social media', 'Sending unwanted gifts', 'Other'];
+                    break;
+                case 'others':
+                    options = ['Blackmail/Extortion', 'Cybercrime', 'Identity theft', 'Privacy violation', 'Other incident'];
+                    break;
+            }
+            
+            incidentSubSelect.innerHTML = '<option value="">Select specific details...</option>';
+            options.forEach(opt => {
+                incidentSubSelect.innerHTML += `<option value="${opt}">${opt}</option>`;
+            });
+        } else if (type === 'location') {
+            // Location detail is text input, just show it
+            document.getElementById('locationDetail').focus();
+        }
+        
+        setTimeout(() => {
+            const field = subOptionsDiv.querySelector('input, textarea, select');
+            if (field) field.focus();
+        }, 100);
+    } else {
+        subOptionsDiv.style.display = 'none';
+    }
+}
+
+// Save Draft functionality
+document.getElementById('saveDraftBtn').addEventListener('click', function() {
+    const formData = new FormData(document.getElementById('incidentForm'));
+    const draftData = {};
+    formData.forEach((value, key) => {
+        draftData[key] = value;
+    });
+    localStorage.setItem('incidentReportDraft', JSON.stringify(draftData));
+    showToast('Draft saved successfully! You can return anytime.', 'success');
+});
+
+// Load draft on page load
+window.addEventListener('DOMContentLoaded', function() {
+    const savedDraft = localStorage.getItem('incidentReportDraft');
+    if (savedDraft && confirm('We found a saved draft. Would you like to continue where you left off?')) {
+        const draftData = JSON.parse(savedDraft);
+        Object.keys(draftData).forEach(key => {
+            const field = document.querySelector(`[name="${key}"]`);
+            if (field) {
+                if (field.type === 'checkbox') {
+                    field.checked = true;
+                } else {
+                    field.value = draftData[key];
+                }
+            }
+        });
+    }
+});
+
+// Smart Conditional Impact Details
+function showImpactDetails(impactType) {
+    const container = document.getElementById('impact_details_container');
+    container.innerHTML = '';
+    
+    if (!impactType) return;
+    
+    let detailsHTML = '<div class="sub-options" style="display: block;">';
+    
+    switch(impactType) {
+        case 'emotional_distress':
+            detailsHTML += `
+                <label class="form-label">How severe is the emotional distress?</label>
+                <select class="form-select" name="impact_detail_severity" required>
+                    <option value="">-- Select Severity --</option>
+                    <option value="mild">Mild - Manageable discomfort</option>
+                    <option value="moderate">Moderate - Affecting daily activities</option>
+                    <option value="severe">Severe - Significant impact on daily life</option>
+                </select>
+                <div class="mt-3">
+                    <label class="form-label">Are you experiencing any of these?</label>
+                    <select class="form-select" name="impact_detail_symptoms">
+                        <option value="">-- Select if applicable --</option>
+                        <option value="anxiety">Anxiety/Panic attacks</option>
+                        <option value="depression">Depression/Sadness</option>
+                        <option value="ptsd">Flashbacks/PTSD symptoms</option>
+                        <option value="anger">Anger/Irritability</option>
+                        <option value="shame">Shame/Guilt</option>
+                    </select>
+                </div>
+            `;
+            break;
+            
+        case 'physical_harm':
+            detailsHTML += `
+                <label class="form-label">What type of physical harm occurred?</label>
+                <select class="form-select" name="impact_detail_harm_type" required>
+                    <option value="">-- Select Type --</option>
+                    <option value="minor_injury">Minor injury (bruises, scratches)</option>
+                    <option value="moderate_injury">Moderate injury (cuts, sprains)</option>
+                    <option value="serious_injury">Serious injury (fractures, severe wounds)</option>
+                    <option value="ongoing_pain">Ongoing pain/discomfort</option>
+                </select>
+                <div class="mt-3">
+                    <label class="form-label">Did you seek medical attention?</label>
+                    <select class="form-select" name="impact_detail_medical" required>
+                        <option value="">-- Select Option --</option>
+                        <option value="yes">Yes, received treatment</option>
+                        <option value="planning">Planning to seek help</option>
+                        <option value="no">No, not yet</option>
+                        <option value="not_needed">Not needed</option>
+                    </select>
+                </div>
+            `;
+            break;
+            
+        case 'financial_loss':
+            detailsHTML += `
+                <label class="form-label">Estimated financial impact:</label>
+                <select class="form-select" name="impact_detail_financial" required>
+                    <option value="">-- Select Range --</option>
+                    <option value="minor">Minor (< ₹5,000)</option>
+                    <option value="moderate">Moderate (₹5,000 - ₹50,000)</option>
+                    <option value="significant">Significant (₹50,000 - ₹2,00,000)</option>
+                    <option value="severe">Severe (> ₹2,00,000)</option>
+                </select>
+                <div class="mt-3">
+                    <label class="form-label">Type of financial loss:</label>
+                    <select class="form-select" name="impact_detail_loss_type">
+                        <option value="">-- Select Type --</option>
+                        <option value="theft">Theft/Stolen items</option>
+                        <option value="property">Property damage</option>
+                        <option value="medical">Medical expenses</option>
+                        <option value="job_loss">Lost income/Job loss</option>
+                        <option value="fraud">Fraud/Scam</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+            `;
+            break;
+            
+        case 'reputation':
+            detailsHTML += `
+                <label class="form-label">How has your reputation been affected?</label>
+                <select class="form-select" name="impact_detail_reputation" required>
+                    <option value="">-- Select Impact --</option>
+                    <option value="family">Within family/relatives</option>
+                    <option value="social">Social circle/friends</option>
+                    <option value="professional">Professional/workplace</option>
+                    <option value="online">Online/social media</option>
+                    <option value="community">Community/public</option>
+                </select>
+                <div class="mt-3">
+                    <label class="form-label">Are there ongoing concerns?</label>
+                    <select class="form-select" name="impact_detail_ongoing">
+                        <option value="">-- Select Option --</option>
+                        <option value="rumors">Rumors spreading</option>
+                        <option value="harassment">Continued harassment</option>
+                        <option value="isolation">Social isolation</option>
+                        <option value="discrimination">Discrimination</option>
+                    </select>
+                </div>
+            `;
+            break;
+            
+        case 'fear':
+            detailsHTML += `
+                <label class="form-label">Level of fear/anxiety:</label>
+                <select class="form-select" name="impact_detail_fear_level" required>
+                    <option value="">-- Select Level --</option>
+                    <option value="mild">Mild - Occasional worry</option>
+                    <option value="moderate">Moderate - Frequent anxiety</option>
+                    <option value="severe">Severe - Constant fear</option>
+                </select>
+                <div class="mt-3">
+                    <label class="form-label">What are you most afraid of?</label>
+                    <select class="form-select" name="impact_detail_fear_type">
+                        <option value="">-- Select Concern --</option>
+                        <option value="recurrence">Incident happening again</option>
+                        <option value="safety">Personal safety threats</option>
+                        <option value="retaliation">Retaliation/revenge</option>
+                        <option value="judgment">Judgment from others</option>
+                        <option value="future">Future consequences</option>
+                    </select>
+                </div>
+            `;
+            break;
+            
+        case 'sleep_issues':
+            detailsHTML += `
+                <label class="form-label">How severe are the sleep disturbances?</label>
+                <select class="form-select" name="impact_detail_sleep" required>
+                    <option value="">-- Select Severity --</option>
+                    <option value="occasional">Occasional - 1-2 nights/week</option>
+                    <option value="frequent">Frequent - 3-5 nights/week</option>
+                    <option value="constant">Constant - Every night</option>
+                </select>
+                <div class="mt-3">
+                    <label class="form-label">What type of sleep issue?</label>
+                    <select class="form-select" name="impact_detail_sleep_type">
+                        <option value="">-- Select Type --</option>
+                        <option value="insomnia">Difficulty falling asleep</option>
+                        <option value="nightmares">Nightmares/bad dreams</option>
+                        <option value="waking">Waking up frequently</option>
+                        <option value="early_waking">Waking too early</option>
+                    </select>
+                </div>
+            `;
+            break;
+            
+        case 'other':
+            detailsHTML += `
+                <label class="form-label">Please describe the impact:</label>
+                <textarea class="form-control" name="impact_detail_other" rows="3" required placeholder="Describe how this incident has affected you..."></textarea>
+            `;
+            break;
+    }
+    
+    detailsHTML += '</div>';
+    container.innerHTML = detailsHTML;
+}
+
+// Show frequency options if incident happened before
+function showFrequencyOptions(value) {
+    const frequencyDiv = document.getElementById('frequency_options');
+    if (value === 'no') {
+        frequencyDiv.style.display = 'block';
+        document.getElementById('frequency').required = true;
+    } else {
+        frequencyDiv.style.display = 'none';
+        document.getElementById('frequency').required = false;
+    }
+}
+
+// Form submission
+document.getElementById('incidentForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    document.getElementById('loadingOverlay').style.display = 'flex';
+    document.getElementById('submitBtn').disabled = true;
+    
+    // Clear draft after submission
+    setTimeout(() => {
+        localStorage.removeItem('incidentReportDraft');
+        this.submit();
+    }, 500);
+});
+
+// Toast notification
+function showToast(message, type = 'success') {
+    const toastHTML = `
+        <div class="toast custom-toast show" role="alert">
+            <div class="toast-body d-flex align-items-center gap-2">
+                <span>${type === 'success' ? '✅' : 'ℹ️'}</span>
+                <span>${message}</span>
+            </div>
+        </div>
+    `;
+    const toastContainer = document.querySelector('.toast-container');
+    toastContainer.innerHTML = toastHTML;
+    
+    setTimeout(() => {
+        toastContainer.innerHTML = '';
+    }, 3000);
+}
+
+// Tooltips
+document.querySelectorAll('.tooltip-icon').forEach(icon => {
+    icon.addEventListener('click', function() {
+        alert(this.getAttribute('title'));
+    });
+});
+</script>
+{% endblock %}

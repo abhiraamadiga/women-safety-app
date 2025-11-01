@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safe Route Finder - Women Safety</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #8b5cf6;
+            --success: #10b981;
+            --bg-light: #f8fafc;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow: hidden;
+        }
+        
+        .nav-header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .nav-header h1 {
+            font-size: 22px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #64748b;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .container {
+            display: flex;
+            height: calc(100vh - 65px);
+            position: relative;
+        }
+        
+        .sidebar {
+            width: 380px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 25px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .sidebar h2 {
+            font-size: 26px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .sidebar h2::before {
+            content: '🛡️';
+            font-size: 28px;
+        }
+        
+        .sidebar p {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .info-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .info-box strong {
+            display: block;
+            color: #92400e;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .info-box ul {
+            margin-left: 20px;
+            color: #78350f;
+            font-size: 13px;
+        }
+        
+        .location-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 15px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .location-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+        }
+        
+        .input-group {
+            margin-bottom: 15px;
+        }
+        
+        .input-group label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 15px;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+        
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+        
+        .find-route-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 20px 0;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .find-route-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4);
+        }
+        
+        .preferences {
+            margin-top: 20px;
+        }
+        
+        .preferences h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 12px;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: rgba(99, 102, 241, 0.05);
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .checkbox-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        
+        .checkbox-item label {
+            flex: 1;
+            cursor: pointer;
+            color: #334155;
+            font-size: 14px;
+        }
+        
+        .saved-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #e2e8f0;
+        }
+        
+        .saved-section h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .save-location-btn {
+            width: 100%;
+            padding: 12px;
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .save-location-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        #map {
+            flex: 1;
+            height: 100%;
+            position: relative;
+        }
+        
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+            font-size: 18px;
+            z-index: 1000;
+        }
+        
+        .spinner {
+            border: 4px solid rgba(255,255,255,0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-header">
+        <h1>Women Safety</h1>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/safe-routes" style="color: var(--primary);">Safe Route Finder</a>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="sidebar">
+            <h2>Safe Route Planner</h2>
+            <p>Find the safest routes in Bangalore</p>
+            
+            <div class="info-box">
+                <strong>💡 Tip:</strong>
+                <ul>
+                    <li>Search for locations or use the map to set points</li>
+                    <li>Set your route preferences and safety priorities</li>
+                    <li>Click "Find Safe Routes" to get optimized paths</li>
+                </ul>
+            </div>
+            
+            <button class="location-btn" id="useLocationBtn">
+                📍 Use My Current Location
+            </button>
+            
+            <div class="input-group">
+                <label>📍 Starting Point</label>
+                <input type="text" id="startInput" placeholder="Enter starting address or click on map">
+            </div>
+            
+            <div class="input-group">
+                <label>🎯 Destination</label>
+                <input type="text" id="endInput" placeholder="Enter destination or click on map">
+            </div>
+            
+            <button class="find-route-btn" id="findRouteBtn">
+                🔍 Find Safe Route
+            </button>
+            
+            <div class="preferences">
+                <h3>Route Preferences</h3>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="avoidCrime" checked>
+                    <label for="avoidCrime">Avoid high-crime areas</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="preferLit" checked>
+                    <label for="preferLit">Prefer well-lit streets</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="preferPopulated">
+                    <label for="preferPopulated">Prefer populated areas</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="preferMainRoads">
+                    <label for="preferMainRoads">Prefer main roads</label>
+                </div>
+            </div>
+            
+            <div class="saved-section">
+                <h3>🏠 Saved Places</h3>
+                <button class="save-location-btn" id="saveLocationBtn">
+                    + Save Current Location
+                </button>
+            </div>
+        </div>
+        
+        <div id="map">
+            <div class="loading" id="loading" style="display: none;">
+                <div class="spinner"></div>
+                <div>Calculating safe routes...</div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // Initialize map
+        const map = L.map('map').setView([12.9716, 77.5946], 13);
+        
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors',
+            maxZoom: 19
+        }).addTo(map);
+        
+        let startMarker, endMarker;
+        let startCoords = null, endCoords = null;
+        let routeLayers = [];
+        
+        // Use current location
+        document.getElementById('useLocationBtn').addEventListener('click', function() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+                    
+                    if (startMarker) map.removeLayer(startMarker);
+                    startMarker = L.marker([lat, lon], {
+                        icon: L.divIcon({
+                            className: 'custom-marker',
+                            html: '<div style="background: #10b981; color: white; padding: 8px; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; font-weight: bold;">A</div>'
+                        })
+                    }).addTo(map);
+                    
+                    startCoords = [lat, lon];
+                    map.setView([lat, lon], 15);
+                    
+                    // Reverse geocode
+                    fetch(`/api/reverse-geocode?lat=${lat}&lon=${lon}`)
+                        .then(r => r.json())
+                        .then(data => {
+                            if (data.success) {
+                                document.getElementById('startInput').value = data.address;
+                            }
+                        });
+                }, function(error) {
+                    alert('Unable to get your location. Please enter manually.');
+                });
+            } else {
+                alert('Geolocation is not supported by your browser.');
+            }
+        });
+        
+        // Map click handler
+        let selectingStart = true;
+        map.on('click', function(e) {
+            const lat = e.latlng.lat;
+            const lon = e.latlng.lng;
+            
+            if (selectingStart) {
+                if (startMarker) map.removeLayer(startMarker);
+                startMarker = L.marker([lat, lon], {
+                    icon: L.divIcon({
+                        className: 'custom-marker',
+                        html: '<div style="background: #10b981; color: white; padding: 8px; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; font-weight: bold;">A</div>'
+                    })
+                }).addTo(map);
+                startCoords = [lat, lon];
+                
+                fetch(`/api/reverse-geocode?lat=${lat}&lon=${lon}`)
+                    .then(r => r.json())
+                    .then(data => {
+                        if (data.success) {
+                            document.getElementById('startInput').value = data.address;
+                        }
+                    });
+                selectingStart = false;
+            } else {
+                if (endMarker) map.removeLayer(endMarker);
+                endMarker = L.marker([lat, lon], {
+                    icon: L.divIcon({
+                        className: 'custom-marker',
+                        html: '<div style="background: #ef4444; color: white; padding: 8px; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; font-weight: bold;">B</div>'
+                    })
+                }).addTo(map);
+                endCoords = [lat, lon];
+                
+                fetch(`/api/reverse-geocode?lat=${lat}&lon=${lon}`)
+                    .then(r => r.json())
+                    .then(data => {
+                        if (data.success) {
+                            document.getElementById('endInput').value = data.address;
+                        }
+                    });
+                selectingStart = true;
+            }
+        });
+        
+        // Search functionality
+        let searchTimeout;
+        function setupSearch(inputId, isStart) {
+            const input = document.getElementById(inputId);
+            input.addEventListener('input', function() {
+                clearTimeout(searchTimeout);
+                const query = this.value.trim();
+                if (query.length < 3) return;
+                
+                searchTimeout = setTimeout(() => {
+                    fetch(`/api/search-place?q=${encodeURIComponent(query)}`)
+                        .then(r => r.json())
+                        .then(data => {
+                            if (data.success && data.results.length > 0) {
+                                const result = data.results[0];
+                                const lat = result.lat;
+                                const lon = result.lon;
+                                
+                                if (isStart) {
+                                    if (startMarker) map.removeLayer(startMarker);
+                                    startMarker = L.marker([lat, lon], {
+                                        icon: L.divIcon({
+                                            className: 'custom-marker',
+                                            html: '<div style="background: #10b981; color: white; padding: 8px; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; font-weight: bold;">A</div>'
+                                        })
+                                    }).addTo(map);
+                                    startCoords = [lat, lon];
+                                } else {
+                                    if (endMarker) map.removeLayer(endMarker);
+                                    endMarker = L.marker([lat, lon], {
+                                        icon: L.divIcon({
+                                            className: 'custom-marker',
+                                            html: '<div style="background: #ef4444; color: white; padding: 8px; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; font-weight: bold;">B</div>'
+                                        })
+                                    }).addTo(map);
+                                    endCoords = [lat, lon];
+                                }
+                                
+                                if (startCoords && endCoords) {
+                                    const bounds = L.latLngBounds([startCoords, endCoords]);
+                                    map.fitBounds(bounds, { padding: [50, 50] });
+                                } else {
+                                    map.setView([lat, lon], 15);
+                                }
+                            }
+                        });
+                }, 500);
+            });
+        }
+        
+        setupSearch('startInput', true);
+        setupSearch('endInput', false);
+        
+        // Find route
+        document.getElementById('findRouteBtn').addEventListener('click', function() {
+            if (!startCoords || !endCoords) {
+                alert('Please select both starting point and destination');
+                return;
+            }
+            
+            // Clear previous routes
+            routeLayers.forEach(layer => map.removeLayer(layer));
+            routeLayers = [];
+            
+            document.getElementById('loading').style.display = 'block';
+            
+            const preferences = {
+                prefer_main_roads: document.getElementById('preferMainRoads').checked,
+                prefer_well_lit: document.getElementById('preferLit').checked,
+                prefer_populated: document.getElementById('preferPopulated').checked,
+                safety_weight: 0.7,
+                distance_weight: 0.3
+            };
+            
+            fetch('/api/optimize-route', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    start_lat: startCoords[0],
+                    start_lon: startCoords[1],
+                    end_lat: endCoords[0],
+                    end_lon: endCoords[1],
+                    ...preferences
+                })
+            })
+            .then(r => r.json())
+            .then(data => {
+                document.getElementById('loading').style.display = 'none';
+                
+                if (data.success && data.routes && data.routes.length > 0) {
+                    const colors = ['#10b981', '#6366f1', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899', '#14b8a6'];
+                    
+                    data.routes.forEach((route, index) => {
+                        const polyline = L.polyline(route.route, {
+                            color: colors[index % colors.length],
+                            weight: index === 0 ? 6 : 4,
+                            opacity: index === 0 ? 0.9 : 0.6
+                        }).addTo(map);
+                        
+                        const popupContent = `
+                            <div style="padding: 10px;">
+                                <h4 style="margin: 0 0 8px 0;">${route.emoji} ${route.category.toUpperCase()}</h4>
+                                <p style="margin: 0 0 8px 0; font-size: 13px;">${route.description}</p>
+                                <div style="font-size: 12px;">
+                                    <strong>Distance:</strong> ${route.distance_display}<br>
+                                    <strong>Duration:</strong> ${route.duration_display}<br>
+                                    <strong>Safety:</strong> ${route.safety_display}
+                                </div>
+                            </div>
+                        `;
+                        polyline.bindPopup(popupContent);
+                        
+                        routeLayers.push(polyline);
+                    });
+                    
+                    const bounds = L.latLngBounds(data.routes[0].route);
+                    map.fitBounds(bounds, { padding: [50, 50] });
+                    
+                    alert(`Found ${data.routes.length} safe routes! Click on routes for details.`);
+                } else {
+                    alert('No routes found. Please try different locations.');
+                }
+            })
+            .catch(err => {
+                document.getElementById('loading').style.display = 'none';
+                alert('Error finding routes: ' + err.message);
+            });
+        });
+        
+        // Save location
+        document.getElementById('saveLocationBtn').addEventListener('click', function() {
+            if (!startCoords) {
+                alert('Please select a location first');
+                return;
+            }
+            const name = prompt('Enter a name for this location:');
+            if (name) {
+                alert('Location saved! (Feature coming soon)');
+            }
+        });
+    </script>
+</body>
+</html>

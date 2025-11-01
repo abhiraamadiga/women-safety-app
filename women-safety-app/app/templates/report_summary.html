@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+
+{% block title %}Incident Report Summary{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card shadow-sm mb-4">
+            <div class="card-body p-4">
+                <h2 class="card-title mb-4">Your Incident Report Summary</h2>
+                
+                <div class="alert alert-info">
+                    <i class="bi bi-info-circle"></i> This summary was generated using AI based on your responses. 
+                    You can edit it if needed before taking further action.
+                </div>
+
+                <div class="report-summary bg-light p-4 rounded mb-4">
+                    <h5 class="mb-3">Incident Report</h5>
+                    <div class="summary-text" style="white-space: pre-line;">{{ summary }}</div>
+                </div>
+
+                <div class="mb-4">
+                    <a href="{{ url_for('main.download_report') }}" class="btn btn-primary">
+                        <i class="bi bi-download"></i> Download Report
+                    </a>
+                </div>
+
+                <form method="POST" action="{{ url_for('main.final_actions') }}"">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">Would you like to report this to the police?</h5>
+                            <p class="text-muted small">We can help you connect with local authorities.</p>
+                            
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="radio" name="report_police" value="yes" id="policeYes">
+                                <label class="form-check-label" for="policeYes">
+                                    <strong>Yes, I want to report this to the police</strong>
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="report_police" value="no" id="policeNo" checked>
+                                <label class="form-check-label" for="policeNo">
+                                    No, not at this time
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Would you like to share your story with the community?</h5>
+                            <p class="text-muted small">
+                                Posting to our community support forum allows others to offer emotional support. 
+                                {% if session.logged_in %}You can choose to post with your username or anonymously.{% else %}Posts are anonymous by default.{% endif %}
+                            </p>
+                            
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="radio" name="post_community" value="yes" id="communityYes">
+                                <label class="form-check-label" for="communityYes">
+                                    <strong>Yes, share my story with the community</strong>
+                                </label>
+                            </div>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="radio" name="post_community" value="no" id="communityNo" checked>
+                                <label class="form-check-label" for="communityNo">
+                                    No, keep this private
+                                </label>
+                            </div>
+                            
+                            {% if session.logged_in %}
+                            <div id="anonymityOptions" style="display: none;" class="mt-3 ps-4 border-start border-3 border-primary">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="post_as_anonymous" id="postAsAnonymous" {% if session.get('default_anonymous') %}checked{% endif %}>
+                                    <label class="form-check-label" for="postAsAnonymous">
+                                        Post as Anonymous (instead of showing my username: <strong>{{ session.username }}</strong>)
+                                    </label>
+                                </div>
+                                <div class="alert alert-info small mt-2 mb-0">
+                                    <strong>Privacy Notice:</strong> If unchecked, your username will be visible on the post. 
+                                    No other personal information will be shared.
+                                </div>
+                            </div>
+                            {% else %}
+                            <div class="alert alert-warning small mt-2">
+                                <strong>Privacy Notice:</strong> Your story will be posted anonymously. No personal information, 
+                                location details, or identifying information will be shared.
+                            </div>
+                            {% endif %}
+
+                            <!-- Optional Community Story (first-person) -->
+                            <div id="communityStoryContainer" style="display: none;" class="mt-4">
+                                <label for="communityStory" class="form-label" style="font-weight:600;">Your Community Story (Optional)</label>
+                                <textarea class="form-control" id="communityStory" name="community_story" rows="4" maxlength="1200" placeholder="Write in your own words (first person). If you leave this empty, we’ll generate a respectful first‑person version for the community."></textarea>
+                                <div class="text-end mt-1"><small class="text-muted"><span id="storyCount">0</span>/1200</small></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <script>
+                    // Show/hide anonymity options when community post is selected
+                    document.querySelectorAll('input[name="post_community"]').forEach(radio => {
+                        radio.addEventListener('change', function() {
+                            const anonymityOptions = document.getElementById('anonymityOptions');
+                            const storyBox = document.getElementById('communityStoryContainer');
+                            if (anonymityOptions) {
+                                anonymityOptions.style.display = this.value === 'yes' ? 'block' : 'none';
+                            }
+                            if (storyBox) {
+                                storyBox.style.display = this.value === 'yes' ? 'block' : 'none';
+                            }
+                        });
+                    });
+
+                    // Live char counter for community story
+                    const storyArea = document.getElementById('communityStory');
+                    const storyCount = document.getElementById('storyCount');
+                    if (storyArea && storyCount) {
+                        storyArea.addEventListener('input', function() {
+                            storyCount.textContent = this.value.length;
+                        });
+                    }
+                    </script>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary btn-lg">Complete Report</button>
+                        <a href="{{ url_for('main.index') }}" class="btn btn-outline-secondary">Start Over</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,240 @@
+{% extends 'base.html' %}
+
+{% block title %}Sign Up - SafeSpace Women's Safety{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center min-vh-100 align-items-center py-5">
+        <div class="col-md-6">
+            <div class="card shadow-lg border-0" style="border-radius: 16px;">
+                <div class="card-body p-5">
+                    <!-- Logo/Header -->
+                    <div class="text-center mb-4">
+                        <h2 class="mb-2" style="font-weight: 700; color: #2D3748;">Create Account</h2>
+                        <p class="text-secondary">Join SafeSpace for a safer tomorrow</p>
+                    </div>
+
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                                    {{ message }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+
+                    <form method="POST" action="{{ url_for('main.signup') }}" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="username" class="form-label" style="font-weight: 600;">Username <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control form-control-lg" id="username" name="username" required 
+                                   style="border-radius: 8px; padding: 0.875rem;" placeholder="Choose a unique username" 
+                                   pattern="[a-zA-Z0-9_]{3,20}" title="3-20 characters, letters, numbers, and underscores only">
+                            <small class="text-secondary">This will be displayed on your posts (unless you choose to post anonymously)</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="name" class="form-label" style="font-weight: 600;">Full Name (Optional)</label>
+                            <input type="text" class="form-control form-control-lg" id="name" name="name" 
+                                   style="border-radius: 8px; padding: 0.875rem;" placeholder="Your name">
+                            <small class="text-secondary">You can skip this for complete anonymity</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label" style="font-weight: 600;">Email Address <span class="text-danger">*</span></label>
+                            <input type="email" class="form-control form-control-lg" id="email" name="email" required 
+                                   style="border-radius: 8px; padding: 0.875rem;" placeholder="your@email.com">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="phone" class="form-label" style="font-weight: 600;">Phone Number <span class="text-danger">*</span></label>
+                            <input type="tel" class="form-control form-control-lg" id="phone" name="phone" required
+                                   style="border-radius: 8px; padding: 0.875rem;" placeholder="e.g., +91 98XXXXXXXX" inputmode="tel" pattern="[+\d\s-]{7,20}">
+                            <small class="text-secondary">Required for account recovery and emergency coordination</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password" class="form-label" style="font-weight: 600;">Password <span class="text-danger">*</span></label>
+                            <input type="password" class="form-control form-control-lg" id="password" name="password" required 
+                                   style="border-radius: 8px; padding: 0.875rem;" placeholder="Create a strong password" minlength="6">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="confirm_password" class="form-label" style="font-weight: 600;">Confirm Password <span class="text-danger">*</span></label>
+                            <input type="password" class="form-control form-control-lg" id="confirm_password" name="confirm_password" required 
+                                   style="border-radius: 8px; padding: 0.875rem;" placeholder="Re-enter password" minlength="6">
+                        </div>
+
+                        <!-- Location & ID -->
+                        <hr class="my-4">
+                        <h5 class="mb-3" style="font-weight:700; color:#2D3748;">Location & ID</h5>
+                        <div class="mb-3">
+                            <label for="home_city_district" class="form-label" style="font-weight: 600;">Home city / district (Optional)</label>
+                            <input type="text" class="form-control form-control-lg" id="home_city_district" name="home_city_district" placeholder="e.g., Chennai">
+                            <small class="text-secondary">Nearest city or district for context</small>
+                        </div>
+                        <div class="mb-3">
+                            <label for="address" class="form-label" style="font-weight: 600;">Address (Optional)</label>
+                            <input type="text" class="form-control form-control-lg" id="address" name="address" placeholder="Share only if comfortable">
+                            <small class="text-secondary">Helps responders locate you</small>
+                        </div>
+
+                        <!-- Appearance -->
+                        <hr class="my-4">
+                        <h5 class="mb-3" style="font-weight:700; color:#2D3748;">Basic Information (Optional)</h5>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label" for="age_range" style="font-weight: 600;">Age range</label>
+                                <select class="form-select" id="age_range" name="age_range">
+                                    <option value="">Select age range</option>
+                                    <option value="Under 18">Under 18</option>
+                                    <option value="18-25">18-25</option>
+                                    <option value="26-35">26-35</option>
+                                    <option value="36-45">36-45</option>
+                                    <option value="46-55">46-55</option>
+                                    <option value="56-65">56-65</option>
+                                    <option value="Over 65">Over 65</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="gender_presentation" style="font-weight: 600;">Gender / presentation</label>
+                                <select class="form-select" id="gender_presentation" name="gender_presentation">
+                                    <option value="">Select gender presentation</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Non-binary">Non-binary</option>
+                                    <option value="Prefer not to say">Prefer not to say</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Medical Information -->
+                        <hr class="my-4">
+                        <h5 class="mb-3" style="font-weight:700; color:#2D3748;">Medical Information (Optional)</h5>
+                        <p class="text-secondary mb-3">For emergency situations only</p>
+                        <div class="mb-3">
+                            <label class="form-label" for="allergies" style="font-weight: 600;">Allergies</label>
+                            <input class="form-control" id="allergies" name="allergies" placeholder="e.g., Penicillin, peanuts">
+                            <small class="text-secondary">Medication/food allergies</small>
+                        </div>
+                        <div class="row g-3 mt-2">
+                            <div class="col-md-6">
+                                <label class="form-label" for="chronic_conditions" style="font-weight: 600;">Chronic conditions / medications</label>
+                                <input class="form-control" id="chronic_conditions" name="chronic_conditions" placeholder="e.g., insulin-dependent diabetes">
+                                <small class="text-secondary">Critical medical info</small>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="disability" style="font-weight: 600;">Any disability / mobility aid</label>
+                                <input class="form-control" id="disability" name="disability" placeholder="e.g., wheelchair user">
+                                <small class="text-secondary">Helps responders assist you</small>
+                            </div>
+                        </div>
+
+                        <!-- Emergency contacts moved to dedicated page: /emergency-contacts -->
+
+                        <!-- Police / legal consent toggles -->
+                        <hr class="my-4">
+                        <h5 class="mb-3" style="font-weight:700; color:#2D3748;">Police / legal (consent)</h5>
+                        <div class="card border-info mb-3" style="background: #EBF8FF; border-radius: 8px;">
+                            <div class="card-body">
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="checkbox" id="consent_share_with_police" name="consent_share_with_police">
+                                    <label class="form-check-label" for="consent_share_with_police">
+                                        <strong>Pre-authorize sharing my profile & live location with police during an emergency</strong>
+                                    </label>
+                                    <br>
+                                    <small class="text-secondary ms-4">Speeds up police response during emergencies</small>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="consent_share_photo_with_police" name="consent_share_photo_with_police">
+                                    <label class="form-check-label" for="consent_share_photo_with_police">
+                                        <strong>Share uploaded photo with authorities in emergencies</strong>
+                                    </label>
+                                    <br>
+                                    <small class="text-secondary ms-4">Helps identification during search operations</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Privacy & retention -->
+                        <hr class="my-4">
+                        <h5 class="mb-3" style="font-weight:700; color:#2D3748;">Privacy & retention</h5>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label" for="data_retention" style="font-weight: 600;">Data retention preference</label>
+                                <select class="form-select" id="data_retention" name="data_retention">
+                                    <option value="30d">30 days</option>
+                                    <option value="1y" selected>1 year</option>
+                                    <option value="indefinite">Indefinite</option>
+                                </select>
+                                <small class="text-secondary">How long to keep your data</small>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" style="font-weight: 600;">Anonymity preference</label>
+                                <div class="form-check mt-2">
+                                    <input class="form-check-input" type="checkbox" id="default_anonymous" name="default_anonymous" checked>
+                                    <label class="form-check-label" for="default_anonymous">
+                                        <strong>Post anonymously by default</strong>
+                                    </label>
+                                    <br>
+                                    <small class="text-secondary">You can change this per post</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <div class="mb-4">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="terms" name="terms" required>
+                                <label class="form-check-label" for="terms">
+                                    I agree to the <a href="#" style="color: #4299E1;">Terms of Service</a> and <a href="#" style="color: #4299E1;">Privacy Policy</a>
+                                </label>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100 py-3 mb-3" 
+                                style="font-weight: 600; font-size: 1.1rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(74, 85, 104, 0.3);">
+                            Create Account
+                        </button>
+                    </form>
+
+                    <div class="text-center mt-4">
+                        <p class="mb-2">Already have an account? <a href="{{ url_for('main.login') }}" style="color: #4299E1; font-weight: 600;">Sign In</a></p>
+                        <p class="text-secondary mb-3">OR</p>
+                        <a href="{{ url_for('main.index') }}" class="btn btn-outline-secondary w-100 py-2" 
+                           style="border-radius: 8px; font-weight: 600;">
+                            Continue as Guest (Anonymous)
+                        </a>
+                    </div>
+
+                    <div class="alert alert-success mt-4" style="border-radius: 8px; background: #F0FFF4; border: none;">
+                        <small>
+                            <strong>✨ Benefits of Creating an Account</strong><br>
+                            • Track your reports<br>
+                            • Easier police verification<br>
+                            • Access support resources<br>
+                            • Still post anonymously when you want
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Password match validation
+document.querySelector('form').addEventListener('submit', function(e) {
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirm_password').value;
+    
+    if (password !== confirmPassword) {
+        e.preventDefault();
+        alert('Passwords do not match!');
+    }
+});
+</script>
+{% endblock %}

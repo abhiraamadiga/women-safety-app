@@ -1,0 +1,254 @@
+{% extends 'base.html' %}
+
+{% block title %}Post Incident Report - SafeSpace{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <!-- Hero Section with Illustration -->
+        <div class="text-center mb-4">
+            <img src="https://illustrations.popsy.co/violet/woman-with-vr-headset.svg" 
+                 alt="Report Incident" 
+                 class="report-hero-img mb-3"
+                 style="max-width: 200px; height: auto; opacity: 0.85;">
+            <h1 class="display-6 fw-bold mb-2" style="color: #8B5CF6;">Report an Incident</h1>
+            <p class="lead text-muted">Your voice matters. We're here to help.</p>
+        </div>
+
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <h2 class="card-title mb-3">Incident Details</h2>
+                <p class="text-muted mb-4">
+                    You are safe here. Please take your time filling out this form. 
+                    All information is confidential and will be handled with care.
+                </p>
+
+                <form id="incidentForm" method="POST" action="{{ url_for('main.submit_report') }}" enctype="multipart/form-data">
+                    
+                    <!-- Question 1: Who was involved? -->
+                    <div class="question-section mb-4 p-3 bg-light rounded">
+                        <label class="form-label fw-bold">1. Who was involved?</label>
+                        <select class="form-select mb-3" name="who_involved" id="whoInvolved" required onchange="showSubOptions('who')">
+                            <option value="">Select...</option>
+                            <option value="family">Family</option>
+                            <option value="strangers">Strangers</option>
+                            <option value="friends">Friends</option>
+                            <option value="partner">Partner</option>
+                            <option value="colleagues">Colleagues</option>
+                            <option value="others">Others</option>
+                            <option value="prefer_not_say">Prefer not to say</option>
+                        </select>
+                        
+                        <!-- Sub-options (shown dynamically) -->
+                        <div id="who_sub_options" class="sub-options" style="display: none;">
+                            <label class="form-label text-muted">Please specify:</label>
+                            <select class="form-select" name="who_sub_option" id="whoSubOption">
+                                <option value="">Select...</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Question 2: What kind of disturbance? -->
+                    <div class="question-section mb-4 p-3 bg-light rounded">
+                        <label class="form-label fw-bold">2. What kind of disturbance/incident happened?</label>
+                        <select class="form-select mb-3" name="incident_type" id="incidentType" required onchange="showSubOptions('incident')">
+                            <option value="">Select...</option>
+                            <option value="verbal_abuse">Verbal Abuse</option>
+                            <option value="physical_threat">Physical Threat</option>
+                            <option value="harassment">Harassment</option>
+                            <option value="stalking">Stalking</option>
+                            <option value="online_bullying">Online Bullying</option>
+                            <option value="others">Others</option>
+                            <option value="prefer_not_say">Prefer not to say</option>
+                        </select>
+                        
+                        <div id="incident_sub_options" class="sub-options" style="display: none;">
+                            <label class="form-label text-muted">Type of incident:</label>
+                            <select class="form-select" name="incident_sub_type" id="incidentSubType">
+                                <option value="">Select...</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Question 3: Where did it happen? -->
+                    <div class="question-section mb-4 p-3 bg-light rounded">
+                        <label class="form-label fw-bold">3. Where did it happen?</label>
+                        <select class="form-select mb-3" name="location" id="location" required onchange="showSubOptions('location')">
+                            <option value="">Select...</option>
+                            <option value="home">Home</option>
+                            <option value="school">School/College</option>
+                            <option value="workplace">Workplace</option>
+                            <option value="public_place">Public Place</option>
+                            <option value="online">Online</option>
+                            <option value="others">Others</option>
+                            <option value="prefer_not_say">Prefer not to say</option>
+                        </select>
+                        
+                        <div id="location_sub_options" class="sub-options" style="display: none;">
+                            <label class="form-label text-muted">Specific location:</label>
+                            <select class="form-select" name="location_detail" id="locationDetail">
+                                <option value="">Select...</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Question 4: How did it affect you? -->
+                    <div class="question-section mb-4 p-3 bg-light rounded">
+                        <label class="form-label fw-bold">4. How did it affect you? (Select all that apply)</label>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" name="impact" value="emotional_distress" id="impact1" onchange="toggleImpactDetails('emotional')">
+                            <label class="form-check-label" for="impact1">Emotional distress</label>
+                        </div>
+                        <div id="emotional_details" class="ms-4 mb-2" style="display: none;">
+                            <select class="form-select form-select-sm" name="impact_details">
+                                <option value="">Specify...</option>
+                                <option value="anxiety">Anxiety/Fear</option>
+                                <option value="depression">Depression/Sadness</option>
+                                <option value="anger">Anger/Frustration</option>
+                                <option value="shame">Shame/Guilt</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" name="impact" value="physical_injury" id="impact2" onchange="toggleImpactDetails('physical')">
+                            <label class="form-check-label" for="impact2">Physical injury</label>
+                        </div>
+                        <div id="physical_details" class="ms-4 mb-2" style="display: none;">
+                            <select class="form-select form-select-sm" name="impact_details">
+                                <option value="">Specify...</option>
+                                <option value="bruises">Bruises/Cuts</option>
+                                <option value="severe">Severe injury</option>
+                                <option value="pain">Pain/Discomfort</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" name="impact" value="threats" id="impact3">
+                            <label class="form-check-label" for="impact3">Threats</label>
+                        </div>
+                        
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" name="impact" value="daily_life" id="impact4">
+                            <label class="form-check-label" for="impact4">Impact on daily life</label>
+                        </div>
+                    </div>
+
+                    <!-- Question 5: When did it happen? -->
+                    <div class="question-section mb-4 p-3 bg-light rounded">
+                        <label class="form-label fw-bold">5. When did it happen?</label>
+                        <div class="row">
+                            <div class="col-md-6 mb-2">
+                                <label class="form-label text-muted">Date</label>
+                                <input type="date" class="form-control" name="incident_date" required max="{{ today }}">
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <label class="form-label text-muted">Time (if known)</label>
+                                <input type="time" class="form-control" name="incident_time">
+                            </div>
+                        </div>
+                        <div class="form-check mt-2">
+                            <input class="form-check-input" type="checkbox" id="approxTime">
+                            <label class="form-check-label text-muted" for="approxTime">
+                                <small>I'm not sure of the exact time</small>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Question 6: First time? -->
+                    <div class="question-section mb-4 p-3 bg-light rounded">
+                        <label class="form-label fw-bold">6. Was this the first time?</label>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="radio" name="first_time" value="yes" id="firstYes" onclick="hideFrequency()">
+                            <label class="form-check-label" for="firstYes">Yes, this was the first time</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="radio" name="first_time" value="no" id="firstNo" onclick="showFrequency()">
+                            <label class="form-check-label" for="firstNo">No, it has happened before</label>
+                        </div>
+                        
+                        <div id="frequency_section" class="mt-3" style="display: none;">
+                            <label class="form-label text-muted">How many times approximately?</label>
+                            <select class="form-select" name="frequency">
+                                <option value="">Select...</option>
+                                <option value="2-3">2-3 times</option>
+                                <option value="4-10">4-10 times</option>
+                                <option value="10+">More than 10 times</option>
+                                <option value="ongoing">Ongoing/Regular occurrence</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Question 7: Evidence -->
+                    <div class="question-section mb-4 p-3 bg-light rounded">
+                        <label class="form-label fw-bold">7. Would you like to attach evidence?</label>
+                        <p class="text-muted small">You can upload photos, audio, screenshots, or documents. Multiple files allowed.</p>
+                        
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="radio" name="attach_evidence" value="yes" id="evidenceYes" onclick="showUpload()">
+                            <label class="form-check-label" for="evidenceYes">Yes, I want to attach evidence</label>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="radio" name="attach_evidence" value="no" id="evidenceNo" onclick="hideUpload()">
+                            <label class="form-check-label" for="evidenceNo">No, I don't have evidence</label>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="radio" name="attach_evidence" value="later" id="evidenceLater" onclick="hideUpload()">
+                            <label class="form-check-label" for="evidenceLater">I prefer not to attach evidence right now</label>
+                        </div>
+                        
+                        <div id="upload_section" class="mt-3" style="display: none;">
+                            <input type="file" class="form-control" name="evidence_files" id="evidenceFiles" multiple accept=".jpg,.jpeg,.png,.gif,.mp3,.wav,.m4a,.mp4,.mov,.pdf">
+                            <small class="text-muted d-block mt-2">
+                                Accepted formats: Images (jpg, png), Audio (mp3, wav), Video (mp4), Documents (pdf)
+                                <br>Maximum file size: 16MB per file
+                            </small>
+                            <div id="file_preview" class="mt-2"></div>
+                        </div>
+                    </div>
+
+                    <!-- Additional Details -->
+                    <div class="question-section mb-4 p-3 bg-light rounded">
+                        <label class="form-label fw-bold">Additional details (optional)</label>
+                        <textarea class="form-control" name="additional_details" rows="4" 
+                                  placeholder="If there's anything else you'd like to add about the incident, please share it here. This is completely optional."></textarea>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">Generate Report Summary</button>
+                        <p class="text-center text-muted small mb-0">
+                            Your information will be used to generate a professional incident summary using AI.
+                        </p>
+                    </div>
+                </form>
+                
+                <!-- Loading overlay -->
+                <div id="loadingOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 9999; justify-content: center; align-items: center;">
+                    <div class="text-center text-white">
+                        <div class="spinner-border mb-3" role="status" style="width: 3rem; height: 3rem;">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <h4>Generating AI Summary...</h4>
+                        <p>Please wait while we create a professional summary of your report.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Show loading overlay on form submit
+document.getElementById('incidentForm').addEventListener('submit', function(e) {
+    const submitBtn = document.getElementById('submitBtn');
+    const overlay = document.getElementById('loadingOverlay');
+    
+    // Show loading
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Processing...';
+    overlay.style.display = 'flex';
+});
+</script>
+
+<script src="{{ url_for('static', filename='js/dynamic_form.js') }}"></script>
+{% endblock %}

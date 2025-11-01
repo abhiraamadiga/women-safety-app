@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block title %}Settings - SafeSpace{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card shadow-sm border-0 mb-4" style="border-radius: 12px;">
+        <div class="card-body p-4 p-md-5">
+          <h3 class="mb-3" style="font-weight: 700; color: #2D3748;">Account Settings</h3>
+          <p class="text-secondary">Control your profile, privacy, consent, and data retention preferences.</p>
+
+          <form method="POST" action="{{ url_for('main.settings') }}">
+            <!-- Username Section -->
+            <div class="mb-4">
+              <label for="username" class="form-label" style="font-weight: 600;">Username</label>
+              <input type="text" class="form-control" id="username" name="username" value="{{ user.username }}" required 
+                     pattern="[a-zA-Z0-9_]{3,20}" title="3-20 characters, letters, numbers, and underscores only">
+              <small class="text-muted">This will be displayed when you post (unless you choose to post anonymously)</small>
+            </div>
+
+            <hr class="my-4">
+
+            <!-- Privacy Settings -->
+            <h5 class="mb-3" style="font-weight: 600; color: #2D3748;">Privacy Settings</h5>
+            
+            <div class="form-check mb-3">
+              <input class="form-check-input" type="checkbox" id="default_anonymous" name="default_anonymous" {% if user.default_anonymous %}checked{% endif %}>
+              <label class="form-check-label" for="default_anonymous"><strong>Post anonymously by default</strong></label>
+            </div>
+
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="checkbox" id="consent_share_with_police" name="consent_share_with_police" {% if user.consent_share_with_police %}checked{% endif %}>
+              <label class="form-check-label" for="consent_share_with_police">Pre-authorize sharing my profile & live location with police during an emergency</label>
+            </div>
+            <div class="form-check mb-3">
+              <input class="form-check-input" type="checkbox" id="consent_share_photo_with_police" name="consent_share_photo_with_police" {% if user.consent_share_photo_with_police %}checked{% endif %}>
+              <label class="form-check-label" for="consent_share_photo_with_police">Share uploaded photo with authorities in emergencies</label>
+            </div>
+
+            <div class="mb-4">
+              <label for="data_retention" class="form-label" style="font-weight:600;">Data retention preference</label>
+              <select class="form-select" id="data_retention" name="data_retention">
+                <option value="30d" {% if user.data_retention == '30d' %}selected{% endif %}>30 days</option>
+                <option value="1y" {% if user.data_retention == '1y' %}selected{% endif %}>1 year</option>
+                <option value="indefinite" {% if user.data_retention == 'indefinite' %}selected{% endif %}>Indefinite</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Save Settings</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="card shadow-sm border-0" style="border-radius: 12px;">
+        <div class="card-body p-4 p-md-5">
+          <h4 class="mb-3" style="font-weight: 700; color: #2D3748;">Privacy & Data</h4>
+          <p class="text-secondary">You can export or permanently delete your data any time.</p>
+
+          <div class="d-flex flex-wrap gap-2">
+            <a href="{{ url_for('main.export_profile') }}" class="btn btn-outline-secondary">Export my data</a>
+            <form method="POST" action="{{ url_for('main.delete_profile') }}" onsubmit="return confirm('This will permanently delete your account and all related data. Are you sure?');">
+              <button type="submit" class="btn btn-outline-danger">Delete my account</button>
+            </form>
+          </div>
+
+          <div class="alert alert-warning mt-3 mb-0">
+            <small>Deleting your account is irreversible. Community comments are anonymous and cannot be linked to you, but your reports and any linked community posts will be removed.</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

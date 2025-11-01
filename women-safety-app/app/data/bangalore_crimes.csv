@@ -1,0 +1,261 @@
+Latitude,Longitude,Crime type,date,time,area
+12.9766,77.5993,theft,2024-01-02,22:45,Majestic Bus Stand
+12.9771,77.5998,pickpocketing,2024-01-02,23:15,Majestic Area
+12.9768,77.6001,snatching,2024-01-03,21:30,Kempegowda Bus Station
+12.9774,77.5995,harassment,2024-01-03,20:15,Majestic Platform Road
+12.9765,77.5990,theft,2024-01-04,22:00,Majestic Metro
+12.9770,77.6003,robbery,2024-01-05,23:45,Majestic Subway
+12.9772,77.5997,pickpocketing,2024-01-06,21:15,Majestic Circle
+12.9769,77.5992,snatching,2024-01-07,22:30,Majestic Bus Terminal
+12.9940,77.5807,theft,2024-01-02,21:45,Shivajinagar
+12.9945,77.5812,pickpocketing,2024-01-03,22:15,Russell Market
+12.9938,77.5804,snatching,2024-01-04,23:00,Shivajinagar Bus Stand
+12.9943,77.5809,harassment,2024-01-05,20:45,Siddhartha Layout
+12.9942,77.5815,theft,2024-01-06,21:30,Shivajinagar Market
+12.9947,77.5805,assault,2024-01-07,22:00,Shivajinagar Main Road
+12.9939,77.5811,robbery,2024-01-08,23:30,Russell Market Area
+12.9941,77.5808,pickpocketing,2024-01-09,21:00,Shivajinagar Circle
+12.9748,77.6006,theft,2024-01-03,22:30,City Market
+12.9745,77.6010,pickpocketing,2024-01-04,21:45,KR Market
+12.9750,77.6008,snatching,2024-01-05,23:15,Krishnarajendra Market
+12.9747,77.6012,harassment,2024-01-06,20:30,City Market Main Road
+12.9752,77.6005,theft,2024-01-07,22:00,KR Market Area
+12.9744,77.6009,robbery,2024-01-08,23:45,City Market Circle
+12.9749,77.6011,pickpocketing,2024-01-09,21:15,Avenue Road Market
+12.9746,77.6007,snatching,2024-01-10,22:30,Chikpet Area
+12.9687,77.5960,theft,2024-01-02,22:00,Kalasipalyam
+12.9690,77.5965,pickpocketing,2024-01-03,21:30,Kalasipalyam Bus Stand
+12.9685,77.5958,snatching,2024-01-04,23:00,Kalasipalyam Market
+12.9692,77.5963,harassment,2024-01-05,20:15,Kalasipalyam Main Road
+12.9688,77.5961,theft,2024-01-06,22:45,Kalasipalyam Circle
+12.9691,77.5967,robbery,2024-01-07,23:30,Kalasipalyam Junction
+12.9689,77.5959,pickpocketing,2024-01-08,21:00,Kalasipalyam Area
+12.9986,77.7089,theft,2024-01-02,21:45,KR Puram
+12.9990,77.7095,snatching,2024-01-03,22:30,KR Puram Railway Station
+12.9984,77.7092,pickpocketing,2024-01-04,23:15,Krishnarajapuram
+12.9988,77.7088,harassment,2024-01-05,20:45,KR Puram Bus Stand
+12.9982,77.7091,theft,2024-01-06,21:30,KR Puram Main Road
+12.9987,77.7097,assault,2024-01-07,22:00,KR Puram Industrial Area
+12.9985,77.7090,robbery,2024-01-08,23:45,Krishnarajapuram Junction
+12.9989,77.7094,snatching,2024-01-09,21:15,KR Puram Market
+12.9505,77.5695,theft,2024-01-03,22:30,Goripalya
+12.9508,77.5698,pickpocketing,2024-01-04,21:45,Goripalya Main Road
+12.9503,77.5692,snatching,2024-01-05,23:00,Goripalya Market
+12.9510,77.5696,harassment,2024-01-06,20:30,Goripalya Circle
+12.9506,77.5694,theft,2024-01-07,22:15,Goripalya Junction
+12.9507,77.5699,assault,2024-01-08,23:30,Goripalya Area
+12.9504,77.5697,robbery,2024-01-09,21:00,Goripalya Main
+13.0365,77.5978,theft,2024-01-02,21:45,Yeshwanthpur
+13.0370,77.5982,snatching,2024-01-03,22:30,Yeshwanthpur Railway Station
+13.0363,77.5975,pickpocketing,2024-01-04,23:15,Yeshwanthpur Junction
+13.0368,77.5980,harassment,2024-01-05,20:45,Yeshwanthpur Metro
+13.0366,77.5976,theft,2024-01-06,22:00,Yeshwanthpur Industrial Area
+13.0372,77.5984,assault,2024-01-07,23:30,Yeshwanthpur Main Road
+13.0364,77.5979,robbery,2024-01-08,21:15,Yeshwanthpur Market
+13.0830,77.5808,theft,2024-01-03,22:30,Hebbal
+13.0835,77.5812,snatching,2024-01-04,21:45,Hebbal Flyover
+13.0828,77.5805,pickpocketing,2024-01-05,23:00,Hebbal Lake
+13.0832,77.5810,harassment,2024-01-06,20:30,Hebbal Industrial Area
+13.0837,77.5815,theft,2024-01-07,22:15,Hebbal Main Road
+13.0829,77.5807,assault,2024-01-08,23:45,Hebbal Circle
+13.0834,77.5809,robbery,2024-01-09,21:00,Hebbal Market
+13.0204,77.5892,theft,2024-01-02,22:00,Peenya Industrial Area
+13.0208,77.5896,snatching,2024-01-03,21:30,Peenya
+13.0202,77.5890,pickpocketing,2024-01-04,23:15,Peenya 1st Phase
+13.0206,77.5894,harassment,2024-01-05,20:45,Peenya 2nd Phase
+13.0210,77.5898,theft,2024-01-06,22:30,Peenya Main Road
+13.0203,77.5891,assault,2024-01-07,23:00,Peenya Industrial Estate
+13.0207,77.5895,robbery,2024-01-08,21:15,Peenya Junction
+12.9716,77.5946,theft,2024-01-05,22:30,MG Road
+12.9720,77.5950,pickpocketing,2024-01-08,21:45,MG Road Metro
+12.9714,77.5944,snatching,2024-01-12,23:00,MG Road Brigade
+12.9718,77.5948,harassment,2024-01-15,20:30,MG Road Trinity
+12.9698,77.5984,harassment,2024-01-08,23:15,Brigade Road
+12.9702,77.5988,theft,2024-01-16,22:00,Brigade Road Church Street
+12.9696,77.5982,pickpocketing,2024-01-22,21:30,Commercial Street
+12.9700,77.5986,snatching,2024-01-28,23:45,Brigade Road Metro
+12.9784,77.6408,assault,2024-01-10,21:45,Whitefield
+12.9788,77.6412,theft,2024-01-18,22:30,Whitefield ITPL
+12.9782,77.6406,snatching,2024-01-25,20:45,Whitefield Main Road
+12.9786,77.6410,harassment,2024-02-02,23:15,Whitefield Phoenix
+12.9352,77.6245,robbery,2024-01-12,20:30,Koramangala
+12.9356,77.6249,theft,2024-01-20,22:15,Koramangala 5th Block
+12.9350,77.6243,snatching,2024-01-27,21:00,Koramangala Forum
+12.9354,77.6247,harassment,2024-02-05,23:30,Koramangala Sony Signal
+12.9279,77.6271,theft,2024-01-15,22:00,Koramangala 5th Block
+12.9283,77.6275,snatching,2024-01-23,21:30,Koramangala 6th Block
+12.9277,77.6269,pickpocketing,2024-02-01,23:00,Koramangala BDA
+12.9281,77.6273,harassment,2024-02-08,20:45,Koramangala Inner Ring
+12.9141,77.6100,snatching,2024-01-18,21:30,BTM Layout
+12.9145,77.6104,theft,2024-01-26,22:45,BTM Layout 1st Stage
+12.9139,77.6098,assault,2024-02-03,23:15,BTM Silk Board
+12.9143,77.6102,harassment,2024-02-12,20:30,BTM 5th Phase
+12.9698,77.7499,theft,2024-01-20,23:00,Marathahalli
+12.9702,77.7503,snatching,2024-01-29,22:30,Marathahalli Bridge
+12.9696,77.7497,pickpocketing,2024-02-06,21:45,Marathahalli ORR
+12.9700,77.7501,harassment,2024-02-14,23:30,Marathahalli Kundalahalli
+12.9634,77.6414,harassment,2024-01-28,20:15,Indiranagar
+12.9638,77.6418,theft,2024-02-05,22:00,Indiranagar 100 Feet Road
+12.9632,77.6412,snatching,2024-02-13,21:30,Indiranagar Metro
+12.9636,77.6416,pickpocketing,2024-02-20,23:15,Indiranagar CMH Road
+12.9538,77.4905,robbery,2024-01-25,21:00,Rajajinagar
+12.9542,77.4909,theft,2024-02-02,22:30,Rajajinagar Metro
+12.9536,77.4903,snatching,2024-02-10,23:45,Rajajinagar 4th Block
+12.9540,77.4907,harassment,2024-02-18,20:15,Rajajinagar Main Road
+12.8456,77.6628,assault,2024-01-30,23:30,Electronic City
+12.8460,77.6632,theft,2024-02-08,22:15,Electronic City Phase 1
+12.8454,77.6626,snatching,2024-02-16,21:00,Electronic City Phase 2
+12.8458,77.6630,harassment,2024-02-23,23:45,Electronic City Metro
+12.9120,77.6476,harassment,2024-02-04,21:00,HSR Layout
+12.9124,77.6480,theft,2024-02-12,22:30,HSR Layout Sector 1
+12.9118,77.6474,snatching,2024-02-19,23:15,HSR Layout 27th Main
+12.9122,77.6478,pickpocketing,2024-02-26,20:45,HSR Layout BDA
+13.0143,77.5504,assault,2024-02-06,23:15,Malleshwaram
+13.0147,77.5508,theft,2024-02-14,22:00,Malleshwaram 8th Cross
+13.0141,77.5502,snatching,2024-02-21,21:30,Malleshwaram Metro
+13.0145,77.5506,harassment,2024-02-28,23:45,Malleshwaram Market
+13.0210,77.6387,robbery,2024-02-01,21:15,Banaswadi
+13.0214,77.6391,theft,2024-02-09,22:45,Banaswadi Metro
+13.0208,77.6385,snatching,2024-02-17,23:30,Banaswadi Main Road
+13.0212,77.6389,harassment,2024-02-24,20:00,Banaswadi Market
+12.9770,77.5999,pickpocketing,2024-02-10,22:15,Majestic Circle
+12.9767,77.5994,snatching,2024-02-11,23:00,Majestic Platform
+12.9773,77.6000,theft,2024-02-12,21:45,Majestic Subway
+12.9766,77.5996,harassment,2024-02-13,20:30,Majestic Metro Station
+12.9771,77.6002,robbery,2024-02-14,23:15,Majestic Bus Terminal
+12.9768,77.5998,pickpocketing,2024-02-15,21:00,Majestic Area
+12.9944,77.5810,theft,2024-02-11,22:30,Shivajinagar Market
+12.9946,77.5813,pickpocketing,2024-02-12,21:45,Russell Market
+12.9940,77.5806,snatching,2024-02-13,23:00,Shivajinagar Bus Stand
+12.9948,77.5811,harassment,2024-02-14,20:30,Siddhartha Layout
+12.9942,77.5808,theft,2024-02-15,22:15,Shivajinagar Main
+12.9749,77.6009,pickpocketing,2024-02-11,22:00,City Market
+12.9746,77.6011,snatching,2024-02-12,21:30,KR Market Area
+12.9751,77.6007,theft,2024-02-13,23:15,Krishnarajendra Market
+12.9748,77.6013,harassment,2024-02-14,20:45,City Market Main
+12.9753,77.6010,robbery,2024-02-15,22:30,Avenue Road
+12.9688,77.5962,theft,2024-02-11,21:45,Kalasipalyam Market
+12.9691,77.5965,pickpocketing,2024-02-12,22:30,Kalasipalyam Bus Stand
+12.9686,77.5960,snatching,2024-02-13,23:15,Kalasipalyam Main
+12.9693,77.5964,harassment,2024-02-14,20:00,Kalasipalyam Junction
+12.9689,77.5966,theft,2024-02-15,21:30,Kalasipalyam Area
+12.9987,77.7091,snatching,2024-02-11,22:15,KR Puram Station
+12.9991,77.7096,theft,2024-02-12,23:00,Krishnarajapuram
+12.9985,77.7093,pickpocketing,2024-02-13,21:45,KR Puram Bus Stand
+12.9983,77.7089,harassment,2024-02-14,22:30,KR Puram Main
+12.9988,77.7094,assault,2024-02-15,23:45,KR Puram Market
+12.9506,77.5696,theft,2024-02-11,22:00,Goripalya Main Road
+12.9509,77.5699,pickpocketing,2024-02-12,21:30,Goripalya Market
+12.9504,77.5693,snatching,2024-02-13,23:15,Goripalya Circle
+12.9511,77.5697,harassment,2024-02-14,20:45,Goripalya Junction
+12.9507,77.5695,theft,2024-02-15,22:30,Goripalya Area
+13.0367,77.5979,theft,2024-02-11,22:15,Yeshwanthpur Station
+13.0371,77.5983,snatching,2024-02-12,23:00,Yeshwanthpur Junction
+13.0365,77.5977,pickpocketing,2024-02-13,21:45,Yeshwanthpur Metro
+13.0369,77.5981,harassment,2024-02-14,22:30,Yeshwanthpur Industrial
+13.0366,77.5978,assault,2024-02-15,23:15,Yeshwanthpur Main
+13.0831,77.5809,theft,2024-03-01,22:00,Hebbal Flyover
+13.0836,77.5813,snatching,2024-03-02,21:30,Hebbal Lake
+13.0829,77.5806,pickpocketing,2024-03-03,23:15,Hebbal Industrial
+13.0833,77.5811,harassment,2024-03-04,20:45,Hebbal Circle
+13.0838,77.5816,theft,2024-03-05,22:30,Hebbal Main Road
+13.0205,77.5893,theft,2024-03-01,21:45,Peenya 1st Phase
+13.0209,77.5897,snatching,2024-03-02,22:30,Peenya Industrial
+13.0203,77.5891,pickpocketing,2024-03-03,23:00,Peenya 2nd Phase
+13.0207,77.5895,harassment,2024-03-04,20:30,Peenya Main Road
+13.0211,77.5899,assault,2024-03-05,21:45,Peenya Junction
+12.9717,77.5947,theft,2024-03-02,22:15,MG Road Metro
+12.9721,77.5951,pickpocketing,2024-03-08,21:30,MG Road Trinity
+12.9715,77.5945,snatching,2024-03-15,23:15,MG Road Brigade
+12.9719,77.5949,harassment,2024-03-22,20:45,MG Road Garuda
+12.9699,77.5985,theft,2024-03-05,22:45,Brigade Road
+12.9703,77.5989,pickpocketing,2024-03-12,21:15,Brigade Church Street
+12.9697,77.5983,snatching,2024-03-18,23:30,Commercial Street
+12.9701,77.5987,harassment,2024-03-25,20:00,Brigade Metro
+12.9785,77.6409,assault,2024-03-03,22:00,Whitefield ITPL
+12.9789,77.6413,theft,2024-03-10,23:15,Whitefield Phoenix
+12.9783,77.6407,snatching,2024-03-17,21:45,Whitefield Varthur
+12.9787,77.6411,harassment,2024-03-24,22:30,Whitefield Main
+12.9353,77.6246,theft,2024-03-05,21:30,Koramangala Sony
+12.9357,77.6250,snatching,2024-03-12,22:45,Koramangala Forum
+12.9351,77.6244,pickpocketing,2024-03-19,23:15,Koramangala 80 Feet
+12.9355,77.6248,harassment,2024-03-26,20:30,Koramangala BDA
+12.9280,77.6272,theft,2024-03-08,22:30,Koramangala 6th Block
+12.9284,77.6276,snatching,2024-03-15,21:15,Koramangala Forum
+12.9278,77.6270,pickpocketing,2024-03-22,23:00,Koramangala Inner Ring
+12.9282,77.6274,harassment,2024-03-29,20:45,Koramangala Sarjapur
+12.9142,77.6101,theft,2024-03-08,22:00,BTM Layout 1st Stage
+12.9146,77.6105,snatching,2024-03-15,23:30,BTM Silk Board
+12.9140,77.6099,assault,2024-03-22,21:45,BTM 5th Phase
+12.9144,77.6103,harassment,2024-03-29,22:15,BTM Arekere
+12.9699,77.7500,theft,2024-03-10,22:30,Marathahalli Bridge
+12.9703,77.7504,snatching,2024-03-18,21:45,Marathahalli ORR
+12.9697,77.7498,pickpocketing,2024-03-25,23:15,Marathahalli Kundalahalli
+12.9701,77.7502,harassment,2024-04-02,20:30,Marathahalli Spice Garden
+12.9635,77.6415,theft,2024-03-20,22:15,Indiranagar 100 Feet
+12.9639,77.6419,snatching,2024-03-28,21:00,Indiranagar Metro
+12.9633,77.6413,pickpocketing,2024-04-05,23:45,Indiranagar CMH
+12.9637,77.6417,harassment,2024-04-12,20:15,Indiranagar Domlur
+12.9539,77.4906,theft,2024-03-22,22:00,Rajajinagar Metro
+12.9543,77.4910,snatching,2024-03-30,23:30,Rajajinagar 4th Block
+12.9537,77.4904,pickpocketing,2024-04-07,21:15,Rajajinagar Main
+12.9541,77.4908,harassment,2024-04-15,22:45,Rajajinagar Market
+12.8457,77.6629,theft,2024-03-25,22:30,Electronic City Phase 1
+12.8461,77.6633,snatching,2024-04-02,21:45,Electronic City Phase 2
+12.8455,77.6627,assault,2024-04-10,23:15,Electronic City Metro
+12.8459,77.6631,harassment,2024-04-18,20:30,Electronic City TCS
+12.9121,77.6477,theft,2024-04-03,22:15,HSR Layout Sector 1
+12.9125,77.6481,snatching,2024-04-10,23:00,HSR Layout 27th Main
+12.9119,77.6475,pickpocketing,2024-04-17,21:30,HSR Layout BDA
+12.9123,77.6479,harassment,2024-04-25,22:45,HSR Layout Sector 2
+13.0144,77.5505,theft,2024-04-11,22:30,Malleshwaram 8th Cross
+13.0148,77.5509,snatching,2024-04-18,21:15,Malleshwaram Metro
+13.0142,77.5503,assault,2024-04-25,23:00,Malleshwaram Market
+13.0146,77.5507,harassment,2024-05-02,20:45,Malleshwaram Main
+13.0211,77.6388,theft,2024-04-23,22:00,Banaswadi Metro
+13.0215,77.6392,snatching,2024-05-01,21:30,Banaswadi Main Road
+13.0209,77.6386,assault,2024-05-08,23:15,Banaswadi Market
+13.0213,77.6390,harassment,2024-05-15,20:00,Banaswadi Junction
+12.9769,77.5997,pickpocketing,2024-05-05,21:45,Majestic Platform
+12.9772,77.6001,snatching,2024-05-06,22:30,Majestic Subway
+12.9767,77.5995,theft,2024-05-07,23:15,Majestic Metro
+12.9774,77.6003,harassment,2024-05-08,20:30,Majestic Circle
+12.9770,77.5998,robbery,2024-05-09,21:00,Majestic Bus Stand
+12.9945,77.5811,theft,2024-05-11,22:15,Shivajinagar Market
+12.9947,77.5814,pickpocketing,2024-05-12,21:30,Russell Market
+12.9941,77.5807,snatching,2024-05-13,23:00,Shivajinagar Bus Stand
+12.9949,77.5812,harassment,2024-05-14,20:45,Siddhartha Layout
+12.9943,77.5809,assault,2024-05-15,22:30,Shivajinagar Main
+12.9750,77.6010,pickpocketing,2024-05-10,21:45,City Market Main
+12.9747,77.6012,snatching,2024-05-11,22:30,KR Market
+12.9752,77.6008,theft,2024-05-12,23:15,Krishnarajendra Market
+12.9749,77.6014,harassment,2024-05-13,20:00,City Market Circle
+12.9754,77.6011,robbery,2024-05-14,21:30,Avenue Road Market
+12.9689,77.5963,theft,2024-05-10,22:00,Kalasipalyam Market
+12.9692,77.5966,pickpocketing,2024-05-11,21:15,Kalasipalyam Bus Stand
+12.9687,77.5961,snatching,2024-05-12,23:30,Kalasipalyam Main
+12.9694,77.5965,harassment,2024-05-13,20:45,Kalasipalyam Junction
+12.9690,77.5967,assault,2024-05-14,22:15,Kalasipalyam Area
+12.9988,77.7092,snatching,2024-05-10,21:30,KR Puram Station
+12.9992,77.7097,theft,2024-05-11,22:45,Krishnarajapuram
+12.9986,77.7094,pickpocketing,2024-05-12,23:00,KR Puram Bus Stand
+12.9984,77.7090,harassment,2024-05-13,21:15,KR Puram Main
+12.9989,77.7095,assault,2024-05-14,23:45,KR Puram Industrial
+12.9507,77.5697,theft,2024-06-01,21:45,Goripalya Main
+12.9510,77.5700,pickpocketing,2024-06-02,22:30,Goripalya Market
+12.9505,77.5694,snatching,2024-06-03,23:15,Goripalya Circle
+12.9512,77.5698,harassment,2024-06-04,20:00,Goripalya Junction
+12.9508,77.5696,assault,2024-06-05,21:30,Goripalya Area
+13.0368,77.5980,theft,2024-06-08,22:00,Yeshwanthpur Station
+13.0372,77.5984,snatching,2024-06-09,21:15,Yeshwanthpur Junction
+13.0366,77.5978,pickpocketing,2024-06-10,23:30,Yeshwanthpur Metro
+13.0370,77.5982,harassment,2024-06-11,20:45,Yeshwanthpur Industrial
+13.0367,77.5979,robbery,2024-06-12,22:30,Yeshwanthpur Main
+13.0832,77.5810,theft,2024-06-15,21:30,Hebbal Flyover
+13.0837,77.5814,snatching,2024-06-16,22:45,Hebbal Lake
+13.0830,77.5807,pickpocketing,2024-06-17,23:00,Hebbal Industrial
+13.0834,77.5812,harassment,2024-06-18,21:15,Hebbal Circle
+13.0839,77.5817,assault,2024-06-19,23:45,Hebbal Manyata
+13.0206,77.5894,theft,2024-06-22,22:15,Peenya 1st Phase
+13.0210,77.5898,snatching,2024-06-23,21:00,Peenya Industrial
+13.0204,77.5892,pickpocketing,2024-06-23,22:00,

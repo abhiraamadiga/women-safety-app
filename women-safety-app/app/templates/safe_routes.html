@@ -1,0 +1,730 @@
+{% extends "base.html" %}
+
+{% block title %}Safe Routes - SafeSpace{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<style>
+    .safe-routes-container {
+        display: flex;
+        height: calc(100vh - 120px);
+        gap: 20px;
+        margin-top: 20px;
+    }
+    
+    .route-sidebar {
+        width: 380px;
+        background: #fff;
+        border-radius: 16px;
+        padding: 25px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        overflow-y: auto;
+        max-height: calc(100vh - 140px);
+    }
+    
+    .route-sidebar h2 {
+        font-size: 24px;
+        font-weight: 700;
+        background: linear-gradient(135deg, #6B7FD7 0%, #9B7EDE 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 8px;
+    }
+    
+    .route-sidebar p {
+        color: #64748b;
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+    
+    .search-box {
+        margin-bottom: 15px;
+    }
+    
+    .search-box label {
+        display: block;
+        font-weight: 600;
+        color: #2D3748;
+        margin-bottom: 8px;
+        font-size: 14px;
+    }
+    
+    .search-box input {
+        width: 100%;
+        padding: 12px 16px;
+        border: 1.5px solid #E2E8F0;
+        border-radius: 10px;
+        font-size: 15px;
+        transition: all 0.3s ease;
+        font-family: inherit;
+        position: relative;
+    }
+    
+    .search-box input:focus {
+        outline: none;
+        border-color: #6B7FD7;
+        box-shadow: 0 0 0 3px rgba(107,127,215,0.1);
+    }
+    
+    .autocomplete-container {
+        position: relative;
+    }
+    
+    .autocomplete-suggestions {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: #fff;
+        border: 1px solid #E2E8F0;
+        border-radius: 8px;
+        margin-top: 4px;
+        max-height: 200px;
+        overflow-y: auto;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 1000;
+        display: none;
+    }
+    
+    .autocomplete-suggestions.show {
+        display: block;
+    }
+    
+    .autocomplete-item {
+        padding: 12px 16px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        border-bottom: 1px solid #F7FAFC;
+    }
+    
+    .autocomplete-item:last-child {
+        border-bottom: none;
+    }
+    
+    .autocomplete-item:hover {
+        background: linear-gradient(135deg, rgba(107,127,215,0.1) 0%, rgba(155,126,222,0.1) 100%);
+    }
+    
+    .autocomplete-item-main {
+        font-weight: 600;
+        color: #2D3748;
+        font-size: 14px;
+    }
+    
+    .autocomplete-item-sub {
+        font-size: 12px;
+        color: #64748b;
+        margin-top: 2px;
+    }
+    
+    .map-instruction {
+        background: linear-gradient(135deg, rgba(107,127,215,0.1) 0%, rgba(155,126,222,0.1) 100%);
+        padding: 12px 16px;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        font-size: 14px;
+        color: #4A5568;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .btn-calculate {
+        width: 100%;
+        padding: 14px;
+        background: linear-gradient(135deg, #6B7FD7 0%, #9B7EDE 100%);
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 10px;
+    }
+    
+    .btn-calculate:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(107,127,215,0.4);
+    }
+    
+    .btn-calculate:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+    }
+    
+    .preferences-section {
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 1px solid #E2E8F0;
+    }
+    
+    .preferences-section h3 {
+        font-size: 16px;
+        font-weight: 600;
+        color: #2D3748;
+        margin-bottom: 12px;
+    }
+    
+    .preference-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 12px;
+    }
+    
+    .preference-item input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+    }
+    
+    .preference-item label {
+        font-size: 14px;
+        color: #4A5568;
+        cursor: pointer;
+    }
+    
+    .map-container {
+        flex: 1;
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        overflow: hidden;
+        position: relative;
+    }
+    
+    #map {
+        height: 100%;
+        width: 100%;
+    }
+    
+    .route-info {
+        margin-top: 20px;
+        padding: 16px;
+        background: linear-gradient(135deg, rgba(107,127,215,0.1) 0%, rgba(155,126,222,0.1) 100%);
+        border-radius: 12px;
+        display: none;
+    }
+    
+    .route-info.show {
+        display: block;
+        animation: fadeInUp 0.5s ease;
+    }
+    
+    .route-stat {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 0;
+        border-bottom: 1px solid rgba(107,127,215,0.2);
+    }
+    
+    .route-stat:last-child {
+        border-bottom: none;
+    }
+    
+    .route-stat-label {
+        font-weight: 600;
+        color: #2D3748;
+        font-size: 14px;
+    }
+    
+    .route-stat-value {
+        color: #6B7FD7;
+        font-weight: 700;
+        font-size: 14px;
+    }
+    
+    .loading {
+        display: none;
+        text-align: center;
+        padding: 20px;
+        color: #6B7FD7;
+        font-weight: 600;
+    }
+    
+    .loading.show {
+        display: block;
+    }
+    
+    .loading-spinner {
+        border: 3px solid #E2E8F0;
+        border-top: 3px solid #6B7FD7;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 10px;
+    }
+    
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    @media (max-width: 992px) {
+        .safe-routes-container {
+            flex-direction: column;
+            height: auto;
+        }
+        
+        .route-sidebar {
+            width: 100%;
+            max-height: none;
+        }
+        
+        .map-container {
+            height: 500px;
+        }
+    }
+    
+    .alert {
+        padding: 12px 16px;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        font-size: 14px;
+        display: none;
+    }
+    
+    .alert.show {
+        display: block;
+        animation: fadeInUp 0.3s ease;
+    }
+    
+    .alert-error {
+        background: #FEE2E2;
+        color: #DC2626;
+        border: 1px solid #FCA5A5;
+    }
+    
+    .alert-success {
+        background: #D1FAE5;
+        color: #059669;
+        border: 1px solid #6EE7B7;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="safe-routes-container">
+    <div class="route-sidebar">
+        <h2>🗺️ Safe Route Planner</h2>
+        <p>Find the safest route to your destination based on crime data, lighting, and traffic.</p>
+        
+        <div class="alert alert-error" id="errorAlert"></div>
+        
+        <div class="map-instruction">
+            💡 <strong>Tip:</strong> Click on the map to select locations or type to search
+        </div>
+        
+        <div class="search-box">
+            <label for="startLocation">📍 Starting Point</label>
+            <div class="autocomplete-container">
+                <input type="text" id="startLocation" placeholder="Enter starting address or click on map" autocomplete="off">
+                <div class="autocomplete-suggestions" id="startSuggestions"></div>
+            </div>
+        </div>
+        
+        <div class="search-box">
+            <label for="endLocation">🎯 Destination</label>
+            <div class="autocomplete-container">
+                <input type="text" id="endLocation" placeholder="Enter destination or click on map" autocomplete="off">
+                <div class="autocomplete-suggestions" id="endSuggestions"></div>
+            </div>
+        </div>
+        
+        <button class="btn-calculate" id="calculateBtn" onclick="calculateRoute()">
+            🔍 Find Safe Route
+        </button>
+        
+        <div class="loading" id="loadingIndicator">
+            <div class="loading-spinner"></div>
+            <div>Calculating safest route...</div>
+        </div>
+        
+        <div class="preferences-section">
+            <h3>Route Preferences</h3>
+            <div class="preference-item">
+                <input type="checkbox" id="avoidCrime" checked>
+                <label for="avoidCrime">Avoid high-crime areas</label>
+            </div>
+            <div class="preference-item">
+                <input type="checkbox" id="preferLighting" checked>
+                <label for="preferLighting">Prefer well-lit streets</label>
+            </div>
+            <div class="preference-item">
+                <input type="checkbox" id="preferBusy" checked>
+                <label for="preferBusy">Prefer busy/populated areas</label>
+            </div>
+        </div>
+        
+        <div class="route-info" id="routeInfo">
+            <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 12px; color: #2D3748;">Route Statistics</h3>
+            <div class="route-stat">
+                <span class="route-stat-label">Distance:</span>
+                <span class="route-stat-value" id="routeDistance">-</span>
+            </div>
+            <div class="route-stat">
+                <span class="route-stat-label">Estimated Time:</span>
+                <span class="route-stat-value" id="routeTime">-</span>
+            </div>
+            <div class="route-stat">
+                <span class="route-stat-label">Safety Score:</span>
+                <span class="route-stat-value" id="routeSafety">-</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="map-container">
+        <div id="map"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+    let map;
+    let currentRoute = null;
+    let startMarker = null;
+    let endMarker = null;
+    let selectingStart = true; // Toggle between selecting start and end points
+    let startCoords = null;
+    let endCoords = null;
+    let autocompleteTimeout = null;
+    
+    // Initialize map
+    function initMap() {
+        map = L.map('map').setView([12.9716, 77.5946], 12); // Bangalore center
+        
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors',
+            maxZoom: 19
+        }).addTo(map);
+        
+        // Add click handler to map
+        map.on('click', function(e) {
+            const lat = e.latlng.lat;
+            const lon = e.latlng.lng;
+            
+            if (selectingStart || !startCoords) {
+                // Set start location
+                setStartLocation(lat, lon);
+                selectingStart = false;
+            } else {
+                // Set end location
+                setEndLocation(lat, lon);
+            }
+        });
+    }
+    
+    // Set start location from map click
+    async function setStartLocation(lat, lon) {
+        startCoords = [lat, lon];
+        
+        // Add/update marker
+        if (startMarker) {
+            map.removeLayer(startMarker);
+        }
+        
+        startMarker = L.marker([lat, lon], {
+            icon: L.icon({
+                iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+                shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
+                iconSize: [25, 41],
+                iconAnchor: [12, 41],
+                popupAnchor: [1, -34],
+                shadowSize: [41, 41]
+            })
+        }).addTo(map).bindPopup('Starting Point');
+        
+        // Reverse geocode to get address
+        try {
+            const response = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`, {
+                headers: {'User-Agent': 'SafeSpace-WomenSafety/1.0'}
+            });
+            const data = await response.json();
+            if (data.display_name) {
+                document.getElementById('startLocation').value = data.display_name;
+            }
+        } catch (error) {
+            document.getElementById('startLocation').value = `${lat.toFixed(6)}, ${lon.toFixed(6)}`;
+        }
+    }
+    
+    // Set end location from map click
+    async function setEndLocation(lat, lon) {
+        endCoords = [lat, lon];
+        
+        // Add/update marker
+        if (endMarker) {
+            map.removeLayer(endMarker);
+        }
+        
+        endMarker = L.marker([lat, lon], {
+            icon: L.icon({
+                iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+                shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
+                iconSize: [25, 41],
+                iconAnchor: [12, 41],
+                popupAnchor: [1, -34],
+                shadowSize: [41, 41]
+            })
+        }).addTo(map).bindPopup('Destination');
+        
+        // Reverse geocode to get address
+        try {
+            const response = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`, {
+                headers: {'User-Agent': 'SafeSpace-WomenSafety/1.0'}
+            });
+            const data = await response.json();
+            if (data.display_name) {
+                document.getElementById('endLocation').value = data.display_name;
+            }
+        } catch (error) {
+            document.getElementById('endLocation').value = `${lat.toFixed(6)}, ${lon.toFixed(6)}`;
+        }
+    }
+    
+    // Autocomplete search
+    async function searchLocation(query, suggestionsContainer) {
+        if (query.length < 3) {
+            suggestionsContainer.classList.remove('show');
+            return;
+        }
+        
+        try {
+            const response = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query + ', Bangalore, India')}&format=json&limit=5`, {
+                headers: {'User-Agent': 'SafeSpace-WomenSafety/1.0'}
+            });
+            const results = await response.json();
+            
+            if (results.length > 0) {
+                displaySuggestions(results, suggestionsContainer);
+            } else {
+                suggestionsContainer.classList.remove('show');
+            }
+        } catch (error) {
+            console.error('Autocomplete error:', error);
+        }
+    }
+    
+    // Display autocomplete suggestions
+    function displaySuggestions(results, container) {
+        container.innerHTML = '';
+        
+        results.forEach(result => {
+            const item = document.createElement('div');
+            item.className = 'autocomplete-item';
+            
+            const mainText = result.display_name.split(',')[0];
+            const subText = result.display_name.split(',').slice(1, 3).join(',');
+            
+            item.innerHTML = `
+                <div class="autocomplete-item-main">${mainText}</div>
+                <div class="autocomplete-item-sub">${subText}</div>
+            `;
+            
+            item.addEventListener('click', () => {
+                const inputId = container.id === 'startSuggestions' ? 'startLocation' : 'endLocation';
+                document.getElementById(inputId).value = result.display_name;
+                
+                // Store coordinates
+                if (container.id === 'startSuggestions') {
+                    startCoords = [parseFloat(result.lat), parseFloat(result.lon)];
+                    if (startMarker) map.removeLayer(startMarker);
+                    startMarker = L.marker(startCoords, {
+                        icon: L.icon({
+                            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+                            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
+                            iconSize: [25, 41],
+                            iconAnchor: [12, 41],
+                            popupAnchor: [1, -34],
+                            shadowSize: [41, 41]
+                        })
+                    }).addTo(map).bindPopup('Starting Point');
+                    map.setView(startCoords, 14);
+                } else {
+                    endCoords = [parseFloat(result.lat), parseFloat(result.lon)];
+                    if (endMarker) map.removeLayer(endMarker);
+                    endMarker = L.marker(endCoords, {
+                        icon: L.icon({
+                            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+                            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
+                            iconSize: [25, 41],
+                            iconAnchor: [12, 41],
+                            popupAnchor: [1, -34],
+                            shadowSize: [41, 41]
+                        })
+                    }).addTo(map).bindPopup('Destination');
+                    map.setView(endCoords, 14);
+                }
+                
+                container.classList.remove('show');
+            });
+            
+            container.appendChild(item);
+        });
+        
+        container.classList.add('show');
+    }
+    
+    // Show error message
+    function showError(message) {
+        const errorAlert = document.getElementById('errorAlert');
+        errorAlert.textContent = message;
+        errorAlert.classList.add('show');
+        setTimeout(() => {
+            errorAlert.classList.remove('show');
+        }, 5000);
+    }
+    
+    // Calculate route
+    async function calculateRoute() {
+        const startLocation = document.getElementById('startLocation').value.trim();
+        const endLocation = document.getElementById('endLocation').value.trim();
+        
+        if (!startLocation || !endLocation) {
+            showError('Please select or enter both starting point and destination');
+            return;
+        }
+        
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const calculateBtn = document.getElementById('calculateBtn');
+        const routeInfo = document.getElementById('routeInfo');
+        
+        // Show loading
+        loadingIndicator.classList.add('show');
+        calculateBtn.disabled = true;
+        routeInfo.classList.remove('show');
+        
+        // Clear previous route
+        if (currentRoute) {
+            map.removeLayer(currentRoute);
+        }
+        
+        try {
+            // Get preferences
+            const preferences = {
+                avoid_crime: document.getElementById('avoidCrime').checked,
+                prefer_lighting: document.getElementById('preferLighting').checked,
+                prefer_busy: document.getElementById('preferBusy').checked
+            };
+            
+            let startLat, startLon, endLat, endLon;
+            
+            // Use stored coordinates if available, otherwise geocode
+            if (startCoords) {
+                [startLat, startLon] = startCoords;
+            } else {
+                const startResponse = await fetch(`/api/geocode?address=${encodeURIComponent(startLocation)}`);
+                const startData = await startResponse.json();
+                
+                if (!startData.coordinates) {
+                    throw new Error('Could not find starting location');
+                }
+                [startLat, startLon] = startData.coordinates;
+            }
+            
+            if (endCoords) {
+                [endLat, endLon] = endCoords;
+            } else {
+                const endResponse = await fetch(`/api/geocode?address=${encodeURIComponent(endLocation)}`);
+                const endData = await endResponse.json();
+                
+                if (!endData.coordinates) {
+                    throw new Error('Could not find destination');
+                }
+                [endLat, endLon] = endData.coordinates;
+            }
+            
+            // Calculate route
+            const routeResponse = await fetch('/api/calculate-route', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    start_lat: startLat,
+                    start_lon: startLon,
+                    end_lat: endLat,
+                    end_lon: endLon,
+                    preferences: preferences
+                })
+            });
+            
+            const routeData = await routeResponse.json();
+            
+            if (routeData.error) {
+                throw new Error(routeData.error);
+            }
+            
+            // Display route on map
+            const routeCoordinates = routeData.route.map(point => [point[0], point[1]]);
+            
+            currentRoute = L.polyline(routeCoordinates, {
+                color: '#6B7FD7',
+                weight: 5,
+                opacity: 0.8
+            }).addTo(map);
+            
+            // Add markers
+            startMarker = L.marker([startLat, startLon], {
+                icon: L.icon({
+                    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+                    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
+                    iconSize: [25, 41],
+                    iconAnchor: [12, 41],
+                    popupAnchor: [1, -34],
+                    shadowSize: [41, 41]
+                })
+            }).addTo(map).bindPopup('Start: ' + startLocation);
+            
+            endMarker = L.marker([endLat, endLon], {
+                icon: L.icon({
+                    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+                    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
+                    iconSize: [25, 41],
+                    iconAnchor: [12, 41],
+                    popupAnchor: [1, -34],
+                    shadowSize: [41, 41]
+                })
+            }).addTo(map).bindPopup('Destination: ' + endLocation);
+            
+            // Fit map to route
+            map.fitBounds(currentRoute.getBounds(), { padding: [50, 50] });
+            
+            // Update route info
+            document.getElementById('routeDistance').textContent = routeData.distance.toFixed(2) + ' km';
+            document.getElementById('routeTime').textContent = routeData.time + ' min';
+            document.getElementById('routeSafety').textContent = routeData.safety_score.toFixed(1) + '/10';
+            
+            routeInfo.classList.add('show');
+            
+        } catch (error) {
+            console.error('Route calculation error:', error);
+            showError(error.message || 'Failed to calculate route. Please try again.');
+        } finally {
+            loadingIndicator.classList.remove('show');
+            calculateBtn.disabled = false;
+        }
+    }
+    
+    // Initialize map when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        initMap();
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,1145 @@
+Latitude,Longitude,lighting_score,area,road_type
+12.9716,77.5946,8.5,MG Road,Main Road
+12.9720,77.5950,8.8,MG Road Metro,Main Road
+12.9714,77.5944,8.2,MG Road Brigade,Main Road
+12.9718,77.5948,8.6,MG Road Trinity,Main Road
+12.9698,77.5984,8.4,Brigade Road,Main Road
+12.9702,77.5988,8.7,Brigade Church Street,Main Road
+12.9696,77.5982,7.8,Commercial Street,Main Road
+12.9700,77.5986,8.3,Brigade Metro,Main Road
+12.9766,77.5993,5.8,Majestic Bus Stand,Transit Hub
+12.9771,77.5998,6.0,Majestic Area,Transit Hub
+12.9768,77.6001,5.6,Kempegowda Bus Station,Transit Hub
+12.9774,77.5995,5.9,Majestic Platform Road,Transit Hub
+12.9765,77.5990,6.2,Majestic Metro,Transit Hub
+12.9770,77.6003,5.4,Majestic Subway,Transit Hub
+12.9772,77.5997,5.9,Majestic Circle,Transit Hub
+12.9769,77.5992,5.7,Majestic Bus Terminal,Transit Hub
+12.9940,77.5807,6.4,Shivajinagar,Commercial
+12.9945,77.5812,6.7,Russell Market,Commercial
+12.9938,77.5804,6.0,Shivajinagar Bus Stand,Commercial
+12.9943,77.5809,6.2,Siddhartha Layout,Commercial
+12.9942,77.5815,6.5,Shivajinagar Market,Commercial
+12.9947,77.5805,6.3,Shivajinagar Main Road,Commercial
+12.9939,77.5811,6.1,Russell Market Area,Commercial
+12.9941,77.5808,6.6,Shivajinagar Circle,Commercial
+12.9748,77.6006,6.0,City Market,Market Area
+12.9745,77.6010,5.8,KR Market,Market Area
+12.9750,77.6008,6.2,Krishnarajendra Market,Market Area
+12.9747,77.6012,5.9,City Market Main Road,Market Area
+12.9752,77.6005,6.1,KR Market Area,Market Area
+12.9744,77.6009,5.7,City Market Circle,Market Area
+12.9749,77.6011,6.3,Avenue Road Market,Market Area
+12.9746,77.6007,5.6,Chikpet Area,Market Area
+12.9687,77.5960,5.3,Kalasipalyam,Old Area
+12.9690,77.5965,5.5,Kalasipalyam Bus Stand,Old Area
+12.9685,77.5958,5.0,Kalasipalyam Market,Old Area
+12.9692,77.5963,5.4,Kalasipalyam Main Road,Old Area
+12.9688,77.5961,5.2,Kalasipalyam Circle,Old Area
+12.9691,77.5967,5.6,Kalasipalyam Junction,Old Area
+12.9689,77.5959,5.1,Kalasipalyam Area,Old Area
+12.9986,77.7089,7.8,KR Puram,Suburban Main
+12.9990,77.7095,8.0,KR Puram Railway Station,Suburban Main
+12.9984,77.7092,7.5,Krishnarajapuram,Suburban Main
+12.9988,77.7088,7.6,KR Puram Bus Stand,Suburban Main
+12.9982,77.7091,7.7,KR Puram Main Road,Suburban Main
+12.9987,77.7097,7.3,KR Puram Industrial Area,Industrial
+12.9985,77.7090,7.9,Krishnarajapuram Junction,Suburban Main
+12.9989,77.7094,7.4,KR Puram Market,Suburban Main
+12.9505,77.5695,4.8,Goripalya,Old Residential
+12.9508,77.5698,5.0,Goripalya Main Road,Old Residential
+12.9503,77.5692,4.6,Goripalya Market,Old Residential
+12.9510,77.5696,4.9,Goripalya Circle,Old Residential
+12.9506,77.5694,4.7,Goripalya Junction,Old Residential
+12.9507,77.5699,5.1,Goripalya Area,Old Residential
+12.9504,77.5697,4.6,Goripalya Main,Old Residential
+13.0365,77.5978,8.2,Yeshwanthpur,Transport Hub
+13.0370,77.5982,8.5,Yeshwanthpur Railway Station,Transport Hub
+13.0363,77.5975,8.0,Yeshwanthpur Junction,Transport Hub
+13.0368,77.5980,8.3,Yeshwanthpur Metro,Transport Hub
+13.0366,77.5976,7.9,Yeshwanthpur Industrial Area,Industrial
+13.0372,77.5984,8.1,Yeshwanthpur Main Road,Transport Hub
+13.0364,77.5979,8.4,Yeshwanthpur Market,Transport Hub
+13.0830,77.5808,8.6,Hebbal,Main Road
+13.0835,77.5812,8.9,Hebbal Flyover,Main Road
+13.0828,77.5805,7.2,Hebbal Lake,Residential
+13.0832,77.5810,7.8,Hebbal Industrial Area,Industrial
+13.0837,77.5815,8.7,Hebbal Main Road,Main Road
+13.0829,77.5807,7.5,Hebbal Circle,Main Road
+13.0834,77.5809,7.6,Hebbal Market,Commercial
+13.0204,77.5892,7.4,Peenya Industrial Area,Industrial
+13.0208,77.5896,7.6,Peenya,Industrial
+13.0202,77.5890,7.3,Peenya 1st Phase,Industrial
+13.0206,77.5894,7.5,Peenya 2nd Phase,Industrial
+13.0210,77.5898,7.7,Peenya Main Road,Industrial
+13.0203,77.5891,7.2,Peenya Industrial Estate,Industrial
+13.0207,77.5895,7.8,Peenya Junction,Industrial
+12.9784,77.6408,8.8,Whitefield,IT Hub
+12.9788,77.6412,9.0,Whitefield ITPL,IT Hub
+12.9782,77.6406,8.5,Whitefield Main Road,IT Hub
+12.9786,77.6410,8.7,Whitefield Phoenix,IT Hub
+12.9352,77.6245,8.6,Koramangala,Upscale Residential
+12.9356,77.6249,8.9,Koramangala 5th Block,Upscale Residential
+12.9350,77.6243,8.4,Koramangala Forum,Upscale Residential
+12.9354,77.6247,8.7,Koramangala Sony Signal,Upscale Residential
+12.9279,77.6271,8.5,Koramangala 5th Block,Upscale Residential
+12.9283,77.6275,8.8,Koramangala 6th Block,Upscale Residential
+12.9277,77.6269,8.3,Koramangala BDA,Upscale Residential
+12.9281,77.6273,8.6,Koramangala Inner Ring,Upscale Residential
+12.9141,77.6100,7.8,BTM Layout,Residential
+12.9145,77.6104,8.0,BTM Layout 1st Stage,Residential
+12.9139,77.6098,7.5,BTM Silk Board,Residential
+12.9143,77.6102,7.9,BTM 5th Phase,Residential
+12.9698,77.7499,8.4,Marathahalli,Commercial
+12.9702,77.7503,8.6,Marathahalli Bridge,Commercial
+12.9696,77.7497,8.2,Marathahalli ORR,Main Road
+12.9700,77.7501,8.5,Marathahalli Kundalahalli,Commercial
+12.9634,77.6414,8.7,Indiranagar,Upscale Residential
+12.9638,77.6418,9.0,Indiranagar 100 Feet Road,Upscale Residential
+12.9632,77.6412,8.5,Indiranagar Metro,Upscale Residential
+12.9636,77.6416,8.8,Indiranagar CMH Road,Upscale Residential
+12.9538,77.4905,7.6,Rajajinagar,Residential
+12.9542,77.4909,7.9,Rajajinagar Metro,Residential
+12.9536,77.4903,7.4,Rajajinagar 4th Block,Residential
+12.9540,77.4907,7.7,Rajajinagar Main Road,Residential
+12.8456,77.6628,8.2,Electronic City,IT Hub
+12.8460,77.6632,8.5,Electronic City Phase 1,IT Hub
+12.8454,77.6626,8.0,Electronic City Phase 2,IT Hub
+12.8458,77.6630,8.3,Electronic City Metro,IT Hub
+12.9120,77.6476,8.3,HSR Layout,Residential
+12.9124,77.6480,8.6,HSR Layout Sector 1,Residential
+12.9118,77.6474,8.1,HSR Layout 27th Main,Residential
+12.9122,77.6478,8.4,HSR Layout BDA,Residential
+13.0143,77.5504,7.8,Malleshwaram,Traditional Residential
+13.0147,77.5508,8.1,Malleshwaram 8th Cross,Traditional Residential
+13.0141,77.5502,7.6,Malleshwaram Metro,Traditional Residential
+13.0145,77.5506,7.9,Malleshwaram Market,Traditional Residential
+13.0210,77.6387,7.7,Banaswadi,Residential
+13.0214,77.6391,8.0,Banaswadi Metro,Residential
+13.0208,77.6385,7.5,Banaswadi Main Road,Residential
+13.0212,77.6389,7.8,Banaswadi Market,Residential
+12.9500,77.5700,5.3,Chamrajpet,Old Residential
+12.9550,77.5750,5.6,Chamrajpet Market,Old Residential
+12.9600,77.5800,6.2,Basavanagudi,Traditional Residential
+12.9650,77.5850,6.5,Jayanagar,Traditional Residential
+12.9700,77.5900,7.0,Lalbagh Area,Park Area
+13.0000,77.6000,7.5,Frazer Town,Residential
+13.0100,77.6100,7.8,Ulsoor,Residential
+12.9300,77.6000,6.8,Bommanahalli,Suburban
+12.9400,77.6100,7.2,JP Nagar,Residential
+12.9200,77.6200,7.5,Bannerghatta Road,Suburban Main
+12.8900,77.6400,8.0,Electronic City Outer,IT Hub
+13.0500,77.5500,7.3,Sadashivanagar,Upscale Residential
+13.0600,77.5600,7.6,RT Nagar,Residential
+13.0700,77.5700,7.2,Sahakara Nagar,Residential
+12.9100,77.6300,7.8,Hulimavu,Residential
+12.9000,77.6500,7.5,Begur,Suburban
+12.9800,77.7200,8.3,Hoodi,Commercial
+12.9900,77.7300,8.1,Varthur,Suburban
+13.0300,77.6200,7.7,Ramamurthy Nagar,Residential
+13.0400,77.6300,7.9,Mahadevapura,Commercial
+12.9250,77.6800,8.4,Sarjapur Road,Main Road
+12.9150,77.6900,8.2,Carmelram,Residential
+13.0800,77.5900,8.0,Yelahanka,Suburban Main
+13.0900,77.6000,7.8,Yelahanka New Town,Suburban
+13.1000,77.6100,7.5,Jakkur,Suburban
+12.8700,77.6300,7.6,Bommasandra,Industrial
+12.8600,77.6400,7.4,Attibele Border,Industrial
+12.8800,77.6200,7.8,Jigani,Industrial
+12.9450,77.4800,7.1,Nagarbhavi,Residential
+12.9550,77.4700,6.9,Kengeri,Suburban
+12.9650,77.4600,6.7,Uttarahalli,Suburban
+13.0250,77.5300,7.5,Rajajinagar Block,Residential
+13.0350,77.5400,7.7,Mahalaxmi Layout,Residential
+13.0150,77.5200,7.3,Vijayanagar,Residential
+12.9850,77.7400,8.5,Brookfield,IT Hub
+12.9750,77.7500,8.3,AECS Layout,Residential
+13.0550,77.6500,8.2,Kalkere,Suburban
+13.0450,77.6400,8.0,Horamavu,Residential
+13.0350,77.6350,7.9,Kammanahalli,Residential
+13.0250,77.6300,8.1,Kalyan Nagar,Residential
+12.9550,77.6500,8.4,Koramangala 8th Block,Upscale Residential
+12.9450,77.6550,8.2,Agara,Residential
+12.9350,77.6450,8.6,Koramangala 7th Block,Upscale Residential
+12.9050,77.6550,7.7,Madiwala,Residential
+12.8950,77.6600,7.5,Koramangala Extension,Residential
+12.9650,77.6300,8.5,Domlur,Upscale Residential
+12.9750,77.6350,8.7,HAL Airport,Commercial
+12.9850,77.6250,8.3,Old Airport Road,Commercial
+12.9950,77.6150,7.9,Jeevanbhima Nagar,Residential
+13.0050,77.6050,7.7,CV Raman Nagar,Residential
+12.9300,77.5700,6.0,Banashankari,Old Residential
+12.9400,77.5800,6.5,Jayanagar 4th Block,Traditional Residential
+12.9350,77.5900,6.3,BTM 2nd Stage,Residential
+12.9200,77.6100,7.2,JP Nagar 7th Phase,Residential
+12.9100,77.6000,6.8,Uttarahalli Main,Suburban
+12.9450,77.6200,7.4,Wilson Garden,Residential
+12.9550,77.6300,7.8,Ejipura,Residential
+12.9600,77.6400,8.2,Koramangala 1st Block,Upscale Residential
+12.9250,77.6500,8.0,HSR Extension,Residential
+12.9150,77.6400,7.6,Somasundarapalya,Residential
+12.9050,77.6300,7.3,Bilekahalli,Residential
+12.8950,77.6200,6.9,Hongasandra,Suburban
+12.8850,77.6100,6.5,Begur Road,Suburban
+12.9800,77.5900,7.8,Richmond Town,Residential
+12.9900,77.6000,8.1,Benson Town,Residential
+13.0000,77.6100,8.4,Kasturi Nagar,Residential
+13.0100,77.6200,8.0,HBR Layout,Residential
+13.0200,77.6250,8.3,Kalyan Nagar Extension,Residential
+12.9716,77.5946,8.5,MG Road,Main Road
+12.9720,77.5950,8.8,MG Road Metro,Main Road
+12.9714,77.5944,8.2,MG Road Brigade,Main Road
+12.9718,77.5948,8.6,MG Road Trinity,Main Road
+12.9722,77.5952,8.7,MG Road East,Main Road
+12.9712,77.5942,8.3,MG Road West,Main Road
+12.9719,77.5947,8.5,MG Road Central,Main Road
+12.9715,77.5945,8.4,MG Road South,Main Road
+12.9698,77.5984,8.4,Brigade Road,Main Road
+12.9702,77.5988,8.7,Brigade Church Street,Main Road
+12.9696,77.5982,7.8,Commercial Street,Main Road
+12.9700,77.5986,8.3,Brigade Metro,Main Road
+12.9704,77.5990,8.6,Brigade North,Main Road
+12.9694,77.5980,7.9,Commercial Street South,Main Road
+12.9699,77.5985,8.2,Brigade Central,Main Road
+12.9701,77.5987,8.5,Brigade East End,Main Road
+12.9766,77.5993,5.8,Majestic Bus Stand,Transit Hub
+12.9771,77.5998,6.0,Majestic Area,Transit Hub
+12.9768,77.6001,5.6,Kempegowda Bus Station,Transit Hub
+12.9774,77.5995,5.9,Majestic Platform Road,Transit Hub
+12.9765,77.5990,6.2,Majestic Metro,Transit Hub
+12.9770,77.6003,5.4,Majestic Subway,Transit Hub
+12.9772,77.5997,5.9,Majestic Circle,Transit Hub
+12.9769,77.5992,5.7,Majestic Bus Terminal,Transit Hub
+12.9773,77.5999,5.8,Majestic East Gate,Transit Hub
+12.9767,77.5994,6.0,Majestic West Side,Transit Hub
+12.9770,77.5996,5.9,Majestic Central Plaza,Transit Hub
+12.9768,77.5998,5.7,Majestic South End,Transit Hub
+12.9772,77.6000,5.6,Majestic North Wing,Transit Hub
+12.9766,77.5991,6.1,Majestic Junction,Transit Hub
+12.9940,77.5807,6.4,Shivajinagar,Commercial
+12.9945,77.5812,6.7,Russell Market,Commercial
+12.9938,77.5804,6.0,Shivajinagar Bus Stand,Commercial
+12.9943,77.5809,6.2,Siddhartha Layout,Commercial
+12.9942,77.5815,6.5,Shivajinagar Market,Commercial
+12.9947,77.5805,6.3,Shivajinagar Main Road,Commercial
+12.9939,77.5811,6.1,Russell Market Area,Commercial
+12.9941,77.5808,6.6,Shivajinagar Circle,Commercial
+12.9944,77.5813,6.6,Russell Market North,Commercial
+12.9946,77.5810,6.4,Shivajinagar East,Commercial
+12.9937,77.5806,6.1,Shivajinagar West,Commercial
+12.9948,77.5814,6.8,Russell Market East,Commercial
+12.9940,77.5812,6.3,Shivajinagar Central,Commercial
+12.9943,77.5815,6.5,Shivajinagar Market Area,Commercial
+12.9748,77.6006,6.0,City Market,Market Area
+12.9745,77.6010,5.8,KR Market,Market Area
+12.9750,77.6008,6.2,Krishnarajendra Market,Market Area
+12.9747,77.6012,5.9,City Market Main Road,Market Area
+12.9752,77.6005,6.1,KR Market Area,Market Area
+12.9744,77.6009,5.7,City Market Circle,Market Area
+12.9749,77.6011,6.3,Avenue Road Market,Market Area
+12.9746,77.6007,5.6,Chikpet Area,Market Area
+12.9751,77.6009,6.0,KR Market Central,Market Area
+12.9743,77.6008,5.8,City Market South,Market Area
+12.9753,77.6006,6.2,Avenue Road Junction,Market Area
+12.9747,77.6010,5.9,Chikpet Main,Market Area
+12.9748,77.6013,5.7,City Market East,Market Area
+12.9746,77.6005,5.9,KR Market West,Market Area
+12.9750,77.6011,6.1,Avenue Road Central,Market Area
+12.9687,77.5960,5.3,Kalasipalyam,Old Area
+12.9690,77.5965,5.5,Kalasipalyam Bus Stand,Old Area
+12.9685,77.5958,5.0,Kalasipalyam Market,Old Area
+12.9692,77.5963,5.4,Kalasipalyam Main Road,Old Area
+12.9688,77.5961,5.2,Kalasipalyam Circle,Old Area
+12.9691,77.5967,5.6,Kalasipalyam Junction,Old Area
+12.9689,77.5959,5.1,Kalasipalyam Area,Old Area
+12.9693,77.5966,5.5,Kalasipalyam East,Old Area
+12.9686,77.5962,5.2,Kalasipalyam West,Old Area
+12.9690,77.5964,5.4,Kalasipalyam Central,Old Area
+12.9688,77.5968,5.3,Kalasipalyam North,Old Area
+12.9684,77.5957,5.0,Kalasipalyam South,Old Area
+12.9986,77.7089,7.8,KR Puram,Suburban Main
+12.9990,77.7095,8.0,KR Puram Railway Station,Suburban Main
+12.9984,77.7092,7.5,Krishnarajapuram,Suburban Main
+12.9988,77.7088,7.6,KR Puram Bus Stand,Suburban Main
+12.9982,77.7091,7.7,KR Puram Main Road,Suburban Main
+12.9987,77.7097,7.3,KR Puram Industrial Area,Industrial
+12.9985,77.7090,7.9,Krishnarajapuram Junction,Suburban Main
+12.9989,77.7094,7.4,KR Puram Market,Suburban Main
+12.9991,77.7096,7.9,KR Puram Station East,Suburban Main
+12.9983,77.7093,7.6,Krishnarajapuram West,Suburban Main
+12.9988,77.7091,7.7,KR Puram Central,Suburban Main
+12.9986,77.7098,7.2,KR Puram Industrial East,Industrial
+12.9984,77.7089,7.8,KR Puram South,Suburban Main
+12.9987,77.7092,7.5,KR Puram North,Suburban Main
+12.9505,77.5695,4.8,Goripalya,Old Residential
+12.9508,77.5698,5.0,Goripalya Main Road,Old Residential
+12.9503,77.5692,4.6,Goripalya Market,Old Residential
+12.9510,77.5696,4.9,Goripalya Circle,Old Residential
+12.9506,77.5694,4.7,Goripalya Junction,Old Residential
+12.9507,77.5699,5.1,Goripalya Area,Old Residential
+12.9504,77.5697,4.6,Goripalya Main,Old Residential
+12.9509,77.5697,4.9,Goripalya East,Old Residential
+12.9502,77.5693,4.7,Goripalya West,Old Residential
+12.9511,77.5695,5.0,Goripalya North,Old Residential
+12.9505,77.5691,4.6,Goripalya South,Old Residential
+12.9508,77.5694,4.8,Goripalya Central,Old Residential
+13.0365,77.5978,8.2,Yeshwanthpur,Transport Hub
+13.0370,77.5982,8.5,Yeshwanthpur Railway Station,Transport Hub
+13.0363,77.5975,8.0,Yeshwanthpur Junction,Transport Hub
+13.0368,77.5980,8.3,Yeshwanthpur Metro,Transport Hub
+13.0366,77.5976,7.9,Yeshwanthpur Industrial Area,Industrial
+13.0372,77.5984,8.1,Yeshwanthpur Main Road,Transport Hub
+13.0364,77.5979,8.4,Yeshwanthpur Market,Transport Hub
+13.0371,77.5983,8.4,Yeshwanthpur Station East,Transport Hub
+13.0362,77.5977,8.1,Yeshwanthpur West,Transport Hub
+13.0367,77.5981,8.2,Yeshwanthpur Central,Transport Hub
+13.0365,77.5974,8.0,Yeshwanthpur South,Transport Hub
+13.0369,77.5985,8.3,Yeshwanthpur North,Transport Hub
+13.0364,77.5976,7.9,Yeshwanthpur Industrial South,Industrial
+13.0368,77.5977,8.0,Yeshwanthpur Industrial North,Industrial
+13.0830,77.5808,8.6,Hebbal,Main Road
+13.0835,77.5812,8.9,Hebbal Flyover,Main Road
+13.0828,77.5805,7.2,Hebbal Lake,Residential
+13.0832,77.5810,7.8,Hebbal Industrial Area,Industrial
+13.0837,77.5815,8.7,Hebbal Main Road,Main Road
+13.0829,77.5807,7.5,Hebbal Circle,Main Road
+13.0834,77.5809,7.6,Hebbal Market,Commercial
+13.0836,77.5813,8.8,Hebbal Flyover North,Main Road
+13.0827,77.5806,7.3,Hebbal Lake West,Residential
+13.0833,77.5811,7.7,Hebbal Industrial Central,Industrial
+13.0838,77.5816,8.6,Hebbal Main Road North,Main Road
+13.0831,77.5808,8.4,Hebbal Junction,Main Road
+13.0826,77.5804,7.1,Hebbal Lake South,Residential
+13.0833,77.5814,8.5,Hebbal Flyover East,Main Road
+13.0204,77.5892,7.4,Peenya Industrial Area,Industrial
+13.0208,77.5896,7.6,Peenya,Industrial
+13.0202,77.5890,7.3,Peenya 1st Phase,Industrial
+13.0206,77.5894,7.5,Peenya 2nd Phase,Industrial
+13.0210,77.5898,7.7,Peenya Main Road,Industrial
+13.0203,77.5891,7.2,Peenya Industrial Estate,Industrial
+13.0207,77.5895,7.8,Peenya Junction,Industrial
+13.0209,77.5897,7.6,Peenya 3rd Phase,Industrial
+13.0201,77.5889,7.3,Peenya Industrial South,Industrial
+13.0205,77.5893,7.4,Peenya Central,Industrial
+13.0211,77.5899,7.7,Peenya Main Road North,Industrial
+13.0202,77.5895,7.5,Peenya Industrial West,Industrial
+13.0208,77.5891,7.3,Peenya Industrial East,Industrial
+13.0206,77.5897,7.6,Peenya North,Industrial
+12.9784,77.6408,8.8,Whitefield,IT Hub
+12.9788,77.6412,9.0,Whitefield ITPL,IT Hub
+12.9782,77.6406,8.5,Whitefield Main Road,IT Hub
+12.9786,77.6410,8.7,Whitefield Phoenix,IT Hub
+12.9789,77.6413,8.9,Whitefield ITPL East,IT Hub
+12.9781,77.6407,8.6,Whitefield Main Road South,IT Hub
+12.9787,77.6409,8.8,Whitefield Central,IT Hub
+12.9783,77.6411,8.7,Whitefield East,IT Hub
+12.9785,77.6405,8.5,Whitefield West,IT Hub
+12.9790,77.6414,8.9,Whitefield ITPL North,IT Hub
+12.9780,77.6406,8.4,Whitefield South,IT Hub
+12.9788,77.6408,8.7,Whitefield Varthur Road,IT Hub
+12.9352,77.6245,8.6,Koramangala,Upscale Residential
+12.9356,77.6249,8.9,Koramangala 5th Block,Upscale Residential
+12.9350,77.6243,8.4,Koramangala Forum,Upscale Residential
+12.9354,77.6247,8.7,Koramangala Sony Signal,Upscale Residential
+12.9357,77.6250,8.8,Koramangala 5th Block North,Upscale Residential
+12.9349,77.6244,8.5,Koramangala Forum East,Upscale Residential
+12.9353,77.6246,8.6,Koramangala Central,Upscale Residential
+12.9355,77.6248,8.8,Koramangala 80 Feet Road,Upscale Residential
+12.9351,77.6242,8.3,Koramangala South,Upscale Residential
+12.9358,77.6251,8.9,Koramangala 5th Block East,Upscale Residential
+12.9279,77.6271,8.5,Koramangala 5th Block,Upscale Residential
+12.9283,77.6275,8.8,Koramangala 6th Block,Upscale Residential
+12.9277,77.6269,8.3,Koramangala BDA,Upscale Residential
+12.9281,77.6273,8.6,Koramangala Inner Ring,Upscale Residential
+12.9284,77.6276,8.7,Koramangala 6th Block East,Upscale Residential
+12.9276,77.6268,8.4,Koramangala BDA South,Upscale Residential
+12.9280,77.6272,8.5,Koramangala Inner Ring Central,Upscale Residential
+12.9282,77.6274,8.7,Koramangala 6th Block North,Upscale Residential
+12.9278,77.6270,8.4,Koramangala BDA Complex,Upscale Residential
+12.9285,77.6277,8.8,Koramangala 6th Block Sarjapur,Upscale Residential
+12.9141,77.6100,7.8,BTM Layout,Residential
+12.9145,77.6104,8.0,BTM Layout 1st Stage,Residential
+12.9139,77.6098,7.5,BTM Silk Board,Residential
+12.9143,77.6102,7.9,BTM 5th Phase,Residential
+12.9146,77.6105,8.1,BTM Layout 1st Stage North,Residential
+12.9138,77.6099,7.6,BTM Silk Board Junction,Residential
+12.9142,77.6101,7.8,BTM Layout Central,Residential
+12.9144,77.6103,7.9,BTM 5th Phase East,Residential
+12.9140,77.6097,7.5,BTM Silk Board South,Residential
+12.9147,77.6106,8.0,BTM Layout 1st Stage East,Residential
+12.9137,77.6096,7.4,BTM Silk Board West,Residential
+12.9698,77.7499,8.4,Marathahalli,Commercial
+12.9702,77.7503,8.6,Marathahalli Bridge,Commercial
+12.9696,77.7497,8.2,Marathahalli ORR,Main Road
+12.9700,77.7501,8.5,Marathahalli Kundalahalli,Commercial
+12.9703,77.7504,8.7,Marathahalli Bridge East,Commercial
+12.9695,77.7498,8.3,Marathahalli ORR South,Main Road
+12.9699,77.7500,8.4,Marathahalli Central,Commercial
+12.9701,77.7502,8.6,Marathahalli Kundalahalli North,Commercial
+12.9697,77.7496,8.2,Marathahalli ORR Junction,Main Road
+12.9704,77.7505,8.7,Marathahalli HAL,Commercial
+12.9634,77.6414,8.7,Indiranagar,Upscale Residential
+12.9638,77.6418,9.0,Indiranagar 100 Feet Road,Upscale Residential
+12.9632,77.6412,8.5,Indiranagar Metro,Upscale Residential
+12.9636,77.6416,8.8,Indiranagar CMH Road,Upscale Residential
+12.9639,77.6419,8.9,Indiranagar 100 Feet Road East,Upscale Residential
+12.9631,77.6413,8.6,Indiranagar Metro South,Upscale Residential
+12.9635,77.6415,8.7,Indiranagar Central,Upscale Residential
+12.9637,77.6417,8.8,Indiranagar CMH Road North,Upscale Residential
+12.9633,77.6411,8.5,Indiranagar West,Upscale Residential
+12.9640,77.6420,9.0,Indiranagar 12th Main,Upscale Residential
+12.9538,77.4905,7.6,Rajajinagar,Residential
+12.9542,77.4909,7.9,Rajajinagar Metro,Residential
+12.9536,77.4903,7.4,Rajajinagar 4th Block,Residential
+12.9540,77.4907,7.7,Rajajinagar Main Road,Residential
+12.9543,77.4910,7.8,Rajajinagar Metro North,Residential
+12.9535,77.4904,7.5,Rajajinagar 4th Block South,Residential
+12.9539,77.4906,7.6,Rajajinagar Central,Residential
+12.9541,77.4908,7.8,Rajajinagar Main Road East,Residential
+12.9537,77.4902,7.4,Rajajinagar West,Residential
+12.9544,77.4911,7.9,Rajajinagar 8th Main,Residential
+12.8456,77.6628,8.2,Electronic City,IT Hub
+12.8460,77.6632,8.5,Electronic City Phase 1,IT Hub
+12.8454,77.6626,8.0,Electronic City Phase 2,IT Hub
+12.8458,77.6630,8.3,Electronic City Metro,IT Hub
+12.8461,77.6633,8.4,Electronic City Phase 1 North,IT Hub
+12.8453,77.6627,8.1,Electronic City Phase 2 South,IT Hub
+12.8457,77.6629,8.2,Electronic City Central,IT Hub
+12.8459,77.6631,8.4,Electronic City Metro East,IT Hub
+12.8455,77.6625,8.0,Electronic City Phase 2 West,IT Hub
+12.8462,77.6634,8.5,Electronic City Infosys,IT Hub
+12.8452,77.6624,7.9,Electronic City Hosur Road,IT Hub
+12.9120,77.6476,8.3,HSR Layout,Residential
+12.9124,77.6480,8.6,HSR Layout Sector 1,Residential
+12.9118,77.6474,8.1,HSR Layout 27th Main,Residential
+12.9122,77.6478,8.4,HSR Layout BDA,Residential
+12.9125,77.6481,8.5,HSR Layout Sector 1 North,Residential
+12.9117,77.6475,8.2,HSR Layout 27th Main South,Residential
+12.9121,77.6477,8.3,HSR Layout Central,Residential
+12.9123,77.6479,8.5,HSR Layout BDA Complex,Residential
+12.9119,77.6473,8.0,HSR Layout South,Residential
+12.9126,77.6482,8.6,HSR Layout Sector 2,Residential
+13.0143,77.5504,7.8,Malleshwaram,Traditional Residential
+13.0147,77.5508,8.1,Malleshwaram 8th Cross,Traditional Residential
+13.0141,77.5502,7.6,Malleshwaram Metro,Traditional Residential
+13.0145,77.5506,7.9,Malleshwaram Market,Traditional Residential
+13.0148,77.5509,8.0,Malleshwaram 8th Cross North,Traditional Residential
+13.0140,77.5503,7.7,Malleshwaram Metro South,Traditional Residential
+13.0144,77.5505,7.8,Malleshwaram Central,Traditional Residential
+13.0146,77.5507,8.0,Malleshwaram Market East,Traditional Residential
+13.0142,77.5501,7.6,Malleshwaram West,Traditional Residential
+13.0149,77.5510,8.1,Malleshwaram 18th Cross,Traditional Residential
+13.0210,77.6387,7.7,Banaswadi,Residential
+13.0214,77.6391,8.0,Banaswadi Metro,Residential
+13.0208,77.6385,7.5,Banaswadi Main Road,Residential
+13.0212,77.6389,7.8,Banaswadi Market,Residential
+13.0215,77.6392,7.9,Banaswadi Metro North,Residential
+13.0207,77.6386,7.6,Banaswadi Main Road South,Residential
+13.0211,77.6388,7.7,Banaswadi Central,Residential
+13.0213,77.6390,7.9,Banaswadi Market East,Residential
+13.0209,77.6384,7.5,Banaswadi West,Residential
+13.0216,77.6393,8.0,Banaswadi HRBR Layout,Residential
+12.9500,77.5700,5.3,Chamrajpet,Old Residential
+12.9550,77.5750,5.6,Chamrajpet Market,Old Residential
+12.9525,77.5725,5.4,Chamrajpet Main Road,Old Residential
+12.9575,77.5775,5.7,Chamrajpet East,Old Residential
+12.9475,77.5675,5.2,Chamrajpet West,Old Residential
+12.9512,77.5712,5.3,Chamrajpet Central,Old Residential
+12.9537,77.5737,5.5,Chamrajpet Market North,Old Residential
+12.9562,77.5762,5.6,Chamrajpet Double Road,Old Residential
+12.9600,77.5800,6.2,Basavanagudi,Traditional Residential
+12.9625,77.5825,6.4,Basavanagudi Bull Temple,Traditional Residential
+12.9575,77.5775,6.0,Basavanagudi South,Traditional Residential
+12.9612,77.5812,6.3,Basavanagudi Gandhi Bazaar,Traditional Residential
+12.9587,77.5787,6.1,Basavanagudi Central,Traditional Residential
+12.9650,77.5850,6.5,Jayanagar,Traditional Residential
+12.9675,77.5875,6.7,Jayanagar 4th Block,Traditional Residential
+12.9625,77.5825,6.3,Jayanagar 9th Block,Traditional Residential
+12.9662,77.5862,6.6,Jayanagar Shopping Complex,Traditional Residential
+12.9637,77.5837,6.4,Jayanagar South,Traditional Residential
+12.9700,77.5900,7.0,Lalbagh Area,Park Area
+12.9712,77.5912,7.2,Lalbagh East Gate,Park Area
+12.9688,77.5888,6.8,Lalbagh West Gate,Park Area
+12.9706,77.5906,7.1,Lalbagh Main Gate,Park Area
+12.9694,77.5894,6.9,Lalbagh South,Park Area
+13.0000,77.6000,7.5,Frazer Town,Residential
+13.0025,77.6025,7.7,Frazer Town Church,Residential
+12.9975,77.5975,7.3,Frazer Town South,Residential
+13.0012,77.6012,7.6,Frazer Town Main Road,Residential
+12.9987,77.5987,7.4,Frazer Town Central,Residential
+13.0100,77.6100,7.8,Ulsoor,Residential
+13.0125,77.6125,8.0,Ulsoor Lake,Residential
+13.0075,77.6075,7.6,Ulsoor South,Residential
+13.0112,77.6112,7.9,Ulsoor Main Road,Residential
+13.0087,77.6087,7.7,Ulsoor Central,Residential
+12.9300,77.6000,6.8,Bommanahalli,Suburban
+12.9325,77.6025,7.0,Bommanahalli Main Road,Suburban
+12.9275,77.5975,6.6,Bommanahalli South,Suburban
+12.9312,77.6012,6.9,Bommanahalli Central,Suburban
+12.9287,77.5987,6.7,Bommanahalli West,Suburban
+12.9400,77.6100,7.2,JP Nagar,Residential
+12.9425,77.6125,7.4,JP Nagar 1st Phase,Residential
+12.9375,77.6075,7.0,JP Nagar 9th Phase,Residential
+12.9412,77.6112,7.3,JP Nagar Main Road,Residential
+12.9387,77.6087,7.1,JP Nagar Central,Residential
+12.9200,77.6200,7.5,Bannerghatta Road,Suburban Main
+12.9225,77.6225,7.7,Bannerghatta Road North,Suburban Main
+12.9175,77.6175,7.3,Bannerghatta Road South,Suburban Main
+12.9212,77.6212,7.6,Bannerghatta Road Main,Suburban Main
+12.9187,77.6187,7.4,Bannerghatta Road Central,Suburban Main
+12.8900,77.6400,8.0,Electronic City Outer,IT Hub
+12.8925,77.6425,8.2,Electronic City Outer Ring,IT Hub
+12.8875,77.6375,7.8,Electronic City Outer South,IT Hub
+12.8912,77.6412,8.1,Electronic City Outer Main,IT Hub
+12.8887,77.6387,7.9,Electronic City Outer Central,IT Hub
+13.0500,77.5500,7.3,Sadashivanagar,Upscale Residential
+13.0525,77.5525,7.5,Sadashivanagar Police Station,Upscale Residential
+13.0475,77.5475,7.1,Sadashivanagar South,Upscale Residential
+13.0512,77.5512,7.4,Sadashivanagar Main Road,Upscale Residential
+13.0487,77.5487,7.2,Sadashivanagar Central,Upscale Residential
+13.0600,77.5600,7.6,RT Nagar,Residential
+13.0625,77.5625,7.8,RT Nagar BDA Complex,Residential
+13.0575,77.5575,7.4,RT Nagar South,Residential
+13.0612,77.5612,7.7,RT Nagar Main Road,Residential
+13.0587,77.5587,7.5,RT Nagar Central,Residential
+13.0700,77.5700,7.2,Sahakara Nagar,Residential
+13.0725,77.5725,7.4,Sahakara Nagar Main Road,Residential
+13.0675,77.5675,7.0,Sahakara Nagar South,Residential
+13.0712,77.5712,7.3,Sahakara Nagar East,Residential
+13.0687,77.5687,7.1,Sahakara Nagar Central,Residential
+12.9100,77.6300,7.8,Hulimavu,Residential
+12.9125,77.6325,8.0,Hulimavu Main Road,Residential
+12.9075,77.6275,7.6,Hulimavu South,Residential
+12.9112,77.6312,7.9,Hulimavu Bannerghatta,Residential
+12.9087,77.6287,7.7,Hulimavu Central,Residential
+12.9000,77.6500,7.5,Begur,Suburban
+12.9025,77.6525,7.7,Begur Main Road,Suburban
+12.8975,77.6475,7.3,Begur South,Suburban
+12.9012,77.6512,7.6,Begur Electronics City Road,Suburban
+12.8987,77.6487,7.4,Begur Central,Suburban
+12.9800,77.7200,8.3,Hoodi,Commercial
+12.9825,77.7225,8.5,Hoodi Circle,Commercial
+12.9775,77.7175,8.1,Hoodi ITPL Road,Commercial
+12.9812,77.7212,8.4,Hoodi Main Road,Commercial
+12.9787,77.7187,8.2,Hoodi Central,Commercial
+12.9837,77.7237,8.6,Hoodi Whitefield Road,Commercial
+12.9762,77.7162,8.0,Hoodi South,Commercial
+12.9900,77.7300,8.1,Varthur,Suburban
+12.9925,77.7325,8.3,Varthur Main Road,Suburban
+12.9875,77.7275,7.9,Varthur Lake,Suburban
+12.9912,77.7312,8.2,Varthur Whitefield Road,Suburban
+12.9887,77.7287,8.0,Varthur Central,Suburban
+12.9937,77.7337,8.4,Varthur Sarjapur Road,Suburban
+12.9862,77.7262,7.8,Varthur South,Suburban
+13.0300,77.6200,7.7,Ramamurthy Nagar,Residential
+13.0325,77.6225,7.9,Ramamurthy Nagar Main Road,Residential
+13.0275,77.6175,7.5,Ramamurthy Nagar South,Residential
+13.0312,77.6212,7.8,Ramamurthy Nagar East,Residential
+13.0287,77.6187,7.6,Ramamurthy Nagar Central,Residential
+13.0337,77.6237,8.0,Ramamurthy Nagar New Extension,Residential
+13.0262,77.6162,7.4,Ramamurthy Nagar Old Airport Road,Residential
+13.0400,77.6300,7.9,Mahadevapura,Commercial
+13.0425,77.6325,8.1,Mahadevapura ITPL,Commercial
+13.0375,77.6275,7.7,Mahadevapura South,Commercial
+13.0412,77.6312,8.0,Mahadevapura Main Road,Commercial
+13.0387,77.6287,7.8,Mahadevapura Central,Commercial
+13.0437,77.6337,8.2,Mahadevapura Whitefield,Commercial
+13.0362,77.6262,7.6,Mahadevapura West,Commercial
+12.9250,77.6800,8.4,Sarjapur Road,Main Road
+12.9275,77.6825,8.6,Sarjapur Road Outer Ring,Main Road
+12.9225,77.6775,8.2,Sarjapur Road HSR,Main Road
+12.9262,77.6812,8.5,Sarjapur Road Main,Main Road
+12.9237,77.6787,8.3,Sarjapur Road Central,Main Road
+12.9287,77.6837,8.7,Sarjapur Road Bellandur,Main Road
+12.9212,77.6762,8.1,Sarjapur Road South,Main Road
+12.9150,77.6900,8.2,Carmelram,Residential
+12.9175,77.6925,8.4,Carmelram Main Road,Residential
+12.9125,77.6875,8.0,Carmelram South,Residential
+12.9162,77.6912,8.3,Carmelram Church,Residential
+12.9137,77.6887,8.1,Carmelram Central,Residential
+12.9187,77.6937,8.5,Carmelram Sarjapur,Residential
+12.9112,77.6862,7.9,Carmelram West,Residential
+13.0800,77.5900,8.0,Yelahanka,Suburban Main
+13.0825,77.5925,8.2,Yelahanka Old Town,Suburban Main
+13.0775,77.5875,7.8,Yelahanka Air Force Station,Suburban Main
+13.0812,77.5912,8.1,Yelahanka Main Road,Suburban Main
+13.0787,77.5887,7.9,Yelahanka Central,Suburban Main
+13.0837,77.5937,8.3,Yelahanka Doddaballapur Road,Suburban Main
+13.0762,77.5862,7.7,Yelahanka South,Suburban Main
+13.0900,77.6000,7.8,Yelahanka New Town,Suburban
+13.0925,77.6025,8.0,Yelahanka New Town Main,Suburban
+13.0875,77.5975,7.6,Yelahanka New Town West,Suburban
+13.0912,77.6012,7.9,Yelahanka New Town East,Suburban
+13.0887,77.5987,7.7,Yelahanka New Town Central,Suburban
+13.0937,77.6037,8.1,Yelahanka New Town North,Suburban
+13.0862,77.5962,7.5,Yelahanka New Town South,Suburban
+13.1000,77.6100,7.5,Jakkur,Suburban
+13.1025,77.6125,7.7,Jakkur Aerodrome,Suburban
+13.0975,77.6075,7.3,Jakkur Lake,Suburban
+13.1012,77.6112,7.6,Jakkur Main Road,Suburban
+13.0987,77.6087,7.4,Jakkur Central,Suburban
+13.1037,77.6137,7.8,Jakkur Yelahanka Road,Suburban
+13.0962,77.6062,7.2,Jakkur South,Suburban
+12.8700,77.6300,7.6,Bommasandra,Industrial
+12.8725,77.6325,7.8,Bommasandra Industrial Area,Industrial
+12.8675,77.6275,7.4,Bommasandra South,Industrial
+12.8712,77.6312,7.7,Bommasandra Main Road,Industrial
+12.8687,77.6287,7.5,Bommasandra Central,Industrial
+12.8737,77.6337,7.9,Bommasandra Link Road,Industrial
+12.8662,77.6262,7.3,Bommasandra Hosur Road,Industrial
+12.8600,77.6400,7.4,Attibele Border,Industrial
+12.8625,77.6425,7.6,Attibele Industrial Area,Industrial
+12.8575,77.6375,7.2,Attibele Border Check,Industrial
+12.8612,77.6412,7.5,Attibele Main Road,Industrial
+12.8587,77.6387,7.3,Attibele Central,Industrial
+12.8637,77.6437,7.7,Attibele Electronics City Road,Industrial
+12.8562,77.6362,7.1,Attibele South,Industrial
+12.8800,77.6200,7.8,Jigani,Industrial
+12.8825,77.6225,8.0,Jigani Industrial Area,Industrial
+12.8775,77.6175,7.6,Jigani Bommasandra Road,Industrial
+12.8812,77.6212,7.9,Jigani Main Road,Industrial
+12.8787,77.6187,7.7,Jigani Central,Industrial
+12.8837,77.6237,8.1,Jigani Anekal Road,Industrial
+12.8762,77.6162,7.5,Jigani South,Industrial
+12.9450,77.4800,7.1,Nagarbhavi,Residential
+12.9475,77.4825,7.3,Nagarbhavi Main Road,Residential
+12.9425,77.4775,6.9,Nagarbhavi South,Residential
+12.9462,77.4812,7.2,Nagarbhavi Circle,Residential
+12.9437,77.4787,7.0,Nagarbhavi Central,Residential
+12.9487,77.4837,7.4,Nagarbhavi Outer Ring Road,Residential
+12.9412,77.4762,6.8,Nagarbhavi West,Residential
+12.9550,77.4700,6.9,Kengeri,Suburban
+12.9575,77.4725,7.1,Kengeri Satellite Town,Suburban
+12.9525,77.4675,6.7,Kengeri South,Suburban
+12.9562,77.4712,7.0,Kengeri Main Road,Suburban
+12.9537,77.4687,6.8,Kengeri Central,Suburban
+12.9587,77.4737,7.2,Kengeri NICE Road,Suburban
+12.9512,77.4662,6.6,Kengeri West,Suburban
+12.9650,77.4600,6.7,Uttarahalli,Suburban
+12.9675,77.4625,6.9,Uttarahalli Main Road,Suburban
+12.9625,77.4575,6.5,Uttarahalli South,Suburban
+12.9662,77.4612,6.8,Uttarahalli Kengeri Road,Suburban
+12.9637,77.4587,6.6,Uttarahalli Central,Suburban
+12.9687,77.4637,7.0,Uttarahalli NICE Road,Suburban
+12.9612,77.4562,6.4,Uttarahalli West,Suburban
+13.0250,77.5300,7.5,Rajajinagar Block,Residential
+13.0275,77.5325,7.7,Rajajinagar 3rd Block,Residential
+13.0225,77.5275,7.3,Rajajinagar 10th Block,Residential
+13.0262,77.5312,7.6,Rajajinagar Main Road,Residential
+13.0237,77.5287,7.4,Rajajinagar Central,Residential
+13.0287,77.5337,7.8,Rajajinagar Chord Road,Residential
+13.0212,77.5262,7.2,Rajajinagar West,Residential
+13.0350,77.5400,7.7,Mahalaxmi Layout,Residential
+13.0375,77.5425,7.9,Mahalaxmi Layout Main Road,Residential
+13.0325,77.5375,7.5,Mahalaxmi Layout South,Residential
+13.0362,77.5412,7.8,Mahalaxmi Layout Central,Residential
+13.0337,77.5387,7.6,Mahalaxmi Layout West,Residential
+13.0387,77.5437,8.0,Mahalaxmi Layout Outer Ring Road,Residential
+13.0312,77.5362,7.4,Mahalaxmi Layout Metro,Residential
+13.0150,77.5200,7.3,Vijayanagar,Residential
+13.0175,77.5225,7.5,Vijayanagar Chord Road,Residential
+13.0125,77.5175,7.1,Vijayanagar South,Residential
+13.0162,77.5212,7.4,Vijayanagar Main Road,Residential
+13.0137,77.5187,7.2,Vijayanagar Central,Residential
+13.0187,77.5237,7.6,Vijayanagar Hosahalli,Residential
+13.0112,77.5162,7.0,Vijayanagar West,Residential
+12.9850,77.7400,8.5,Brookfield,IT Hub
+12.9875,77.7425,8.7,Brookfield ITPL Main Road,IT Hub
+12.9825,77.7375,8.3,Brookfield South,IT Hub
+12.9862,77.7412,8.6,Brookfield Main Road,IT Hub
+12.9837,77.7387,8.4,Brookfield Central,IT Hub
+12.9887,77.7437,8.8,Brookfield Whitefield Road,IT Hub
+12.9812,77.7362,8.2,Brookfield West,IT Hub
+12.9750,77.7500,8.3,AECS Layout,Residential
+12.9775,77.7525,8.5,AECS Layout Main Road,Residential
+12.9725,77.7475,8.1,AECS Layout South,Residential
+12.9762,77.7512,8.4,AECS Layout Singasandra,Residential
+12.9737,77.7487,8.2,AECS Layout Central,Residential
+12.9787,77.7537,8.6,AECS Layout C Block,Residential
+12.9712,77.7462,8.0,AECS Layout West,Residential
+13.0550,77.6500,8.2,Kalkere,Suburban
+13.0575,77.6525,8.4,Kalkere Main Road,Suburban
+13.0525,77.6475,8.0,Kalkere South,Suburban
+13.0562,77.6512,8.3,Kalkere Horamavu Road,Suburban
+13.0537,77.6487,8.1,Kalkere Central,Suburban
+13.0587,77.6537,8.5,Kalkere Ramamurthy Nagar,Suburban
+13.0512,77.6462,7.9,Kalkere West,Suburban
+13.0450,77.6400,8.0,Horamavu,Residential
+13.0475,77.6425,8.2,Horamavu Main Road,Residential
+13.0425,77.6375,7.8,Horamavu Agara,Residential
+13.0462,77.6412,8.1,Horamavu Banaswadi Road,Residential
+13.0437,77.6387,7.9,Horamavu Central,Residential
+13.0487,77.6437,8.3,Horamavu Ramamurthy Nagar Road,Residential
+13.0412,77.6362,7.7,Horamavu South,Residential
+13.0350,77.6350,7.9,Kammanahalli,Residential
+13.0375,77.6375,8.1,Kammanahalli Main Road,Residential
+13.0325,77.6325,7.7,Kammanahalli South,Residential
+13.0362,77.6362,8.0,Kammanahalli 100 Feet Road,Residential
+13.0337,77.6337,7.8,Kammanahalli Central,Residential
+13.0387,77.6387,8.2,Kammanahalli HBR Layout,Residential
+13.0312,77.6312,7.6,Kammanahalli Old Madras Road,Residential
+13.0250,77.6300,8.1,Kalyan Nagar,Residential
+13.0275,77.6325,8.3,Kalyan Nagar Main Road,Residential
+13.0225,77.6275,7.9,Kalyan Nagar Hennur Road,Residential
+13.0262,77.6312,8.2,Kalyan Nagar HRBR Layout,Residential
+13.0237,77.6287,8.0,Kalyan Nagar Central,Residential
+13.0287,77.6337,8.4,Kalyan Nagar Banaswadi Road,Residential
+13.0212,77.6262,7.8,Kalyan Nagar South,Residential
+12.9550,77.6500,8.4,Koramangala 8th Block,Upscale Residential
+12.9575,77.6525,8.6,Koramangala 8th Block Main Road,Upscale Residential
+12.9525,77.6475,8.2,Koramangala 8th Block South,Upscale Residential
+12.9562,77.6512,8.5,Koramangala 8th Block 100 Feet Road,Upscale Residential
+12.9537,77.6487,8.3,Koramangala 8th Block Central,Upscale Residential
+12.9587,77.6537,8.7,Koramangala 8th Block Sarjapur Road,Upscale Residential
+12.9512,77.6462,8.1,Koramangala 8th Block West,Upscale Residential
+12.9450,77.6550,8.2,Agara,Residential
+12.9475,77.6575,8.4,Agara Main Road,Residential
+12.9425,77.6525,8.0,Agara HSR Layout,Residential
+12.9462,77.6562,8.3,Agara Lake,Residential
+12.9437,77.6537,8.1,Agara Central,Residential
+12.9487,77.6587,8.5,Agara Sarjapur Road,Residential
+12.9412,77.6512,7.9,Agara South,Residential
+12.9350,77.6450,8.6,Koramangala 7th Block,Upscale Residential
+12.9375,77.6475,8.8,Koramangala 7th Block Main Road,Upscale Residential
+12.9325,77.6425,8.4,Koramangala 7th Block South,Upscale Residential
+12.9362,77.6462,8.7,Koramangala 7th Block Forum,Upscale Residential
+12.9337,77.6437,8.5,Koramangala 7th Block Central,Upscale Residential
+12.9387,77.6487,8.9,Koramangala 7th Block North,Upscale Residential
+12.9312,77.6412,8.3,Koramangala 7th Block West,Upscale Residential
+12.9050,77.6550,7.7,Madiwala,Residential
+12.9075,77.6575,7.9,Madiwala Main Road,Residential
+12.9025,77.6525,7.5,Madiwala South,Residential
+12.9062,77.6562,7.8,Madiwala Market,Residential
+12.9037,77.6537,7.6,Madiwala Central,Residential
+12.9087,77.6587,8.0,Madiwala BTM Road,Residential
+12.9012,77.6512,7.4,Madiwala Lake,Residential
+12.8950,77.6600,7.5,Koramangala Extension,Residential
+12.8975,77.6625,7.7,Koramangala Extension Main Road,Residential
+12.8925,77.6575,7.3,Koramangala Extension South,Residential
+12.8962,77.6612,7.6,Koramangala Extension Sarjapur Road,Residential
+12.8937,77.6587,7.4,Koramangala Extension Central,Residential
+12.8987,77.6637,7.8,Koramangala Extension Agara,Residential
+12.8912,77.6562,7.2,Koramangala Extension West,Residential
+12.9650,77.6300,8.5,Domlur,Upscale Residential
+12.9675,77.6325,8.7,Domlur Layout,Upscale Residential
+12.9625,77.6275,8.3,Domlur South,Upscale Residential
+12.9662,77.6312,8.6,Domlur Main Road,Upscale Residential
+12.9637,77.6287,8.4,Domlur Central,Upscale Residential
+12.9687,77.6337,8.8,Domlur Indiranagar,Upscale Residential
+12.9612,77.6262,8.2,Domlur HAL Road,Upscale Residential
+12.9750,77.6350,8.7,HAL Airport,Commercial
+12.9775,77.6375,8.9,HAL Old Airport,Commercial
+12.9725,77.6325,8.5,HAL Airport South,Commercial
+12.9762,77.6362,8.8,HAL Old Airport Road,Commercial
+12.9737,77.6337,8.6,HAL Airport Central,Commercial
+12.9787,77.6387,9.0,HAL Marathahalli Road,Commercial
+12.9712,77.6312,8.4,HAL Airport West,Commercial
+12.9850,77.6250,8.3,Old Airport Road,Commercial
+12.9875,77.6275,8.5,Old Airport Road North,Commercial
+12.9825,77.6225,8.1,Old Airport Road South,Commercial
+12.9862,77.6262,8.4,Old Airport Road Main,Commercial
+12.9837,77.6237,8.2,Old Airport Road Central,Commercial
+12.9887,77.6287,8.6,Old Airport Road Marathahalli,Commercial
+12.9812,77.6212,8.0,Old Airport Road HAL,Commercial
+12.9950,77.6150,7.9,Jeevanbhima Nagar,Residential
+12.9975,77.6175,8.1,Jeevanbhima Nagar Main Road,Residential
+12.9925,77.6125,7.7,Jeevanbhima Nagar South,Residential
+12.9962,77.6162,8.0,Jeevanbhima Nagar HAL Road,Residential
+12.9937,77.6137,7.8,Jeevanbhima Nagar Central,Residential
+12.9987,77.6187,8.2,Jeevanbhima Nagar CV Raman Nagar,Residential
+12.9912,77.6112,7.6,Jeevanbhima Nagar West,Residential
+13.0050,77.6050,7.7,CV Raman Nagar,Residential
+13.0075,77.6075,7.9,CV Raman Nagar Main Road,Residential
+13.0025,77.6025,7.5,CV Raman Nagar South,Residential
+13.0062,77.6062,7.8,CV Raman Nagar New Thippasandra,Residential
+13.0037,77.6037,7.6,CV Raman Nagar Central,Residential
+13.0087,77.6087,8.0,CV Raman Nagar Indiranagar,Residential
+13.0012,77.6012,7.4,CV Raman Nagar West,Residential
+12.9300,77.5700,6.0,Banashankari,Old Residential
+12.9325,77.5725,6.2,Banashankari 2nd Stage,Old Residential
+12.9275,77.5675,5.8,Banashankari 3rd Stage,Old Residential
+12.9312,77.5712,6.1,Banashankari Main Road,Old Residential
+12.9287,77.5687,5.9,Banashankari Central,Old Residential
+12.9337,77.5737,6.3,Banashankari Temple,Old Residential
+12.9262,77.5662,5.7,Banashankari South,Old Residential
+12.9400,77.5800,6.5,Jayanagar 4th Block,Traditional Residential
+12.9425,77.5825,6.7,Jayanagar 4th Block Main Road,Traditional Residential
+12.9375,77.5775,6.3,Jayanagar 4th Block South,Traditional Residential
+12.9412,77.5812,6.6,Jayanagar 4th Block Shopping Complex,Traditional Residential
+12.9387,77.5787,6.4,Jayanagar 4th Block Central,Traditional Residential
+12.9437,77.5837,6.8,Jayanagar 4th Block East,Traditional Residential
+12.9362,77.5762,6.2,Jayanagar 4th Block West,Traditional Residential
+12.9350,77.5900,6.3,BTM 2nd Stage,Residential
+12.9375,77.5925,6.5,BTM 2nd Stage Main Road,Residential
+12.9325,77.5875,6.1,BTM 2nd Stage South,Residential
+12.9362,77.5912,6.4,BTM 2nd Stage Central,Residential
+12.9337,77.5887,6.2,BTM 2nd Stage West,Residential
+12.9387,77.5937,6.6,BTM 2nd Stage Outer Ring Road,Residential
+12.9312,77.5862,6.0,BTM 2nd Stage Banashankari,Residential
+12.9200,77.6100,7.2,JP Nagar 7th Phase,Residential
+12.9225,77.6125,7.4,JP Nagar 7th Phase Main Road,Residential
+12.9175,77.6075,7.0,JP Nagar 7th Phase South,Residential
+12.9212,77.6112,7.3,JP Nagar 7th Phase Central,Residential
+12.9187,77.6087,7.1,JP Nagar 7th Phase West,Residential
+12.9237,77.6137,7.5,JP Nagar 7th Phase Bannerghatta Road,Residential
+12.9162,77.6062,6.9,JP Nagar 7th Phase Uttarahalli,Residential
+12.9100,77.6000,6.8,Uttarahalli Main,Suburban
+12.9125,77.6025,7.0,Uttarahalli Main Road,Suburban
+12.9075,77.5975,6.6,Uttarahalli Main South,Suburban
+12.9112,77.6012,6.9,Uttarahalli Main Central,Suburban
+12.9087,77.5987,6.7,Uttarahalli Main West,Suburban
+12.9137,77.6037,7.1,Uttarahalli Main JP Nagar,Suburban
+12.9062,77.5962,6.5,Uttarahalli Main Kengeri Road,Suburban
+12.9450,77.6200,7.4,Wilson Garden,Residential
+12.9475,77.6225,7.6,Wilson Garden Main Road,Residential
+12.9425,77.6175,7.2,Wilson Garden South,Residential
+12.9462,77.6212,7.5,Wilson Garden Central,Residential
+12.9437,77.6187,7.3,Wilson Garden West,Residential
+12.9487,77.6237,7.7,Wilson Garden Shanti Nagar,Residential
+12.9412,77.6162,7.1,Wilson Garden Lalbagh,Residential
+12.9550,77.6300,7.8,Ejipura,Residential
+12.9575,77.6325,8.0,Ejipura Main Road,Residential
+12.9525,77.6275,7.6,Ejipura South,Residential
+12.9562,77.6312,7.9,Ejipura Koramangala Road,Residential
+12.9537,77.6287,7.7,Ejipura Central,Residential
+12.9587,77.6337,8.1,Ejipura Domlur,Residential
+12.9512,77.6262,7.5,Ejipura Viveknagar,Residential
+12.9600,77.6400,8.2,Koramangala 1st Block,Upscale Residential
+12.9625,77.6425,8.4,Koramangala 1st Block Main Road,Upscale Residential
+12.9575,77.6375,8.0,Koramangala 1st Block South,Upscale Residential
+12.9612,77.6412,8.3,Koramangala 1st Block Central,Upscale Residential
+12.9587,77.6387,8.1,Koramangala 1st Block West,Upscale Residential
+12.9637,77.6437,8.5,Koramangala 1st Block Sarjapur Road,Upscale Residential
+12.9562,77.6362,7.9,Koramangala 1st Block South End,Upscale Residential
+12.9250,77.6500,8.0,HSR Extension,Residential
+12.9275,77.6525,8.2,HSR Extension Main Road,Residential
+12.9225,77.6475,7.8,HSR Extension South,Residential
+12.9262,77.6512,8.1,HSR Extension Sarjapur Road,Residential
+12.9237,77.6487,7.9,HSR Extension Central,Residential
+12.9287,77.6537,8.3,HSR Extension Outer Ring Road,Residential
+12.9212,77.6462,7.7,HSR Extension West,Residential
+12.9150,77.6400,7.6,Somasundarapalya,Residential
+12.9175,77.6425,7.8,Somasundarapalya Main Road,Residential
+12.9125,77.6375,7.4,Somasundarapalya South,Residential
+12.9162,77.6412,7.7,Somasundarapalya HSR Road,Residential
+12.9137,77.6387,7.5,Somasundarapalya Central,Residential
+12.9187,77.6437,7.9,Somasundarapalya Outer Ring Road,Residential
+12.9112,77.6362,7.3,Somasundarapalya West,Residential
+12.9050,77.6300,7.3,Bilekahalli,Residential
+12.9075,77.6325,7.5,Bilekahalli Main Road,Residential
+12.9025,77.6275,7.1,Bilekahalli South,Residential
+12.9062,77.6312,7.4,Bilekahalli Bannerghatta Road,Residential
+12.9037,77.6287,7.2,Bilekahalli Central,Residential
+12.9087,77.6337,7.6,Bilekahalli HSR Layout,Residential
+12.9012,77.6262,7.0,Bilekahalli West,Residential
+12.8950,77.6200,6.9,Hongasandra,Suburban
+12.8975,77.6225,7.1,Hongasandra Main Road,Suburban
+12.8925,77.6175,6.7,Hongasandra South,Suburban
+12.8962,77.6212,7.0,Hongasandra Bommanahalli Road,Suburban
+12.8937,77.6187,6.8,Hongasandra Central,Suburban
+12.8987,77.6237,7.2,Hongasandra Electronic City Road,Suburban
+12.8912,77.6162,6.6,Hongasandra West,Suburban
+12.8850,77.6100,6.5,Begur Road,Suburban
+12.8875,77.6125,6.7,Begur Road Main,Suburban
+12.8825,77.6075,6.3,Begur Road South,Suburban
+12.8862,77.6112,6.6,Begur Road Bommanahalli,Suburban
+12.8837,77.6087,6.4,Begur Road Central,Suburban
+12.8887,77.6137,6.8,Begur Road Electronic City,Suburban
+12.8812,77.6062,6.2,Begur Road West,Suburban
+12.9800,77.5900,7.8,Richmond Town,Residential
+12.9825,77.5925,8.0,Richmond Town Main Road,Residential
+12.9775,77.5875,7.6,Richmond Town South,Residential
+12.9812,77.5912,7.9,Richmond Town Circle,Residential
+12.9787,77.5887,7.7,Richmond Town Central,Residential
+12.9837,77.5937,8.1,Richmond Town Shivajinagar,Residential
+12.9762,77.5862,7.5,Richmond Town Lalbagh,Residential
+12.9900,77.6000,8.1,Benson Town,Residential
+12.9925,77.6025,8.3,Benson Town Main Road,Residential
+12.9875,77.5975,7.9,Benson Town South,Residential
+12.9912,77.6012,8.2,Benson Town CV Raman Nagar,Residential
+12.9887,77.5987,8.0,Benson Town Central,Residential
+12.9937,77.6037,8.4,Benson Town Ulsoor,Residential
+12.9862,77.5962,7.8,Benson Town West,Residential
+13.0000,77.6100,8.4,Kasturi Nagar,Residential
+13.0025,77.6125,8.6,Kasturi Nagar Main Road,Residential
+12.9975,77.6075,8.2,Kasturi Nagar South,Residential
+13.0012,77.6112,8.5,Kasturi Nagar Banaswadi Road,Residential
+12.9987,77.6087,8.3,Kasturi Nagar Central,Residential
+13.0037,77.6137,8.7,Kasturi Nagar HBR Layout,Residential
+12.9962,77.6062,8.1,Kasturi Nagar West,Residential
+13.0100,77.6200,8.0,HBR Layout,Residential
+13.0125,77.6225,8.2,HBR Layout Main Road,Residential
+13.0075,77.6175,7.8,HBR Layout South,Residential
+13.0112,77.6212,8.1,HBR Layout Kalyan Nagar Road,Residential
+13.0087,77.6187,7.9,HBR Layout Central,Residential
+13.0137,77.6237,8.3,HBR Layout Banaswadi,Residential
+13.0062,77.6162,7.7,HBR Layout West,Residential
+13.0200,77.6250,8.3,Kalyan Nagar Extension,Residential
+13.0225,77.6275,8.5,Kalyan Nagar Extension Main Road,Residential
+13.0175,77.6225,8.1,Kalyan Nagar Extension South,Residential
+13.0212,77.6262,8.4,Kalyan Nagar Extension HRBR,Residential
+13.0187,77.6237,8.2,Kalyan Nagar Extension Central,Residential
+13.0237,77.6287,8.6,Kalyan Nagar Extension Ramamurthy Nagar,Residential
+13.0162,77.6212,8.0,Kalyan Nagar Extension West,Residential
+12.9717,77.5943,8.4,MG Road Prestige Plaza,Main Road
+12.9713,77.5941,8.3,MG Road Richmond Circle,Main Road
+12.9721,77.5949,8.7,MG Road Trinity Circle,Main Road
+12.9711,77.5939,8.2,MG Road West End,Main Road
+12.9723,77.5951,8.8,MG Road Cauvery Junction,Main Road
+12.9695,77.5981,7.9,Commercial Street North End,Main Road
+12.9697,77.5983,8.0,Commercial Street Central,Main Road
+12.9693,77.5979,7.8,Commercial Street Unity Building,Main Road
+12.9705,77.5991,8.5,Brigade Road Cauvery Junction,Main Road
+12.9703,77.5989,8.6,Brigade Road Residency Road,Main Road
+12.9764,77.5989,6.0,Majestic Kempe Gowda Circle,Transit Hub
+12.9775,77.5991,5.9,Majestic City Railway Station,Transit Hub
+12.9763,77.6005,5.5,Majestic Gubbi Thotadappa Road,Transit Hub
+12.9776,77.6004,5.6,Majestic Kalasipalyam Side,Transit Hub
+12.9936,77.5803,6.1,Shivajinagar CMH Road,Commercial
+12.9949,77.5816,6.7,Russell Market Mosque Road,Commercial
+12.9935,77.5809,6.2,Shivajinagar Pottery Road,Commercial
+12.9950,77.5818,6.8,Russell Market Artillery Road,Commercial
+12.9743,77.6004,5.8,City Market OTC Road,Market Area
+12.9754,77.6013,6.2,Avenue Road Jumma Masjid,Market Area
+12.9742,77.6006,5.7,City Market Mamulpet,Market Area
+12.9755,77.6014,6.3,Avenue Road Gandhi Bazaar,Market Area
+12.9684,77.5956,5.1,Kalasipalyam Pottery Town,Old Area
+12.9694,77.5969,5.5,Kalasipalyam Shivajinagar Link,Old Area
+12.9683,77.5955,5.0,Kalasipalyam Old Slum,Old Area
+12.9695,77.5970,5.6,Kalasipalyam New Extension,Old Area
+12.9992,77.7091,7.9,KR Puram Old Madras Road,Suburban Main
+12.9981,77.7087,7.6,Krishnarajapuram A Narayanapura,Suburban Main
+12.9993,77.7099,7.8,KR Puram Tin Factory,Suburban Main
+12.9980,77.7086,7.5,Krishnarajapuram Banaswadi Link,Suburban Main
+12.9501,77.5690,4.7,Goripalya Chamarajpet Link,Old Residential
+12.9512,77.5701,5.0,Goripalya Cottonpet Road,Old Residential
+12.9500,77.5689,4.6,Goripalya Market Road,Old Residential
+12.9513,77.5702,5.1,Goripalya New Area,Old Residential
+13.0361,77.5973,8.1,Yeshwanthpur Tumkur Road,Transport Hub
+13.0373,77.5986,8.4,Yeshwanthpur Goraguntepalya,Transport Hub
+13.0360,77.5972,8.0,Yeshwanthpur Ramakrishna Ashram,Transport Hub
+13.0374,77.5987,8.5,Yeshwanthpur Link Road,Transport Hub
+13.0825,77.5803,8.5,Hebbal Bellary Road,Main Road
+13.0839,77.5818,8.7,Hebbal Manyata Tech Park,Main Road
+13.0824,77.5802,8.4,Hebbal Nagavara,Main Road
+13.0840,77.5819,8.8,Hebbal Nagawara Lake,Main Road
+13.0200,77.5888,7.3,Peenya Tumkur Road,Industrial
+13.0212,77.5900,7.7,Peenya Jalahalli Cross,Industrial
+13.0199,77.5887,7.2,Peenya Yeshwanthpur Link,Industrial
+13.0213,77.5901,7.8,Peenya Mathikere,Industrial
+12.9780,77.6404,8.4,Whitefield Hope Farm,IT Hub
+12.9791,77.6415,8.9,Whitefield Graphite India,IT Hub
+12.9779,77.6403,8.3,Whitefield Varthur Main Road,IT Hub
+12.9792,77.6416,9.0,Whitefield Kadugodi,IT Hub
+12.9348,77.6241,8.5,Koramangala Hosur Road,Upscale Residential
+12.9359,77.6252,8.9,Koramangala Sarjapur Road Junction,Upscale Residential
+12.9347,77.6240,8.4,Koramangala Dairy Circle,Upscale Residential
+12.9360,77.6253,9.0,Koramangala Outer Ring Road,Upscale Residential
+12.9275,77.6267,8.4,Koramangala BDA Complex Inner,Upscale Residential
+12.9286,77.6278,8.8,Koramangala Sarjapur Link,Upscale Residential
+12.9274,77.6266,8.3,Koramangala Ejipura Junction,Upscale Residential
+12.9287,77.6279,8.9,Koramangala Agara Link,Upscale Residential
+12.9136,77.6095,7.6,BTM Layout Kanakapura Road,Residential
+12.9148,77.6107,8.0,BTM Layout Dairy Circle,Residential
+12.9135,77.6094,7.5,BTM Layout Inner Ring Road,Residential
+12.9149,77.6108,8.1,BTM Layout Forum Mall Area,Residential
+12.9694,77.7495,8.3,Marathahalli HAL Old Airport Road,Commercial
+12.9705,77.7506,8.7,Marathahalli Varthur Main Road,Commercial
+12.9693,77.7494,8.2,Marathahalli Tin Factory,Commercial
+12.9706,77.7507,8.8,Marathahalli Outer Ring Road Junction,Commercial
+12.9630,77.6410,8.6,Indiranagar Defence Colony,Upscale Residential
+12.9641,77.6421,9.0,Indiranagar New Thippasandra,Upscale Residential
+12.9629,77.6409,8.5,Indiranagar HAL 2nd Stage,Upscale Residential
+12.9642,77.6422,9.1,Indiranagar Club Road,Upscale Residential
+12.9534,77.4901,7.5,Rajajinagar Dr Rajkumar Road,Residential
+12.9545,77.4912,7.9,Rajajinagar Chord Road Junction,Residential
+12.9533,77.4900,7.4,Rajajinagar 6th Block,Residential
+12.9546,77.4913,8.0,Rajajinagar Mantri Mall Area,Residential
+12.8452,77.6624,8.1,Electronic City Konappana Agrahara,IT Hub
+12.8463,77.6635,8.5,Electronic City Doddathogur,IT Hub
+12.8451,77.6623,8.0,Electronic City Neeladri Road,IT Hub
+12.8464,77.6636,8.6,Electronic City Wipro Campus,IT Hub
+12.9116,77.6472,8.2,HSR Layout 14th Main,Residential
+12.9127,77.6483,8.6,HSR Layout Agara Lake,Residential
+12.9115,77.6471,8.1,HSR Layout 17th Main,Residential
+12.9128,77.6484,8.7,HSR Layout Somasundara Palya Link,Residential
+13.0139,77.5500,7.7,Malleshwaram Margosa Road,Traditional Residential
+13.0150,77.5511,8.1,Malleshwaram Sampige Road,Traditional Residential
+13.0138,77.5499,7.6,Malleshwaram 15th Cross,Traditional Residential
+13.0151,77.5512,8.2,Malleshwaram BEL Road,Traditional Residential
+13.0206,77.6383,7.6,Banaswadi NGEF Layout,Residential
+13.0217,77.6394,8.0,Banaswadi Tin Factory,Residential
+13.0205,77.6382,7.5,Banaswadi Old Madras Road,Residential
+13.0218,77.6395,8.1,Banaswadi Dooravani Nagar,Residential
+12.9488,77.5688,4.8,Goripalya Akkipet,Old Residential
+12.9520,77.5720,5.2,Chamrajpet Victoria Hospital Road,Old Residential
+12.9463,77.5663,4.9,Goripalya Azad Nagar,Old Residential
+12.9582,77.5782,5.8,Chamrajpet Bull Temple Road Link,Old Residential
+12.9588,77.5788,6.1,Basavanagudi DVG Road,Traditional Residential
+12.9638,77.5838,6.4,Jayanagar 3rd Block,Traditional Residential
+12.9613,77.5813,6.3,Basavanagudi Shankarapuram,Traditional Residential
+12.9663,77.5863,6.6,Jayanagar 2nd Block,Traditional Residential
+12.9688,77.5888,6.9,Lalbagh Double Road,Park Area
+12.9713,77.5913,7.2,Lalbagh West Gate Richmond Road,Park Area
+12.9675,77.5875,6.7,Lalbagh Mavalli,Park Area
+12.9725,77.5925,7.3,Lalbagh East Gate Hosur Road,Park Area
+12.9963,77.5963,7.4,Frazer Town Mosque Road,Residential
+13.0038,77.6038,7.7,Frazer Town Coles Road,Residential
+12.9950,77.5950,7.3,Frazer Town Pottery Road,Residential
+13.0050,77.6050,7.8,Frazer Town Wheeler Road,Residential
+13.0088,77.6088,7.7,Ulsoor Dickenson Road,Residential
+13.0138,77.6138,8.0,Ulsoor St Marks Road,Residential
+13.0063,77.6063,7.6,Ulsoor Tank Bund Road,Residential
+13.0150,77.6150,8.1,Ulsoor Infantry Road,Residential
+12.9263,77.5963,6.7,Bommanahalli Dairy Circle,Suburban
+12.9338,77.6038,7.0,Bommanahalli Bannerghatta Road,Suburban
+12.9250,77.5950,6.6,Bommanahalli Begur Link,Suburban
+12.9350,77.6050,7.1,Bommanahalli BTM Link,Suburban
+12.9388,77.6088,7.1,JP Nagar NICE Road,Residential
+12.9438,77.6138,7.4,JP Nagar Central Silk Board,Residential
+12.9363,77.6063,7.0,JP Nagar Puttenahalli,Residential
+12.9450,77.6150,7.5,JP Nagar Bannerghatta Link,Residential
+12.9188,77.6188,7.4,Bannerghatta Road IIM,Suburban Main
+12.9238,77.6238,7.7,Bannerghatta Road Dairy Circle,Suburban Main
+12.9163,77.6163,7.3,Bannerghatta Road Zoo,Suburban Main
+12.9250,77.6250,7.8,Bannerghatta Road Hulimavu,Suburban Main
+12.8888,77.6388,7.9,Electronic City Outer Hebbagodi,IT Hub
+12.8938,77.6438,8.2,Electronic City Outer Chandapura,IT Hub
+12.8863,77.6363,7.8,Electronic City Outer Bommasandra Link,IT Hub
+12.8950,77.6450,8.3,Electronic City Outer Attibele Road,IT Hub
+13.0488,77.5488,7.2,Sadashivanagar Palace Road,Upscale Residential
+13.0538,77.5538,7.5,Sadashivanagar Windsor Manor,Upscale Residential
+13.0463,77.5463,7.1,Sadashivanagar Gayathri Devi Park,Upscale Residential
+13.0550,77.5550,7.6,Sadashivanagar Sankey Road,Upscale Residential
+13.0588,77.5588,7.5,RT Nagar Service Road,Residential
+13.0638,77.5638,7.8,RT Nagar GKVK Link,Residential
+13.0563,77.5563,7.4,RT Nagar Ganganagar,Residential
+13.0650,77.5650,7.9,RT Nagar Chikkanahalli,Residential
+13.0688,77.5688,7.1,Sahakara Nagar HMT Layout,Residential
+13.0738,77.5738,7.4,Sahakara Nagar Amruthahalli Link,Residential
+13.0663,77.5663,7.0,Sahakara Nagar Vidyaranyapura,Residential
+13.0750,77.5750,7.5,Sahakara Nagar Nagashettyhalli,Residential
+12.9088,77.6288,7.7,Hulimavu Begur Link,Residential
+12.9138,77.6338,8.0,Hulimavu Electronic City Road,Residential
+12.9063,77.6263,7.6,Hulimavu Singasandra,Residential
+12.9150,77.6350,8.1,Hulimavu Sarjapur Road,Residential
+12.8988,77.6488,7.4,Begur Hongasandra Link,Suburban
+12.9038,77.6538,7.7,Begur Electronic City Link,Suburban
+12.8963,77.6463,7.3,Begur Bommanahalli Road,Suburban
+12.9050,77.6550,7.8,Begur Hulimavu Road,Suburban
+12.9813,77.7188,8.2,Hoodi Junction,Commercial
+12.9850,77.7250,8.5,Hoodi Graphite India,Commercial
+12.9788,77.7163,8.1,Hoodi Mahadevapura Link,Commercial
+12.9863,77.7263,8.6,Hoodi Brookfield Link,Commercial
+12.9888,77.7288,8.0,Varthur Kodi,Suburban
+12.9938,77.7338,8.4,Varthur Gunjur,Suburban
+12.9863,77.7263,7.9,Varthur Lake Road,Suburban
+12.9950,77.7350,8.5,Varthur Whitefield Link,Suburban
+13.0288,77.6188,7.6,Ramamurthy Nagar A Narayanapura,Residential
+13.0338,77.6238,8.0,Ramamurthy Nagar Krishnarajapuram Link,Residential
+13.0263,77.6163,7.5,Ramamurthy Nagar Dodda Nekkundi,Residential
+13.0350,77.6250,8.1,Ramamurthy Nagar Mahadevapura Link,Residential
+13.0388,77.6288,7.8,Mahadevapura Tin Factory,Commercial
+13.0438,77.6338,8.2,Mahadevapura Graphite India,Commercial
+13.0363,77.6263,7.7,Mahadevapura Dodda Nekkundi,Commercial
+13.0450,77.6350,8.3,Mahadevapura ITPL Link,Commercial
+12.9238,77.6788,8.3,Sarjapur Road Iblur,Main Road
+12.9288,77.6838,8.7,Sarjapur Road Bellandur Gate,Main Road
+12.9213,77.6763,8.2,Sarjapur Road Agara,Main Road
+12.9300,77.6850,8.8,Sarjapur Road Kadubeesanahalli,Main Road
+12.9138,77.6888,8.1,Carmelram Junction,Residential
+12.9188,77.6938,8.5,Carmelram Attibele Road,Residential
+12.9113,77.6863,8.0,Carmelram Koramangala Link,Residential
+12.9200,77.6950,8.6,Carmelram Outer Ring Road,Residential
+13.0788,77.5888,7.9,Yelahanka Trumpet Interchange,Suburban Main
+13.0838,77.5938,8.3,Yelahanka BEL Circle,Suburban Main
+13.0763,77.5863,7.8,Yelahanka Puttenahalli,Suburban Main
+13.0850,77.5950,8.4,Yelahanka Town,Suburban Main
+13.0888,77.5988,7.7,Yelahanka New Town Kogilu,Suburban
+13.0938,77.6038,8.1,Yelahanka New Town Attur,Suburban
+13.0863,77.5963,7.6,Yelahanka New Town Puttenahalli,Suburban
+13.0950,77.6050,8.2,Yelahanka New Town HMT Link,Suburban
+13.0988,77.6088,7.4,Jakkur Flying Club,Suburban
+13.1038,77.6138,7.8,Jakkur Kogilu Cross,Suburban
+13.0963,77.6063,7.3,Jakkur Sampigehalli,Suburban
+13.1050,77.6150,7.9,Jakkur Yelahanka Link,Suburban
+12.8688,77.6288,7.5,Bommasandra Attibele Road,Industrial
+12.8738,77.6338,7.9,Bommasandra Industrial Town,Industrial
+12.8663,77.6263,7.4,Bommasandra Jigani Link,Industrial
+12.8750,77.6350,8.0,Bommasandra Hosur Road,Industrial
+12.8588,77.6388,7.3,Attibele Check Post,Industrial
+12.8638,77.6438,7.7,Attibele Industrial Zone,Industrial
+12.8563,77.6363,7.2,Attibele Border Road,Industrial
+12.8650,77.6450,7.8,Attibele Karnataka Border,Industrial
+12.8788,77.6188,7.7,Jigani Anekal Road,Industrial
+12.8838,77.6238,8.1,Jigani Bommasandra Link,Industrial
+12.8763,77.6163,7.6,Jigani Industrial Zone,Industrial
+12.8850,77.6250,8.2,Jigani Electronic City Link,Industrial
+12.9438,77.4788,7.0,Nagarbhavi BDA Layout,Residential
+12.9488,77.4838,7.4,Nagarbhavi Industrial Area,Residential
+12.9413,77.4763,6.9,Nagarbhavi Herohalli Link,Residential
+12.9500,77.4850,7.5,Nagarbhavi Mysore Road,Residential
+12.9538,77.4688,6.8,Kengeri Kadu Malleshwara,Suburban
+12.9588,77.4738,7.2,Kengeri Rajarajeshwari Nagar,Suburban
+12.9513,77.4663,6.7,Kengeri Uttarahalli Link,Suburban
+12.9600,77.4750,7.3,Kengeri Lake View,Suburban
+12.9638,77.4588,6.6,Uttarahalli Kadu Malleshwara,Suburban
+12.9688,77.4638,7.0,Uttarahalli Subramanyapura,Suburban
+12.9613,77.4563,6.5,Uttarahalli Rajarajeshwari Nagar Link,Suburban
+12.9700,77.4650,7.1,Uttarahalli Mysore Road,Suburban
+13.0238,77.5288,7.4,Rajajinagar Block Basaveshwara Nagar,Residential
+13.0288,77.5338,7.8,Rajajinagar 9th Block,Residential
+13.0213,77.5263,7.3,Rajajinagar Mahalaxmi Link,Residential
+13.0300,77.5350,7.9,Rajajinagar Chord Road Circle,Residential
+13.0338,77.5388,7.6,Mahalaxmi Layout Goraguntepalya,Residential
+13.0388,77.5438,8.0,Mahalaxmi Layout West of Chord Road,Residential
+13.0313,77.5363,7.5,Mahalaxmi Layout Peenya Link,Residential
+13.0400,77.5450,8.1,Mahalaxmi Layout Yeshwanthpur Link,Residential
+13.0138,77.5188,7.2,Vijayanagar RPC Layout,Residential
+13.0188,77.5238,7.6,Vijayanagar Hampi Nagar,Residential
+13.0113,77.5163,7.1,Vijayanagar Magadi Road,Residential
+13.0200,77.5250,7.7,Vijayanagar Chord Road Link,Residential
+12.9838,77.7388,8.4,Brookfield EPIP Zone,IT Hub
+12.9888,77.7438,8.8,Brookfield Graphite India Junction,IT Hub
+12.9813,77.7363,8.3,Brookfield Marathahalli Link,IT Hub
+12.9900,77.7450,8.9,Brookfield Varthur Road,IT Hub
+12.9738,77.7488,8.2,AECS Layout B Block,Residential
+12.9788,77.7538,8.6,AECS Layout Singasandra Main Road,Residential
+12.9713,77.7463,8.1,AECS Layout HSR Link,Residential
+12.9800,77.7550,8.7,AECS Layout Sarjapur Link,Residential
+13.0538,77.6488,8.1,Kalkere Nagavara,Suburban
+13.0588,77.6538,8.5,Kalkere Thanisandra Main Road,Suburban
+13.0513,77.6463,8.0,Kalkere Banaswadi Link,Suburban
+13.0600,77.6550,8.6,Kalkere Horamavu Link,Suburban
+13.0438,77.6388,7.9,Horamavu Agara Village,Residential
+13.0488,77.6438,8.3,Horamavu Kalyan Nagar Link,Residential
+13.0413,77.6363,7.8,Horamavu Vignan Nagar,Residential
+13.0500,77.6450,8.4,Horamavu Ramamurthy Nagar Link,Residential
+13.0338,77.6338,7.8,Kammanahalli Varthur Road,Residential
+13.0388,77.6388,8.2,Kammanahalli Babusapalya,Residential
+13.0313,77.6313,7.7,Kammanahalli Lingarajapura,Residential
+13.0400,77.6400,8.3,Kammanahalli Mahadevapura Link,Residential
+13.0238,77.6288,8.0,Kalyan Nagar Horamavu Link,Residential
+13.0288,77.6338,8.4,Kalyan Nagar HAL Link,Residential
+13.0213,77.6263,7.9,Kalyan Nagar Babusapalya,Residential
+13.0300,77.6350,8.5,Kalyan Nagar Jeevan Bima Nagar,Residential
+12.9538,77.6488,8.3,Koramangala 8th Block Agara Link,Upscale Residential
+12.9588,77.6538,8.7,Koramangala 8th Block HSR Link,Upscale Residential
+12.9513,77.6463,8.2,Koramangala 8th Block Sarjapur Link,Upscale Residential
+12.9600,77.6550,8.8,Koramangala 8th Block Bellandur Link,Upscale Residential
+12.9438,77.6538,8.1,Agara Village,Residential
+12.9488,77.6588,8.5,Agara Outer Ring Road,Residential
+12.9413,77.6513,8.0,Agara Madiwala Link,Residential
+12.9500,77.6600,8.6,Agara HSR Layout Link,Residential
+12.9338,77.6438,8.5,Koramangala 7th Block Sony World Junction,Upscale Residential
+12.9388,77.6488,8.9,Koramangala 7th Block Sarjapur Road,Upscale Residential
+12.9313,77.6413,8.4,Koramangala 7th Block 80 Feet Road,Upscale Residential
+12.9400,77.6500,9.0,Koramangala 7th Block Intermediate Ring Road,Upscale Residential
+12.9038,77.6538,7.6,Madiwala Check Post,Residential
+12.9088,77.6588,8.0,Madiwala Koramangala Link,Residential
+12.9013,77.6513,7.5,Madiwala Lake Area,Residential
+12.9100,77.6600,8.1,Madiwala BTM Link,Residential
+12.8938,77.6588,7.4,Koramangala Extension Agara Link,Residential
+12.8988,77.6638,7.8,Koramangala Extension Sarjapur Link,Residential
+12.8913,77.6563,7.3,Koramangala Extension HSR Link,Residential
+12.9000,77.6650,7.9,Koramangala Extension HSR Link,Residential

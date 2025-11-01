@@ -1,0 +1,186 @@
+{% extends 'base.html' %}
+
+{% block title %}My Reports - SafeSpace{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-4">
+    <div class="col-lg-10">
+        <!-- Hero Section with Illustration -->
+        <div class="text-center mb-4">
+            <img src="https://illustrations.popsy.co/violet/graphic-design.svg" 
+                 alt="My Reports" 
+                 class="reports-hero-img mb-3"
+                 style="max-width: 220px; height: auto; opacity: 0.85;">
+            <h1 class="display-6 fw-bold mb-2" style="color: #8B5CF6;">My Reports</h1>
+            <p class="lead text-muted">Track your journey. Your history is private and secure.</p>
+        </div>
+
+        <div class="card shadow-sm mb-4">
+            <div class="card-body p-4">
+                <h2 class="card-title mb-2">Incident History</h2>
+                <p class="text-muted">View and manage your submitted incident reports. All data is encrypted and secure.</p>
+            </div>
+        </div>
+
+        {% if reports %}
+            {% for report in reports %}
+            <div class="card shadow-sm mb-3">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div>
+                            <h5 class="card-title mb-1">
+                                {% if report.incident_type %}
+                                    {{ report.incident_type | replace('_', ' ') | title }}
+                                {% else %}
+                                    Incident Report
+                                {% endif %}
+                            </h5>
+                            <p class="text-muted small mb-0">
+                                <svg width="14" height="14" fill="currentColor" class="me-1" viewBox="0 0 16 16" style="vertical-align: middle;">
+                                    <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
+                                    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"/>
+                                </svg>
+                                Submitted on {{ report.created_at.strftime('%B %d, %Y at %I:%M %p') }}
+                            </p>
+                        </div>
+                        <div class="d-flex gap-2">
+                            {% if report.posted_to_community %}
+                            <span class="badge bg-success">Shared with Community</span>
+                            {% endif %}
+                            {% if report.report_to_police %}
+                            <span class="badge bg-warning text-dark">Reported to Police</span>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        {% if report.location %}
+                        <div class="col-md-4 mb-2">
+                            <small class="text-muted d-block">Location</small>
+                            <strong>{{ report.location | replace('_', ' ') | title }}</strong>
+                        </div>
+                        {% endif %}
+                        {% if report.incident_date %}
+                        <div class="col-md-4 mb-2">
+                            <small class="text-muted d-block">Incident Date</small>
+                            <strong>{{ report.incident_date.strftime('%B %d, %Y') }}</strong>
+                        </div>
+                        {% endif %}
+                        {% if report.who_involved %}
+                        <div class="col-md-4 mb-2">
+                            <small class="text-muted d-block">Involved Party</small>
+                            <strong>{{ report.who_involved | replace('_', ' ') | title }}</strong>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    {% if report.ai_summary %}
+                    <div class="alert alert-light mb-3">
+                        <small class="text-muted d-block mb-1"><strong>AI Summary:</strong></small>
+                        <p class="mb-0" style="white-space: pre-line;">{{ report.ai_summary[:200] }}{% if report.ai_summary|length > 200 %}...{% endif %}</p>
+                    </div>
+                    {% endif %}
+
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-sm btn-outline-primary" onclick="viewReport({{ report.id }})">
+                            <svg width="14" height="14" fill="currentColor" class="me-1" viewBox="0 0 16 16">
+                                <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
+                                <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                            </svg>
+                            View Details
+                        </button>
+                        <a href="{{ url_for('main.download_report') }}?report_id={{ report.id }}" class="btn btn-sm btn-outline-secondary">
+                            <svg width="14" height="14" fill="currentColor" class="me-1" viewBox="0 0 16 16">
+                                <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                                <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                            </svg>
+                            Download
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Report Detail Modal -->
+            <div class="modal fade" id="reportModal{{ report.id }}" tabindex="-1">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Incident Report Details</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <h6 class="text-muted">AI Generated Summary</h6>
+                                <p style="white-space: pre-line;">{{ report.ai_summary or 'No summary available.' }}</p>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <strong>Incident Type:</strong><br>
+                                    {{ report.incident_type | replace('_', ' ') | title if report.incident_type else 'Not specified' }}
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <strong>Location:</strong><br>
+                                    {{ report.location | replace('_', ' ') | title if report.location else 'Not specified' }}
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <strong>Who Involved:</strong><br>
+                                    {{ report.who_involved | replace('_', ' ') | title if report.who_involved else 'Not specified' }}
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <strong>Incident Date:</strong><br>
+                                    {{ report.incident_date.strftime('%B %d, %Y') if report.incident_date else 'Not specified' }}
+                                </div>
+                                {% if report.incident_time %}
+                                <div class="col-md-6 mb-3">
+                                    <strong>Time:</strong><br>
+                                    {{ report.incident_time }}
+                                </div>
+                                {% endif %}
+                                {% if report.impact %}
+                                <div class="col-md-6 mb-3">
+                                    <strong>Impact:</strong><br>
+                                    {{ report.impact | replace('_', ' ') | title }}
+                                </div>
+                                {% endif %}
+                                {% if report.additional_details %}
+                                <div class="col-12 mb-3">
+                                    <strong>Additional Details:</strong><br>
+                                    <p class="text-muted">{{ report.additional_details }}</p>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <a href="{{ url_for('main.download_report') }}?report_id={{ report.id }}" class="btn btn-primary">Download Report</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+        <div class="card shadow-sm">
+            <div class="card-body text-center py-5">
+                <svg width="64" height="64" fill="currentColor" class="text-muted mb-3" viewBox="0 0 16 16">
+                    <path d="M2.5 3.5a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-11zm2-2a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6v7zm1.5.5A.5.5 0 0 1 1 13V6a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-13z"/>
+                </svg>
+                <h5 class="text-muted mb-2">No Reports Yet</h5>
+                <p class="text-muted mb-3">You haven't submitted any incident reports.</p>
+                <a href="{{ url_for('main.report_incident') }}" class="btn btn-primary">
+                    Submit Your First Report
+                </a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+function viewReport(reportId) {
+    const modal = new bootstrap.Modal(document.getElementById('reportModal' + reportId));
+    modal.show();
+}
+</script>
+
+{% endblock %}

@@ -1,0 +1,360 @@
+{% extends 'base.html' %}
+
+{% block title %}Community Support{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <!-- Hero Banner with Illustration -->
+        <div class="community-hero text-center mb-4">
+            <img src="https://illustrations.popsy.co/violet/team-spirit.svg" 
+                 alt="Community Support" 
+                 class="community-hero-img mb-3"
+                 style="max-width: 250px; height: auto; opacity: 0.9;">
+            <h1 class="display-5 fw-bold mb-2" style="color: #8B5CF6;">Community Support</h1>
+            <p class="lead" style="color: #E2E8F0; font-size: 1.2rem;">You are not alone. Share, connect, and heal together.</p>
+        </div>
+        
+        <div class="card shadow-sm mb-4">
+            <div class="card-body p-4">
+                <h2 class="card-title mb-3">Share Your Story</h2>
+                <p class="text-muted mb-3">
+                    A safe space to share experiences and receive support. Remember: you are not alone.
+                </p>
+                
+                <div class="alert alert-primary py-2">
+                    <small><strong>Guidelines:</strong> Be supportive • Respect privacy • No judgment • Report inappropriate content</small>
+                </div>
+            </div>
+        </div>
+
+        {% if posts %}
+            {% for post in posts %}
+            <div class="card shadow-sm mb-3" data-post-id="{{ post.id }}">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        {% if post.is_anonymous %}
+                        <div class="avatar-placeholder bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center" 
+                             style="width: 40px; height: 40px; font-size: 18px;">
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                            </svg>
+                        </div>
+                        <div class="ms-3">
+                            <strong class="text-muted">Anonymous</strong>
+                            <br>
+                            <small class="text-muted">Posted {{ post.timestamp.strftime('%B %d, %Y at %I:%M %p') }}</small>
+                        </div>
+                        {% else %}
+                        <div class="avatar-placeholder bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" 
+                             style="width: 40px; height: 40px; font-size: 18px; font-weight: bold;">
+                            {{ post.username[0].upper() if post.username else '?' }}
+                        </div>
+                        <div class="ms-3">
+                            <strong class="text-primary">{{ post.username }}</strong>
+                            <span class="badge bg-success ms-1" style="font-size: 0.65rem;">Verified User</span>
+                            <br>
+                            <small class="text-muted">Posted {{ post.timestamp.strftime('%B %d, %Y at %I:%M %p') }}</small>
+                        </div>
+                        {% endif %}
+                        <div class="ms-auto d-flex align-items-center gap-2">
+                            <span class="badge bg-info">{{ post.category }}</span>
+                            <button class="btn btn-sm btn-outline-danger delete-post-btn" data-post-id="{{ post.id }}" data-user-id="{{ post.user_id }}" title="Delete your post">
+                                <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16" class="me-1">
+                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
+                                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
+                                </svg>
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <p class="card-text" style="white-space: pre-line;">{{ post.summary }}</p>
+                    
+                    <div class="post-reactions mb-3">
+                        <button class="btn btn-sm btn-outline-danger reaction-btn" data-reaction="support" onclick="addReaction({{ post.id }}, 'support')">
+                            <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16" class="me-1">
+                                <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                            </svg>
+                            Support (<span class="count">{{ post.reactions.support }}</span>)
+                        </button>
+                        <button class="btn btn-sm btn-outline-primary reaction-btn" data-reaction="hug" onclick="addReaction({{ post.id }}, 'hug')">
+                            <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16" class="me-1">
+                                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+                            </svg>
+                            Hug (<span class="count">{{ post.reactions.hug }}</span>)
+                        </button>
+                        <button class="btn btn-sm btn-outline-success reaction-btn" data-reaction="solidarity" onclick="addReaction({{ post.id }}, 'solidarity')">
+                            <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16" class="me-1">
+                                <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8Zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022ZM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816ZM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0Zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z"/>
+                            </svg>
+                            Solidarity (<span class="count">{{ post.reactions.solidarity }}</span>)
+                        </button>
+                    </div>
+                    
+                    <hr>
+                    
+                    <div class="comments-section">
+                        <h6 class="mb-3">Supportive Comments (<span class="comment-count">{{ post.comments|length }}</span>)</h6>
+                        
+                        <div class="comments-list">
+                            {% for comment in post.comments %}
+                            <div class="comment mb-3 p-2 bg-light rounded">
+                                <div class="d-flex align-items-start">
+                                    {% if comment.is_anonymous %}
+                                    <div class="avatar-placeholder bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center" 
+                                         style="width: 30px; height: 30px; font-size: 14px;">
+                                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                                            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                                        </svg>
+                                    </div>
+                                    <div class="ms-2 flex-grow-1">
+                                        <strong class="text-muted">Anonymous</strong>
+                                        <small class="text-muted ms-2">{{ comment.timestamp.strftime('%B %d at %I:%M %p') }}</small>
+                                        <p class="mb-0 mt-1">{{ comment.text }}</p>
+                                    </div>
+                                    {% else %}
+                                    <div class="avatar-placeholder bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" 
+                                         style="width: 30px; height: 30px; font-size: 14px; font-weight: bold;">
+                                        {{ comment.username[0].upper() if comment.username else '?' }}
+                                    </div>
+                                    <div class="ms-2 flex-grow-1">
+                                        <strong class="text-primary">{{ comment.username }}</strong>
+                                        <span class="badge bg-success ms-1" style="font-size: 0.5rem;">✓</span>
+                                        <small class="text-muted ms-2">{{ comment.timestamp.strftime('%B %d at %I:%M %p') }}</small>
+                                        <p class="mb-0 mt-1">{{ comment.text }}</p>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        
+                        <form class="mt-3 comment-form" onsubmit="addComment(event, {{ post.id }})">
+                            <div class="input-group mb-2">
+                                <input type="text" class="form-control comment-input" placeholder="Add a supportive comment..." required>
+                                <button class="btn btn-primary" type="submit">Post</button>
+                            </div>
+                            {% if session.logged_in %}
+                            <div class="form-check">
+                                <input class="form-check-input anonymous-toggle" type="checkbox" id="anonymous-comment-{{ post.id }}" {% if session.get('default_anonymous') %}checked{% endif %}>
+                                <label class="form-check-label text-muted" for="anonymous-comment-{{ post.id }}" style="font-size: 0.85rem;">
+                                    Post as Anonymous
+                                </label>
+                            </div>
+                            {% endif %}
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+        <div class="alert alert-info">
+            <p class="mb-0">No posts yet. Be the first to share your story and receive community support.</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+// Add reaction to post
+async function addReaction(postId, reactionType) {
+    try {
+        const response = await fetch(`/api/react/${postId}/${reactionType}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            // Update the count in the UI
+            const postCard = document.querySelector(`[data-post-id="${postId}"]`);
+            const btn = postCard.querySelector(`[data-reaction="${reactionType}"] .count`);
+            btn.textContent = data.count;
+            
+            // Add visual feedback
+            const button = postCard.querySelector(`[data-reaction="${reactionType}"]`);
+            button.classList.add('active');
+            setTimeout(() => button.classList.remove('active'), 300);
+        }
+    } catch (error) {
+        console.error('Error adding reaction:', error);
+    }
+}
+
+// Add comment to post
+async function addComment(event, postId) {
+    event.preventDefault();
+    
+    const form = event.target;
+    const input = form.querySelector('.comment-input');
+    const commentText = input.value.trim();
+    const anonymousToggle = form.querySelector('.anonymous-toggle');
+    const isAnonymous = anonymousToggle ? anonymousToggle.checked : true;
+    
+    if (!commentText) return;
+    
+    try {
+        const response = await fetch(`/api/comment/${postId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ 
+                comment: commentText,
+                is_anonymous: isAnonymous
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            // Clear input
+            input.value = '';
+            
+            // Add comment to UI
+            const postCard = document.querySelector(`[data-post-id="${postId}"]`);
+            const commentsList = postCard.querySelector('.comments-list');
+            const commentCount = postCard.querySelector('.comment-count');
+            
+            const newComment = document.createElement('div');
+            newComment.className = 'comment mb-3 p-2 bg-light rounded';
+            
+            if (data.comment.is_anonymous) {
+                newComment.innerHTML = `
+                    <div class="d-flex align-items-start">
+                        <div class="avatar-placeholder bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center" 
+                             style="width: 30px; height: 30px; font-size: 14px;">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                            </svg>
+                        </div>
+                        <div class="ms-2 flex-grow-1">
+                            <strong class="text-muted">Anonymous</strong>
+                            <small class="text-muted ms-2">Just now</small>
+                            <p class="mb-0 mt-1">${escapeHtml(data.comment.text)}</p>
+                        </div>
+                    </div>
+                `;
+            } else {
+                const firstLetter = data.comment.username ? data.comment.username[0].toUpperCase() : '?';
+                newComment.innerHTML = `
+                    <div class="d-flex align-items-start">
+                        <div class="avatar-placeholder bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" 
+                             style="width: 30px; height: 30px; font-size: 14px; font-weight: bold;">
+                            ${firstLetter}
+                        </div>
+                        <div class="ms-2 flex-grow-1">
+                            <strong class="text-primary">${escapeHtml(data.comment.username)}</strong>
+                            <span class="badge bg-success ms-1" style="font-size: 0.5rem;">✓</span>
+                            <small class="text-muted ms-2">Just now</small>
+                            <p class="mb-0 mt-1">${escapeHtml(data.comment.text)}</p>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            commentsList.appendChild(newComment);
+            commentCount.textContent = parseInt(commentCount.textContent) + 1;
+            
+            // Show success feedback
+            showToast('Comment posted successfully!');
+        }
+    } catch (error) {
+        console.error('Error adding comment:', error);
+        showToast('Failed to post comment. Please try again.', 'error');
+    }
+}
+
+// Escape HTML to prevent XSS
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// Simple toast notification
+function showToast(message, type = 'success') {
+    const toast = document.createElement('div');
+    toast.className = `alert alert-${type === 'error' ? 'danger' : 'success'} position-fixed top-0 end-0 m-3`;
+    toast.style.zIndex = '9999';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+        toast.remove();
+    }, 3000);
+}
+
+// Delete post
+async function deletePost(postId) {
+    console.log('Delete post called for ID:', postId);
+    
+    if (!confirm('Are you sure you want to delete this post? This action cannot be undone.')) {
+        console.log('User cancelled deletion');
+        return;
+    }
+    
+    try {
+        console.log('Sending delete request to:', `/api/delete_post/${postId}`);
+        const response = await fetch(`/api/delete_post/${postId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        
+        console.log('Response status:', response.status);
+        const data = await response.json();
+        console.log('Response data:', data);
+        
+        if (data.success) {
+            // Remove the post card from the DOM
+            const postCard = document.querySelector(`[data-post-id="${postId}"]`);
+            if (postCard) {
+                postCard.style.transition = 'opacity 0.3s';
+                postCard.style.opacity = '0';
+                setTimeout(() => {
+                    postCard.remove();
+                    showToast('Post deleted successfully');
+                }, 300);
+            } else {
+                console.error('Could not find post card element');
+            }
+        } else {
+            console.error('Delete failed:', data.error);
+            showToast(data.error || 'Failed to delete post', 'error');
+        }
+    } catch (error) {
+        console.error('Error deleting post:', error);
+        showToast('Failed to delete post. Please try again.', 'error');
+    }
+}
+
+// Add event listeners for delete buttons
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.delete-post-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const postId = this.getAttribute('data-post-id');
+            deletePost(postId);
+        });
+    });
+});
+
+// Add CSS for button feedback
+const style = document.createElement('style');
+style.textContent = `
+    .reaction-btn.active {
+        transform: scale(1.1);
+        transition: transform 0.2s;
+    }
+`;
+document.head.appendChild(style);
+</script>
+{% endblock %}

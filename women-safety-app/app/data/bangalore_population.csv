@@ -1,0 +1,188 @@
+Latitude,Longitude,population_density,traffic_level,is_main_road,area
+12.9716,77.5946,18500,9,1,MG Road
+12.9720,77.5950,19200,9,1,MG Road Metro
+12.9714,77.5944,17800,8,1,MG Road Brigade
+12.9718,77.5948,18900,9,1,MG Road Trinity
+12.9698,77.5984,16500,8,1,Brigade Road
+12.9702,77.5988,17200,8,1,Brigade Church Street
+12.9696,77.5982,15800,7,1,Commercial Street
+12.9700,77.5986,16900,8,1,Brigade Metro
+12.9766,77.5993,22500,10,1,Majestic Bus Stand
+12.9771,77.5998,24200,10,1,Majestic Area
+12.9768,77.6001,22000,10,1,Kempegowda Bus Station
+12.9774,77.5995,23100,10,1,Majestic Platform Road
+12.9765,77.5990,21800,9,1,Majestic Metro
+12.9770,77.6003,21200,9,1,Majestic Subway
+12.9772,77.5997,22800,10,1,Majestic Circle
+12.9769,77.5992,22100,10,1,Majestic Bus Terminal
+12.9940,77.5807,17200,7,1,Shivajinagar
+12.9945,77.5812,18500,8,1,Russell Market
+12.9938,77.5804,16800,7,1,Shivajinagar Bus Stand
+12.9943,77.5809,17600,7,1,Siddhartha Layout
+12.9942,77.5815,18100,8,1,Shivajinagar Market
+12.9947,77.5805,17400,7,1,Shivajinagar Main Road
+12.9939,77.5811,16900,7,1,Russell Market Area
+12.9941,77.5808,17800,7,1,Shivajinagar Circle
+12.9748,77.6006,20200,9,1,City Market
+12.9745,77.6010,21000,9,1,KR Market
+12.9750,77.6008,19600,8,1,Krishnarajendra Market
+12.9747,77.6012,20500,9,1,City Market Main Road
+12.9752,77.6005,19900,8,1,KR Market Area
+12.9744,77.6009,19200,8,1,City Market Circle
+12.9749,77.6011,20700,9,1,Avenue Road Market
+12.9746,77.6007,19400,8,1,Chikpet Area
+12.9687,77.5960,15100,6,0,Kalasipalyam
+12.9690,77.5965,16200,6,1,Kalasipalyam Bus Stand
+12.9685,77.5958,14700,5,0,Kalasipalyam Market
+12.9692,77.5963,15600,6,0,Kalasipalyam Main Road
+12.9688,77.5961,14900,5,0,Kalasipalyam Circle
+12.9691,77.5967,16500,6,1,Kalasipalyam Junction
+12.9689,77.5959,14800,5,0,Kalasipalyam Area
+12.9986,77.7089,12500,7,1,KR Puram
+12.9990,77.7095,13200,7,1,KR Puram Railway Station
+12.9984,77.7092,12100,6,1,Krishnarajapuram
+12.9988,77.7088,12800,7,1,KR Puram Bus Stand
+12.9982,77.7091,12300,6,1,KR Puram Main Road
+12.9987,77.7097,10500,5,1,KR Puram Industrial Area
+12.9985,77.7090,13500,7,1,Krishnarajapuram Junction
+12.9989,77.7094,11800,6,1,KR Puram Market
+12.9505,77.5695,11800,5,0,Goripalya
+12.9508,77.5698,12500,5,0,Goripalya Main Road
+12.9503,77.5692,11400,4,0,Goripalya Market
+12.9510,77.5696,12100,5,0,Goripalya Circle
+12.9506,77.5694,11600,4,0,Goripalya Junction
+12.9507,77.5699,12700,5,0,Goripalya Area
+12.9504,77.5697,11300,4,0,Goripalya Main
+13.0365,77.5978,15800,8,1,Yeshwanthpur
+13.0370,77.5982,16500,9,1,Yeshwanthpur Railway Station
+13.0363,77.5975,15200,8,1,Yeshwanthpur Junction
+13.0368,77.5980,16100,8,1,Yeshwanthpur Metro
+13.0366,77.5976,13800,7,1,Yeshwanthpur Industrial Area
+13.0372,77.5984,16800,9,1,Yeshwanthpur Main Road
+13.0364,77.5979,15500,8,1,Yeshwanthpur Market
+13.0830,77.5808,14200,9,1,Hebbal
+13.0835,77.5812,15500,10,1,Hebbal Flyover
+13.0828,77.5805,10800,6,0,Hebbal Lake
+13.0832,77.5810,12500,7,1,Hebbal Industrial Area
+13.0837,77.5815,15200,9,1,Hebbal Main Road
+13.0829,77.5807,13500,8,1,Hebbal Circle
+13.0834,77.5809,12800,7,1,Hebbal Market
+13.0204,77.5892,11500,7,1,Peenya Industrial Area
+13.0208,77.5896,12200,7,1,Peenya
+13.0202,77.5890,11100,6,1,Peenya 1st Phase
+13.0206,77.5894,11800,7,1,Peenya 2nd Phase
+13.0210,77.5898,12500,7,1,Peenya Main Road
+13.0203,77.5891,10800,6,1,Peenya Industrial Estate
+13.0207,77.5895,12800,7,1,Peenya Junction
+12.9784,77.6408,17500,8,1,Whitefield
+12.9788,77.6412,18200,9,1,Whitefield ITPL
+12.9782,77.6406,16900,8,1,Whitefield Main Road
+12.9786,77.6410,17800,8,1,Whitefield Phoenix
+12.9352,77.6245,16800,8,1,Koramangala
+12.9356,77.6249,17500,8,1,Koramangala 5th Block
+12.9350,77.6243,16200,7,1,Koramangala Forum
+12.9354,77.6247,17100,8,1,Koramangala Sony Signal
+12.9279,77.6271,16500,7,1,Koramangala 5th Block
+12.9283,77.6275,17200,8,1,Koramangala 6th Block
+12.9277,77.6269,15900,7,1,Koramangala BDA
+12.9281,77.6273,16800,7,1,Koramangala Inner Ring
+12.9141,77.6100,14200,7,1,BTM Layout
+12.9145,77.6104,14800,7,1,BTM Layout 1st Stage
+12.9139,77.6098,13600,6,1,BTM Silk Board
+12.9143,77.6102,14500,7,1,BTM 5th Phase
+12.9698,77.7499,15200,8,1,Marathahalli
+12.9702,77.7503,15900,8,1,Marathahalli Bridge
+12.9696,77.7497,14600,7,1,Marathahalli ORR
+12.9700,77.7501,15500,8,1,Marathahalli Kundalahalli
+12.9634,77.6414,17200,8,1,Indiranagar
+12.9638,77.6418,18000,9,1,Indiranagar 100 Feet Road
+12.9632,77.6412,16800,8,1,Indiranagar Metro
+12.9636,77.6416,17600,8,1,Indiranagar CMH Road
+12.9538,77.4905,13500,6,1,Rajajinagar
+12.9542,77.4909,14200,7,1,Rajajinagar Metro
+12.9536,77.4903,13100,6,1,Rajajinagar 4th Block
+12.9540,77.4907,13800,6,1,Rajajinagar Main Road
+12.8456,77.6628,16200,8,1,Electronic City
+12.8460,77.6632,16800,8,1,Electronic City Phase 1
+12.8454,77.6626,15600,7,1,Electronic City Phase 2
+12.8458,77.6630,16500,8,1,Electronic City Metro
+12.9120,77.6476,15800,7,1,HSR Layout
+12.9124,77.6480,16500,8,1,HSR Layout Sector 1
+12.9118,77.6474,15200,7,1,HSR Layout 27th Main
+12.9122,77.6478,16100,7,1,HSR Layout BDA
+13.0143,77.5504,14500,7,1,Malleshwaram
+13.0147,77.5508,15200,7,1,Malleshwaram 8th Cross
+13.0141,77.5502,14100,6,1,Malleshwaram Metro
+13.0145,77.5506,14800,7,1,Malleshwaram Market
+13.0210,77.6387,13800,7,1,Banaswadi
+13.0214,77.6391,14500,7,1,Banaswadi Metro
+13.0208,77.6385,13400,6,1,Banaswadi Main Road
+13.0212,77.6389,14100,7,1,Banaswadi Market
+12.9500,77.5700,12200,5,0,Chamrajpet
+12.9550,77.5750,12800,6,0,Chamrajpet Market
+12.9600,77.5800,13500,6,1,Basavanagudi
+12.9650,77.5850,14200,7,1,Jayanagar
+12.9700,77.5900,11500,5,0,Lalbagh Area
+13.0000,77.6000,13800,6,1,Frazer Town
+13.0100,77.6100,14200,7,1,Ulsoor
+12.9300,77.6000,12500,6,1,Bommanahalli
+12.9400,77.6100,13800,7,1,JP Nagar
+12.9200,77.6200,14500,7,1,Bannerghatta Road
+12.8900,77.6400,15200,7,1,Electronic City Outer
+13.0500,77.5500,15800,7,1,Sadashivanagar
+13.0600,77.5600,14200,6,1,RT Nagar
+13.0700,77.5700,13500,6,1,Sahakara Nagar
+12.9100,77.6300,13200,6,1,Hulimavu
+12.9000,77.6500,12800,6,1,Begur
+12.9800,77.7200,15800,8,1,Hoodi
+12.9900,77.7300,14500,7,1,Varthur
+13.0300,77.6200,13800,7,1,Ramamurthy Nagar
+13.0400,77.6300,14500,7,1,Mahadevapura
+12.9250,77.6800,16200,8,1,Sarjapur Road
+12.9150,77.6900,15500,7,1,Carmelram
+13.0800,77.5900,14800,8,1,Yelahanka
+13.0900,77.6000,14200,7,1,Yelahanka New Town
+13.1000,77.6100,13500,6,1,Jakkur
+12.8700,77.6300,11800,6,1,Bommasandra
+12.8600,77.6400,11200,5,1,Attibele Border
+12.8800,77.6200,12500,6,1,Jigani
+12.9450,77.4800,13100,6,1,Nagarbhavi
+12.9550,77.4700,12500,5,1,Kengeri
+12.9650,77.4600,11800,5,0,Uttarahalli
+13.0250,77.5300,14200,7,1,Rajajinagar Block
+13.0350,77.5400,14800,7,1,Mahalaxmi Layout
+13.0150,77.5200,13500,6,1,Vijayanagar
+12.9850,77.7400,17200,8,1,Brookfield
+12.9750,77.7500,16500,8,1,AECS Layout
+13.0550,77.6500,13800,7,1,Kalkere
+13.0450,77.6400,14200,7,1,Horamavu
+13.0350,77.6350,14800,7,1,Kammanahalli
+13.0250,77.6300,15500,8,1,Kalyan Nagar
+12.9550,77.6500,17800,8,1,Koramangala 8th Block
+12.9450,77.6550,16800,7,1,Agara
+12.9350,77.6450,18200,8,1,Koramangala 7th Block
+12.9050,77.6550,14500,7,1,Madiwala
+12.8950,77.6600,13800,6,1,Koramangala Extension
+12.9650,77.6300,17500,8,1,Domlur
+12.9750,77.6350,16800,8,1,HAL Airport
+12.9850,77.6250,16200,8,1,Old Airport Road
+12.9950,77.6150,14800,7,1,Jeevanbhima Nagar
+13.0050,77.6050,14200,7,1,CV Raman Nagar
+12.9300,77.5700,12800,6,0,Banashankari
+12.9400,77.5800,13500,6,1,Jayanagar 4th Block
+12.9350,77.5900,13200,6,1,BTM 2nd Stage
+12.9200,77.6100,13800,7,1,JP Nagar 7th Phase
+12.9100,77.6000,13200,6,1,Uttarahalli Main
+12.9450,77.6200,14800,7,1,Wilson Garden
+12.9550,77.6300,15500,7,1,Ejipura
+12.9600,77.6400,16200,8,1,Koramangala 1st Block
+12.9250,77.6500,15800,7,1,HSR Extension
+12.9150,77.6400,14800,7,1,Somasundarapalya
+12.9050,77.6300,13800,6,1,Bilekahalli
+12.8950,77.6200,13200,6,1,Hongasandra
+12.8850,77.6100,12500,6,1,Begur Road
+12.9800,77.5900,15200,7,1,Richmond Town
+12.9900,77.6000,15800,7,1,Benson Town
+13.0000,77.6100,16200,8,1,Kasturi Nagar
+13.0100,77.6200,15500,7,1,HBR Layout
+13.0200,77.6250,16800,8,1,Kalyan Nagar Extension

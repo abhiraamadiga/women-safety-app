@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="SafeSpace - A secure, anonymous platform for women's safety reporting and community support">
+    <meta name="theme-color" content="#6B7FD7">
+    <title>{% block title %}Women's Safety App{% endblock %}</title>
+    
+    <!-- Skip to content for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/enhanced-style.css') }}">
+    
+    {% block extra_css %}{% endblock %}
+    
+    {% block extra_head %}{% endblock %}
+    <style>
+        /* SOS Floating Action Button */
+        .sos-fab{
+            position: fixed;
+            left: 16px;
+            bottom: 20px;
+            z-index: 1050;
+            background: linear-gradient(135deg, #DC2626 0%, #EF4444 100%);
+            color: #fff !important;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            width: 72px;
+            height: 72px;
+            box-shadow: 0 8px 24px rgba(220,38,38,0.5), 0 0 0 0 rgba(220,38,38,0.7);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 0.7rem;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+            animation: sosPulse 2s infinite;
+            cursor: pointer;
+        }
+        
+        @keyframes sosPulse {
+            0% {
+                box-shadow: 0 8px 24px rgba(220,38,38,0.5), 0 0 0 0 rgba(220,38,38,0.7);
+            }
+            50% {
+                box-shadow: 0 8px 24px rgba(220,38,38,0.5), 0 0 0 15px rgba(220,38,38,0);
+            }
+            100% {
+                box-shadow: 0 8px 24px rgba(220,38,38,0.5), 0 0 0 0 rgba(220,38,38,0);
+            }
+        }
+        
+        .sos-fab:hover{ 
+            transform: scale(1.1); 
+            color: #fff !important;
+            animation: sosPulseFast 1s infinite;
+        }
+        
+        @keyframes sosPulseFast {
+            0%, 100% {
+                box-shadow: 0 12px 32px rgba(220,38,38,0.6), 0 0 0 0 rgba(220,38,38,0.7);
+            }
+            50% {
+                box-shadow: 0 12px 32px rgba(220,38,38,0.6), 0 0 0 20px rgba(220,38,38,0);
+            }
+        }
+        
+        .sos-fab svg {
+            transition: transform 0.3s ease;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+        .sos-fab:hover svg {
+            transform: scale(1.15) rotate(15deg);
+        }
+        
+        .sos-fab .sos-text {
+            font-size: 1rem;
+            margin-top: 2px;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+        
+        @media (max-width: 576px){
+            .sos-fab{ 
+                left: 12px; 
+                bottom: 16px; 
+                width: 68px;
+                height: 68px;
+            }
+        }
+        
+        /* Emergency Call Button (smaller, secondary) */
+        .emergency-fab{
+            position: fixed;
+            left: 16px;
+            bottom: 110px;
+            z-index: 1049;
+            background: linear-gradient(135deg, #2D3748 0%, #1a202c 100%);
+            color: #fff !important;
+            border-radius: 50px;
+            padding: 0.75rem 1rem;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+        .emergency-fab:hover{ 
+            transform: translateY(-2px); 
+            color: #fff; 
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+        }
+        @media (max-width: 576px){
+            .emergency-fab{ 
+                left: 12px; 
+                bottom: 100px; 
+                padding: .65rem .9rem;
+                font-size: 0.8rem;
+            }
+            .emergency-fab .label{ 
+                font-size: 0.75rem;
+            }
+        }
+        
+        /* Enhanced navbar styling */
+        .navbar{
+            backdrop-filter: blur(10px);
+            background: rgba(255,255,255,0.98) !important;
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+        }
+        
+        /* Auth top-right area - refined positioning */
+        .auth-area-wrapper{
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+        }
+        .navbar-toggler{
+            margin-right: 0.5rem;
+        }
+        
+        /* Avatar styling */
+        .avatar-circle{
+            width: 38px; 
+            height: 38px; 
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6B7FD7 0%, #9B7EDE 100%);
+            color: #fff; 
+            display: inline-flex; 
+            align-items: center; 
+            justify-content: center;
+            font-weight: 700; 
+            font-size: 0.95rem;
+            letter-spacing: .5px;
+            box-shadow: 0 4px 12px rgba(107,127,215,.35);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255,255,255,0.9);
+        }
+        .avatar-circle:hover{
+            transform: scale(1.05);
+            box-shadow: 0 6px 16px rgba(107,127,215,.45);
+        }
+        
+        /* Compact auth buttons */
+        .auth-btn{
+            font-size: 0.875rem;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .auth-btn-login{
+            color: #4A5568;
+            border: 1.5px solid #E2E8F0;
+            background: #fff;
+        }
+        .auth-btn-login:hover{
+            background: #F7FAFC;
+            color: #2D3748;
+            border-color: #CBD5E0;
+        }
+        .auth-btn-signup{
+            background: linear-gradient(135deg, #6B7FD7 0%, #9B7EDE 100%);
+            color: #fff !important;
+            border: none;
+            box-shadow: 0 2px 8px rgba(107,127,215,0.25);
+        }
+        .auth-btn-signup:hover{
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(107,127,215,0.35);
+        }
+        
+        /* Nav links enhanced */
+        .nav-link{
+            font-weight: 500;
+            color: #4A5568 !important;
+            transition: all 0.2s ease;
+            border-radius: 8px;
+        }
+        .nav-link:hover{
+            color: #6B7FD7 !important;
+            background: rgba(107,127,215,0.08);
+        }
+        .nav-link svg{
+            opacity: 0.7;
+            transition: opacity 0.2s ease;
+        }
+        .nav-link:hover svg{
+            opacity: 1;
+        }
+        
+        /* Dropdown menu polish */
+        .dropdown-menu{
+            border: none;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+            border-radius: 12px;
+            padding: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .dropdown-item{
+            border-radius: 8px;
+            padding: 0.6rem 1rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        .dropdown-item:hover{
+            background: linear-gradient(135deg, rgba(107,127,215,0.1) 0%, rgba(155,126,222,0.1) 100%);
+            color: #6B7FD7;
+        }
+        
+        /* Brand enhancement */
+        .navbar-brand{
+            transition: transform 0.2s ease;
+        }
+        .navbar-brand:hover{
+            transform: translateY(-1px);
+        }
+        
+        /* Mobile optimization */
+        @media (max-width: 991px){
+            .navbar-collapse{
+                margin-top: 1rem;
+                padding: 1rem;
+                background: #F7FAFC;
+                border-radius: 12px;
+                margin-left: -0.5rem;
+                margin-right: -0.5rem;
+            }
+        }
+        
+        @media (min-width: 992px){
+            .auth-area-wrapper{
+                margin-left: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Enhanced Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="{{ url_for('main.index') }}">
+                <svg width="28" height="28" fill="currentColor" viewBox="0 0 16 16" style="color: #667eea;">
+                    <path d="M5.338 1.59a61.44 61.44 0 0 0-2.837.856.481.481 0 0 0-.328.39c-.554 4.157.726 7.19 2.253 9.188a10.725 10.725 0 0 0 2.287 2.233c.346.244.652.42.893.533.12.057.218.095.293.118a.55.55 0 0 0 .101.025.615.615 0 0 0 .1-.025c.076-.023.174-.061.294-.118.24-.113.547-.29.893-.533a10.726 10.726 0 0 0 2.287-2.233c1.527-1.997 2.807-5.031 2.253-9.188a.48.48 0 0 0-.328-.39c-.651-.213-1.75-.56-2.837-.855C9.552 1.29 8.531 1.067 8 1.067c-.53 0-1.552.223-2.662.524zM5.072.56C6.157.265 7.31 0 8 0s1.843.265 2.928.56c1.11.3 2.229.655 2.887.87a1.54 1.54 0 0 1 1.044 1.262c.596 4.477-.787 7.795-2.465 9.99a11.775 11.775 0 0 1-2.517 2.453 7.159 7.159 0 0 1-1.048.625c-.28.132-.581.24-.829.24s-.548-.108-.829-.24a7.158 7.158 0 0 1-1.048-.625 11.777 11.777 0 0 1-2.517-2.453C1.928 10.487.545 7.169 1.141 2.692A1.54 1.54 0 0 1 2.185 1.43 62.456 62.456 0 0 1 5.072.56z"/>
+                </svg>
+                <span style="font-weight: 700; background: linear-gradient(135deg, #6B7FD7 0%, #9B7EDE 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">SafeSpace</span>
+            </a>
+            
+            <div class="auth-area-wrapper ms-auto">
+                {% if session.get('logged_in') %}
+                <div class="dropdown">
+                    {% set display_name = (session.get('user_name') or session.get('user_email') or '') %}
+                    {% set initial = display_name[:1] | upper %}
+                    <a class="avatar-circle dropdown-toggle d-flex" href="#" role="button" id="hdrUser" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Account menu" style="text-decoration: none;">
+                        {{ initial or 'U' }}
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="hdrUser">
+                        <li><a class="dropdown-item d-flex align-items-center gap-2" href="{{ url_for('main.my_reports') }}">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M2.5 3.5a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-11zm2-2a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6v7zm1.5.5A.5.5 0 0 1 1 13V6a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-13z"/>
+                            </svg>
+                            My Reports
+                        </a></li>
+                        <li><a class="dropdown-item d-flex align-items-center gap-2" href="{{ url_for('main.settings') }}">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"/>
+                                <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319z"/>
+                            </svg>
+                            Settings
+                        </a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item d-flex align-items-center gap-2 text-danger" href="{{ url_for('main.logout') }}">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z"/>
+                                <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
+                            </svg>
+                            Logout
+                        </a></li>
+                    </ul>
+                </div>
+                {% else %}
+                <a href="{{ url_for('main.login') }}" class="auth-btn auth-btn-login">Login</a>
+                <a href="{{ url_for('main.signup') }}" class="auth-btn auth-btn-signup">Sign Up</a>
+                {% endif %}
+                <button class="navbar-toggler border-0 ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link px-3 py-2" href="{{ url_for('main.index') }}">
+                            <svg width="16" height="16" fill="currentColor" class="me-1" viewBox="0 0 16 16">
+                                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+                            </svg>
+                            Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-3 py-2" href="{{ url_for('main.report_incident') }}">
+                            <svg width="16" height="16" fill="currentColor" class="me-1" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                            </svg>
+                            Report Incident
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-3 py-2" href="{{ url_for('main.community_support') }}">
+                            <svg width="16" height="16" fill="currentColor" class="me-1" viewBox="0 0 16 16">
+                                <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8Zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022ZM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816ZM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0Zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z"/>
+                            </svg>
+                            Community
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-3 py-2" href="{{ url_for('main.safe_routes') }}">
+                            <svg width="16" height="16" fill="currentColor" class="me-1" viewBox="0 0 16 16">
+                                <path d="M12.166 8.94c-.524 1.062-1.234 2.05-1.908 2.938C9.55 12.997 8.8 13.84 8 14.598c-.8-.757-1.55-1.6-2.258-2.72-.674-.888-1.384-1.876-1.908-2.938C3.31 7.959 3 7.06 3 6a5 5 0 1 1 10 0c0 1.06-.31 1.959-.834 2.94z"/>
+                                <path d="M8 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
+                            </svg>
+                            Safe Route
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-3 py-2" href="{{ url_for('main.fake_call') }}">
+                            <svg width="16" height="16" fill="currentColor" class="me-1" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
+                            </svg>
+                            Fake Call
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link px-3 py-2" href="{{ url_for('main.emergency_contacts') }}">
+                            <svg width="16" height="16" fill="currentColor" class="me-1" viewBox="0 0 16 16">
+                                <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                                <path fill-rule="evenodd" d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z"/>
+                                <path d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/>
+                            </svg>
+                            Emergency Contacts
+                        </a>
+                    </li>
+                    
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </div>
+
+    <footer class="mt-5 py-3 bg-light text-center">
+        <div class="container">
+            <p class="text-muted mb-0">Your safety and privacy are our priority. All data is encrypted and secure.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    {% block extra_scripts %}{% endblock %}
+
+    <!-- Floating SOS Button (Primary) -->
+    <a href="{{ url_for('main.sos_center') }}" class="sos-fab" aria-label="Emergency SOS - Get immediate help">
+        <svg width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0ZM2.04 4.326c.325 1.329 2.532 2.54 3.717 3.19.48.263.793.434.743.484-.08.08-.162.158-.242.234-.416.396-.787.749-.758 1.266.035.634.618.824 1.214 1.017.577.188 1.168.38 1.286.983.082.417-.075.988-.22 1.52-.215.782-.406 1.48.22 1.48 1.5-.5 3.798-3.186 4-5 .138-1.243-2-2-3.5-2.5-.478-.16-.755.081-.99.284-.172.15-.322.279-.51.216-.445-.148-2.5-2-1.5-2.5.78-.39.952-.171 1.227.182.078.099.163.208.273.318.609.304.662-.132.723-.633.039-.322.081-.671.277-.867.434-.434 1.265-.791 2.028-1.12.712-.306 1.365-.587 1.579-.88A7 7 0 1 1 2.04 4.327Z"/>
+        </svg>
+        <span class="sos-text">SOS</span>
+    </a>
+    
+    <!-- Floating Emergency Call Button (Secondary) -->
+    <a href="tel:181" class="emergency-fab" aria-label="Call Emergency 181">
+        <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
+        </svg>
+        <span class="label">181</span>
+    </a>
+</body>
+</html>
+    <button id="chatFloatingBtn" class="chat-floating-btn" aria-label="Open Support Chat">
+        <svg width="28" height="28" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M2.678 11.894a1 1 0 0 1 .287.801 10.97 10.97 0 0 1-.398 2c1.395-.323 2.247-.697 2.634-.893a1 1 0 0 1 .71-.074A8.06 8.06 0 0 0 8 14c3.996 0 7-2.807 7-6 0-3.192-3.004-6-7-6S1 4.808 1 8c0 1.468.617 2.83 1.678 3.894zm-.493 3.905a21.682 21.682 0 0 1-.713.129c-.2.032-.352-.176-.273-.362a9.68 9.68 0 0 0 .244-.637l.003-.01c.248-.72.45-1.548.524-2.319C.743 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.52.263-1.639.742-3.468 1.105z"/>
+        </svg>
+    </button>
+
+    <!-- Chat Modal Popup -->
+    <div id="chatModal" class="chat-modal">
+        <div class="chat-modal-content">
+            <!-- Chat Header -->
+            <div class="chat-header">
+                <div class="d-flex align-items-center gap-2">
+                    <div class="chat-avatar">
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                            <path d="M4.285 9.567a.5.5 0 0 1 .683.183A3.498 3.498 0 0 0 8 11.5a3.498 3.498 0 0 0 3.032-1.75.5.5 0 1 1 .866.5A4.498 4.498 0 0 1 8 12.5a4.498 4.498 0 0 1-3.898-2.25.5.5 0 0 1 .183-.683zM7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5zm4 0c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h6 class="mb-0" style="font-weight: 700; color: #fff;">SafeSpace Support</h6>
+                        <small style="color: rgba(255,255,255,0.9); font-size: 0.75rem;">AI Companion</small>
+                    </div>
+                </div>
+                <button id="closeChatBtn" class="chat-close-btn" aria-label="Close chat">
+                    <svg width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Chat Messages -->
+            <div id="chatMessages" class="chat-messages">
+                <!-- Welcome Message -->
+                <div id="welcomeMessage" class="ai-message">
+                    <div class="message-content">
+                        <p class="mb-2"><strong>Welcome to SafeSpace Support.</strong> I'm here to listen and help.</p>
+                        <p class="mb-3" style="font-size: 0.9rem;">How can I support you today?</p>
+                        <div class="quick-actions">
+                            <button class="quick-action-btn" onclick="sendQuickMessage('I need someone to talk to')">I need to talk</button>
+                            <button class="quick-action-btn" onclick="sendQuickMessage('Can you give me safety tips?')">Safety tips</button>
+                            <button class="quick-action-btn" onclick="sendQuickMessage('I\'m feeling anxious and scared')">Feeling anxious</button>
+                            <button class="quick-action-btn" onclick="sendQuickMessage('How can I cope with this situation?')">Coping strategies</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Typing Indicator -->
+            <div id="typingIndicator" class="typing-indicator" style="display: none;">
+                <div class="typing-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+
+            <!-- Chat Input -->
+            <div class="chat-input-container">
+                <div class="helpline-info-mini">
+                    <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
+                    </svg>
+                    <span>Emergency: 181 | Police: 100</span>
+                </div>
+                <div class="chat-input-wrapper">
+                    <input type="text" id="chatInput" class="chat-input" placeholder="Type your message..." autocomplete="off">
+                    <button id="sendBtn" class="send-btn" aria-label="Send message">
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* Floating Chat Button */
+        .chat-floating-btn {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1E88E5 0%, #42A5F5 100%);
+            border: none;
+            box-shadow: 0 8px 24px rgba(30, 136, 229, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1049;
+            transition: all 0.3s ease;
+            color: white;
+        }
+        .chat-floating-btn:hover {
+            transform: scale(1.1) translateY(-2px);
+            box-shadow: 0 12px 32px rgba(30, 136, 229, 0.5);
+        }
+        .chat-floating-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Chat Modal */
+        .chat-modal {
+            display: none;
+            position: fixed;
+            right: 20px;
+            bottom: 90px;
+            z-index: 1050;
+            width: 380px;
+            max-width: calc(100vw - 40px);
+            height: 600px;
+            max-height: calc(100vh - 120px);
+            animation: slideUp 0.3s ease-out;
+        }
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .chat-modal.show {
+            display: block;
+        }
+
+        .chat-modal-content {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        /* Chat Header */
+        .chat-header {
+            background: linear-gradient(135deg, #1E88E5 0%, #42A5F5 100%);
+            padding: 1rem 1.25rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 16px 16px 0 0;
+        }
+        .chat-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+        }
+        .chat-close-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #fff;
+            transition: all 0.2s ease;
+        }
+        .chat-close-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: rotate(90deg);
+        }
+
+        /* Chat Messages */
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.25rem;
+            background: #F8F9FA;
+        }
+        .user-message, .ai-message {
+            margin-bottom: 1rem;
+            animation: fadeIn 0.3s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .user-message .message-content {
+            background: linear-gradient(135deg, #1E88E5 0%, #42A5F5 100%);
+            color: #fff;
+            padding: 0.75rem 1rem;
+            border-radius: 16px 16px 4px 16px;
+            margin-left: auto;
+            max-width: 85%;
+            width: fit-content;
+            word-wrap: break-word;
+        }
+        .ai-message .message-content {
+            background: #fff;
+            color: #2D3748;
+            padding: 0.75rem 1rem;
+            border-radius: 16px 16px 16px 4px;
+            max-width: 90%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            word-wrap: break-word;
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+        .quick-action-btn {
+            background: linear-gradient(135deg, rgba(30,136,229,0.1) 0%, rgba(66,165,245,0.1) 100%);
+            border: 1px solid rgba(30,136,229,0.3);
+            color: #1E88E5;
+            padding: 0.5rem 0.875rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .quick-action-btn:hover {
+            background: linear-gradient(135deg, #1E88E5 0%, #42A5F5 100%);
+            color: #fff;
+            transform: translateY(-1px);
+        }
+
+        /* Typing Indicator */
+        .typing-indicator {
+            padding: 0 1.25rem 0.75rem;
+            background: #F8F9FA;
+        }
+        .typing-dots {
+            background: #fff;
+            padding: 0.75rem 1rem;
+            border-radius: 16px;
+            display: inline-flex;
+            gap: 0.4rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .typing-dots span {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #1E88E5;
+            animation: typing 1.4s infinite;
+        }
+        .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); opacity: 0.7; }
+            30% { transform: translateY(-10px); opacity: 1; }
+        }
+
+        /* Chat Input */
+        .chat-input-container {
+            background: #fff;
+            padding: 0.75rem 1rem;
+            border-top: 1px solid #E2E8F0;
+        }
+        .helpline-info-mini {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            color: #718096;
+            margin-bottom: 0.5rem;
+            padding: 0.4rem 0.6rem;
+            background: #F7FAFC;
+            border-radius: 8px;
+        }
+        .chat-input-wrapper {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .chat-input {
+            flex: 1;
+            border: 1.5px solid #E2E8F0;
+            border-radius: 24px;
+            padding: 0.75rem 1rem;
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+        .chat-input:focus {
+            border-color: #1E88E5;
+            box-shadow: 0 0 0 3px rgba(30,136,229,0.1);
+        }
+        .send-btn {
+            background: linear-gradient(135deg, #1E88E5 0%, #42A5F5 100%);
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #fff;
+            transition: all 0.2s ease;
+        }
+        .send-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(30,136,229,0.3);
+        }
+        .send-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 576px) {
+            .chat-modal {
+                right: 10px;
+                bottom: 80px;
+                width: calc(100vw - 20px);
+                height: calc(100vh - 100px);
+                max-height: calc(100vh - 100px);
+            }
+            .chat-floating-btn {
+                right: 15px;
+                bottom: 15px;
+                width: 56px;
+                height: 56px;
+            }
+        }
+    </style>
+
+    <script>
+        // Chat Modal Functionality
+        const chatFloatingBtn = document.getElementById('chatFloatingBtn');
+        const chatModal = document.getElementById('chatModal');
+        const closeChatBtn = document.getElementById('closeChatBtn');
+        const chatInput = document.getElementById('chatInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const chatMessages = document.getElementById('chatMessages');
+        const typingIndicator = document.getElementById('typingIndicator');
+        const welcomeMessage = document.getElementById('welcomeMessage');
+
+        // Toggle chat modal
+        chatFloatingBtn.addEventListener('click', () => {
+            chatModal.classList.toggle('show');
+            if (chatModal.classList.contains('show')) {
+                chatInput.focus();
+            }
+        });
+
+        closeChatBtn.addEventListener('click', () => {
+            chatModal.classList.remove('show');
+        });
+
+        // Send message
+        async function sendMessage() {
+            const message = chatInput.value.trim();
+            if (!message) return;
+
+            // Hide welcome message after first message
+            if (welcomeMessage) {
+                welcomeMessage.style.display = 'none';
+            }
+
+            // Add user message
+            addUserMessage(message);
+            chatInput.value = '';
+
+            // Show typing indicator
+            showTyping();
+
+            try {
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ message: message })
+                });
+
+                const data = await response.json();
+                hideTyping();
+
+                if (data.message) {
+                    addAIMessage(data.message);
+                } else if (data.error) {
+                    addAIMessage(data.error);
+                } else {
+                    addAIMessage('I\'m having trouble connecting right now. Please call 181 for immediate help.');
+                }
+            } catch (error) {
+                hideTyping();
+                addAIMessage('I apologize, but I\'m having technical difficulties. Please reach out to emergency helpline 181 or police at 100 for immediate assistance.');
+            }
+        }
+
+        function addUserMessage(text) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'user-message';
+            messageDiv.innerHTML = `<div class="message-content">${escapeHtml(text)}</div>`;
+            chatMessages.appendChild(messageDiv);
+            scrollToBottom();
+        }
+
+        function addAIMessage(text) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'ai-message';
+            messageDiv.innerHTML = `<div class="message-content">${escapeHtml(text)}</div>`;
+            chatMessages.appendChild(messageDiv);
+            scrollToBottom();
+        }
+
+        function showTyping() {
+            typingIndicator.style.display = 'block';
+            scrollToBottom();
+        }
+
+        function hideTyping() {
+            typingIndicator.style.display = 'none';
+        }
+
+        function scrollToBottom() {
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function sendQuickMessage(message) {
+            chatInput.value = message;
+            sendMessage();
+        }
+
+        // Event listeners
+        sendBtn.addEventListener('click', sendMessage);
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html>

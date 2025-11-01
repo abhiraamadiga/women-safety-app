@@ -1,0 +1,723 @@
+{% extends 'base.html' %}
+
+{% block title %}SOS Center{% endblock %}
+
+{% block extra_css %}
+<style>
+  :root{
+    --bg-0: #0b1220; --bg-1: #0f1724; --muted: rgba(255,255,255,0.75);
+    --accent:#ff6b6b; --accent-2:#ff8a7a; --success:#51cf66; --violet:#8B5CF6;
+  }
+  .sos-hero{ background: radial-gradient(800px 400px at 10% 10%, rgba(255,107,107,0.06), transparent), linear-gradient(135deg, var(--bg-0) 0%, var(--bg-1) 100%); color:#fff; border-radius:18px; padding:28px; margin-top:18px; }
+  .sos-title{ font-weight:800; font-size:28px; letter-spacing:.2px; }
+  .sos-sub{ color:var(--muted); }
+  .card-lite{ background: rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); border-radius:16px; padding:18px; color:#fff; }
+  .btn-sos{ display:inline-flex; align-items:center; justify-content:center; gap:10px; width:100%; padding:18px; border-radius:14px; border:none; font-weight:800; font-size:18px; color:#fff; background: radial-gradient(circle at 30% 30%, rgba(255,120,120,0.12), transparent), linear-gradient(90deg,#ff6b6b,#ff4d4d); box-shadow: 0 12px 34px rgba(255,77,77,0.14); }
+  .btn-stop{ background: linear-gradient(90deg,#334155,#0f172a); }
+  .btn-ghost{ background: transparent; border:1px solid rgba(255,255,255,0.12); color:#fff; }
+  .status{ font-size:14px; color:var(--muted); background: rgba(255,255,255,0.05); border-radius:12px; padding:12px; }
+  .recording-dot{ width:10px; height:10px; border-radius:50%; background:#ff3b3b; animation: blink 1s infinite; display:inline-block; }
+  @keyframes blink{ 0%,50%{opacity:1;} 51%,100%{opacity:.3;} }
+  video{ width:100%; border-radius:12px; background:#0b1220; display:none; max-height:260px; object-fit:cover; }
+  
+  /* Countdown Overlay */
+  .countdown-overlay { 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    z-index: 10000; 
+    display: none; 
+    justify-content: center; 
+    align-items: center; 
+    background: radial-gradient(circle at center, rgba(255,0,0,0.95), rgba(139,0,0,0.98)); 
+    animation: pulse 1s infinite;
+  }
+  .countdown-overlay.active { display: flex; }
+  
+  @keyframes pulse { 
+    0%, 100% { background: radial-gradient(circle at center, rgba(255,0,0,0.95), rgba(139,0,0,0.98)); } 
+    50% { background: radial-gradient(circle at center, rgba(255,50,50,0.98), rgba(160,0,0,1)); }
+  }
+  
+  .countdown-content { 
+    text-align: center; 
+    color: white;
+  }
+  
+  .countdown-number { 
+    font-size: 180px; 
+    font-weight: 900; 
+    line-height: 1; 
+    text-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    margin-bottom: 20px;
+  }
+  
+  .countdown-text { 
+    font-size: 32px; 
+    font-weight: 700; 
+    text-transform: uppercase; 
+    letter-spacing: 3px;
+    margin-bottom: 30px;
+  }
+  
+  .countdown-warning { 
+    font-size: 20px; 
+    opacity: 0.9;
+    margin-bottom: 40px;
+  }
+  
+  /* Slide to Cancel */
+  .slide-to-cancel-container {
+    width: 350px;
+    height: 70px;
+    background: rgba(255, 255, 255, 0.2);
+    border: 3px solid white;
+    border-radius: 50px;
+    position: relative;
+    overflow: hidden;
+    cursor: grab;
+    user-select: none;
+  }
+  
+  .slide-to-cancel-track {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.4);
+    width: 0%;
+    transition: width 0.1s ease;
+    border-radius: 50px;
+  }
+  
+  .slide-to-cancel-thumb {
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    width: 60px;
+    height: 60px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: left 0.1s ease;
+    cursor: grab;
+  }
+  
+  .slide-to-cancel-thumb:active {
+    cursor: grabbing;
+  }
+  
+  .slide-to-cancel-text {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 700;
+    color: white;
+    pointer-events: none;
+    letter-spacing: 1px;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Countdown Overlay -->
+<div class="countdown-overlay" id="countdownOverlay">
+  <div class="countdown-content">
+    <div class="countdown-number" id="countdownNumber">5</div>
+    <div class="countdown-text">Emergency SOS Activating</div>
+    <div class="countdown-warning">
+      🚨 Your emergency contacts will be alerted 🚨
+    </div>
+    <div class="slide-to-cancel-container" id="slideContainer">
+      <div class="slide-to-cancel-track" id="slideTrack"></div>
+      <div class="slide-to-cancel-thumb" id="slideThumb">➜</div>
+      <div class="slide-to-cancel-text">Slide to Cancel</div>
+    </div>
+  </div>
+</div>
+
+<div class="sos-hero">
+  <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3">
+    <div>
+      <div class="sos-title">Emergency SOS Center</div>
+      <div class="sos-sub">Trigger SOS, auto-record, and share live location with your trusted contacts.</div>
+    </div>
+    <div class="text-end d-flex gap-2">
+      <a href="{{ url_for('main.sos_deactivate_page') }}" class="btn btn-sm btn-success">Mark as Safe</a>
+      <a href="tel:181" class="btn btn-sm btn-light">Call 181</a>
+    </div>
+  </div>
+
+  <div class="row g-3">
+    <div class="col-lg-7">
+      <div class="card-lite">
+        <h5 class="mb-2">Quick SOS</h5>
+        <p class="mb-3" style="color:var(--muted)">Press SOS to start a 3s countdown. We'll start recording and log your live location.</p>
+        <div class="d-grid gap-2">
+          <button id="sosBtn" class="btn-sos">🚨 Start SOS</button>
+          <button id="stopBtn" class="btn btn-stop d-none">⛔ Stop & Upload</button>
+          <button id="testBtn" class="btn btn-ghost">Test recording (no upload)</button>
+        </div>
+        <div class="mt-3">
+          <div class="d-flex align-items-center gap-2 flex-wrap">
+            <button id="enableShakeBtn" type="button" class="btn btn-sm btn-ghost">Enable shake to trigger SOS</button>
+            <span id="shakeStatus" class="small" style="color:var(--muted)">Shake trigger: Off</span>
+          </div>
+        </div>
+        <div class="mt-3 status" id="status">Ready.</div>
+        <video id="preview" playsinline muted></video>
+      </div>
+    </div>
+    <div class="col-lg-5">
+      <div class="card-lite mb-3">
+        <h6 class="mb-2">Live Location</h6>
+        <div class="status" id="locStatus">Location idle.</div>
+      </div>
+      <div class="card-lite">
+        <h6 class="mb-2">Recent Upload</h6>
+        <div class="status" id="uploadStatus">None yet.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WhatsApp Share Modal -->
+<div class="modal fade" id="whatsappModal" tabindex="-1" aria-labelledby="whatsappModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="whatsappModalLabel">📱 Alert Your Contacts</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-info mb-3">
+          <strong>✅ SMS app opening automatically!</strong><br>
+          Send the pre-filled message to your first contact, then return here to alert others.
+        </div>
+        <div class="d-grid gap-2 mb-3">
+          <button id="waShareAllBtn" type="button" class="btn btn-success">Share to WhatsApp (choose recipients)</button>
+          <button id="copyAlertBtn" type="button" class="btn btn-outline-secondary">Copy alert message</button>
+        </div>
+        <div class="small text-muted mb-2">Send to individual contacts:</div>
+        <p class="mb-3 small">📱 <strong>SMS works instantly</strong> - no signup needed. WhatsApp requires the app installed.</p>
+        <div id="waContacts" class="d-grid gap-2"></div>
+        <hr class="my-3" />
+        <div class="small text-muted">
+          💡 <strong>SMS is ready to use right now!</strong> Click any SMS button to send. No API keys or payment needed.
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Done</button>
+      </div>
+    </div>
+  </div>
+ </div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+(() => {
+  const sosBtn = document.getElementById('sosBtn');
+  const stopBtn = document.getElementById('stopBtn');
+  const testBtn = document.getElementById('testBtn');
+  const status = document.getElementById('status');
+  const locStatus = document.getElementById('locStatus');
+  const uploadStatus = document.getElementById('uploadStatus');
+  const preview = document.getElementById('preview');
+
+  let mediaStream = null; let recorder = null; let chunks = []; let sosId = null; let locTimer = null; let startedAt;
+
+  function log(msg){ status.innerHTML = msg; }
+
+  // Warn if not secure context (required for camera/mic on remote devices)
+  const isLocalhost = ['localhost', '127.0.0.1'].includes(location.hostname);
+  const isSecure = window.isSecureContext || location.protocol === 'https:';
+  const insecureOnLan = !isSecure && !isLocalhost;
+  const isAndroid = /Android/i.test(navigator.userAgent || '');
+  if (insecureOnLan) {
+    log('⚠️ HTTP mode: SOS + Location work. For video recording, use <b>https://' + location.host + '/sos-center</b>');
+    locStatus.innerHTML = 'Location will start when you press SOS.';
+  }
+
+  async function startMedia(){
+    if(mediaStream) return mediaStream;
+    try{
+      mediaStream = await navigator.mediaDevices.getUserMedia({ audio:true, video:{ facingMode:'environment' } });
+      preview.srcObject = mediaStream; preview.muted = true; preview.style.display='block'; preview.play().catch(()=>{});
+      return mediaStream;
+    }catch(e){
+      const reason = e && e.name ? e.name : 'UnknownError';
+      if (reason === 'NotAllowedError') log('Permission denied by user or browser.');
+      else if (reason === 'NotFoundError') log('No camera/microphone found.');
+      else if (reason === 'SecurityError') log('Blocked by insecure connection. Use HTTPS.');
+      else if (reason === 'NotReadableError') log('Hardware in use by another app.');
+      else log('Could not access camera/mic.');
+      throw e;
+    }
+  }
+
+  function startRecorder(){
+    chunks = []; const options = { mimeType: 'video/webm;codecs=vp9,opus' };
+    try{ recorder = new MediaRecorder(mediaStream, options); }catch(e){ recorder = new MediaRecorder(mediaStream); }
+    recorder.ondataavailable = e => { if(e.data && e.data.size) chunks.push(e.data); };
+    recorder.onstop = uploadRecording;
+    recorder.start(1000);
+  }
+
+  async function postJSON(url, data){
+    const res = await fetch(url, { method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify(data) });
+    return res.json();
+  }
+
+  function sanitizePhoneForWhatsApp(phone){
+    // WhatsApp wa.me expects full international number without + or special chars
+    return String(phone || '').replace(/[^\d]/g,'');
+  }
+
+  function buildWhatsAppLink(phone, text){
+    const num = sanitizePhoneForWhatsApp(phone);
+    const msg = encodeURIComponent(text);
+    return `https://wa.me/${num}?text=${msg}`;
+  }
+
+  let lastAlertText = '';
+  let lastTrackUrl = '';
+
+  async function showWhatsAppModal(sosId, batteryLevel){
+    try{
+      const res = await fetch('/api/emergency-contacts');
+      const data = await res.json();
+      if(!data.success || !Array.isArray(data.contacts) || data.contacts.length === 0){
+        return; // nothing to show
+      }
+
+      const userName = (window.currentUser || {{ (session.get('username') or session.get('user_name') or "User") | tojson }});
+      const trackUrl = `${location.origin}/track/${sosId}`;
+      const batteryText = (batteryLevel === 'Unknown' ? 'Unknown' : `${batteryLevel}%`);
+      const baseText = `🚨 EMERGENCY ALERT from ${userName}. I'm in danger and need help. Live location: ${trackUrl}\nBattery: ${batteryText}\nPlease check in immediately.`;
+      lastAlertText = baseText;
+      lastTrackUrl = trackUrl;
+
+      const list = document.getElementById('waContacts');
+      list.innerHTML = '';
+
+      // Build first links
+      let firstSmsLink = null;
+      let firstWaLink = null;
+
+      // Add SMS buttons (native, instant)
+      data.contacts.forEach((c, idx) => {
+        const smsBtn = document.createElement('a');
+        const smsLink = `sms:${c.phone}?body=${encodeURIComponent(baseText)}`;
+        smsBtn.href = smsLink;
+        smsBtn.className = 'btn btn-primary d-flex justify-content-between align-items-center mb-2';
+        smsBtn.innerHTML = `<span>📱 SMS ${c.name} <small class="text-white-50">(${c.relationship})</small></span><span class="ms-2">➜</span>`;
+        list.appendChild(smsBtn);
+        if (idx === 0) firstSmsLink = smsLink;
+      });
+
+      // Add WhatsApp buttons
+      data.contacts.forEach((c, idx) => {
+        const wa = document.createElement('a');
+        const waLink = buildWhatsAppLink(c.phone, baseText);
+        wa.href = waLink; wa.target = '_blank'; wa.rel = 'noopener';
+        wa.className = 'btn btn-success d-flex justify-content-between align-items-center mb-2';
+        wa.innerHTML = `<span>WhatsApp ${c.name} <small class="text-white-50">(${c.relationship})</small></span><span class="ms-2">➜</span>`;
+        list.appendChild(wa);
+        if (idx === 0) firstWaLink = waLink;
+      });
+
+      // Show modal
+      const modalEl = document.getElementById('whatsappModal');
+      if(window.bootstrap && modalEl){ new bootstrap.Modal(modalEl).show(); }
+
+      // Auto-open SMS immediately, then open WhatsApp when the user returns
+      if (firstSmsLink) {
+        setTimeout(() => { try{ window.location.href = firstSmsLink; }catch(_){} }, 500);
+      }
+      if (firstWaLink) {
+        const handler = () => {
+          if (!document.hidden) {
+            setTimeout(() => { try{ window.location.href = firstWaLink; }catch(_){} }, 300);
+            document.removeEventListener('visibilitychange', handler);
+          }
+        };
+        document.addEventListener('visibilitychange', handler);
+      }
+
+      // Wire share/copy
+      const shareAll = document.getElementById('waShareAllBtn');
+      const copyBtn = document.getElementById('copyAlertBtn');
+      if (shareAll) {
+        shareAll.onclick = async () => {
+          const shareText = lastAlertText;
+          if (navigator.share) {
+            try { await navigator.share({ text: shareText, url: lastTrackUrl }); } catch(_) {}
+          } else {
+            const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`;
+            window.open(url, '_blank', 'noopener');
+          }
+        };
+      }
+      if (copyBtn) {
+        copyBtn.onclick = async () => {
+          try { await navigator.clipboard.writeText(lastAlertText); copyBtn.textContent = 'Copied!'; setTimeout(()=>copyBtn.textContent='Copy alert message', 1500); }
+          catch (_) { alert('Copy failed. Long-press to copy the message manually.'); }
+        };
+      }
+    }catch(err){ console.warn('WhatsApp modal skipped:', err); }
+  }
+
+  function startLocation(){
+    if(!('geolocation' in navigator)){ locStatus.textContent = 'Geolocation not available'; return; }
+    const tick = () => navigator.geolocation.getCurrentPosition(pos => {
+      const { latitude, longitude } = pos.coords;
+      locStatus.textContent = `Lat: ${latitude.toFixed(5)}, Lng: ${longitude.toFixed(5)}`;
+      if(sosId) postJSON('/api/sos-live', { sosId, latitude, longitude, timestamp: new Date().toISOString() }).catch(()=>{});
+    }, err => { locStatus.textContent = 'Location error: '+ err.message; }, { enableHighAccuracy:true, maximumAge:5000, timeout:8000 });
+    tick(); locTimer = setInterval(tick, 60000); // 60-second intervals
+  }
+
+  async function uploadRecording(){
+    try{
+      const blob = new Blob(chunks, { type: 'video/webm' });
+      const form = new FormData();
+      form.append('recording', blob, `sos_${Date.now()}.webm`);
+      form.append('sosId', sosId || '');
+      form.append('duration', ((Date.now()-startedAt)/1000).toFixed(1));
+      const r = await fetch('/api/upload-recording', { method:'POST', body: form });
+      const data = await r.json();
+      if(data && data.fileUrl){ uploadStatus.textContent = 'Uploaded: ' + data.fileUrl; }
+      else uploadStatus.textContent = 'Upload complete.';
+    }catch(e){ uploadStatus.textContent = 'Upload failed.'; }
+  }
+
+  // Audio context for alarm sound
+  let audioContext = null;
+  let alarmInterval = null;
+  
+  function playAlarm() {
+    if (!audioContext) {
+      audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+    
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+    
+    oscillator.frequency.value = 1000; // 1000 Hz beep
+    oscillator.type = 'square';
+    
+    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+    
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + 0.3);
+  }
+  
+  function startAlarm() {
+    playAlarm();
+    alarmInterval = setInterval(playAlarm, 500); // Repeat every 500ms
+  }
+  
+  function stopAlarm() {
+    if (alarmInterval) {
+      clearInterval(alarmInterval);
+      alarmInterval = null;
+    }
+  }
+  
+  let countdownCancelled = false;
+  
+  // Slide to cancel mechanism
+  let isDragging = false;
+  let startX = 0;
+  let currentX = 0;
+  const slideContainer = document.getElementById('slideContainer');
+  const slideThumb = document.getElementById('slideThumb');
+  const slideTrack = document.getElementById('slideTrack');
+  const maxSlide = 280; // 350px container - 70px thumb
+  
+  function resetSlider() {
+    slideThumb.style.left = '5px';
+    slideTrack.style.width = '0%';
+    isDragging = false;
+  }
+  
+  function handleSlideStart(e) {
+    isDragging = true;
+    startX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+    slideThumb.style.cursor = 'grabbing';
+  }
+  
+  function handleSlideMove(e) {
+    if (!isDragging) return;
+    
+    e.preventDefault();
+    const clientX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+    const deltaX = clientX - startX;
+    currentX = Math.max(0, Math.min(deltaX, maxSlide));
+    
+    slideThumb.style.left = (5 + currentX) + 'px';
+    const percentage = (currentX / maxSlide) * 100;
+    slideTrack.style.width = percentage + '%';
+    
+    // Check if slid 80% or more
+    if (percentage >= 80) {
+      countdownCancelled = true;
+      isDragging = false;
+      slideThumb.textContent = '✓';
+    }
+  }
+  
+  function handleSlideEnd() {
+    if (!countdownCancelled) {
+      // Snap back if not slid far enough
+      resetSlider();
+    }
+    isDragging = false;
+    slideThumb.style.cursor = 'grab';
+  }
+  
+  slideThumb.addEventListener('mousedown', handleSlideStart);
+  slideThumb.addEventListener('touchstart', handleSlideStart, { passive: false });
+  document.addEventListener('mousemove', handleSlideMove);
+  document.addEventListener('touchmove', handleSlideMove, { passive: false });
+  document.addEventListener('mouseup', handleSlideEnd);
+  document.addEventListener('touchend', handleSlideEnd);
+  
+  let sosFlowBusy = false;
+  let tripleTapEnabled = false; 
+  let tapTimes = [];
+
+  function enableTripleTapFallback(){
+    if (tripleTapEnabled) return;
+    tripleTapEnabled = true;
+    setShakeStatus('Fallback: Triple‑tap enabled');
+    document.addEventListener('touchstart', onTripleTap, { passive: true });
+    log('ℹ️ Triple-tap anywhere on the screen to trigger SOS (Android over HTTP).');
+  }
+
+  function onTripleTap(){
+    const now = Date.now();
+    tapTimes.push(now);
+    // Keep only last 3 taps
+    if (tapTimes.length > 3) tapTimes = tapTimes.slice(-3);
+    if (tapTimes.length === 3 && (tapTimes[2] - tapTimes[0]) <= 800) {
+      log('Triple-tap detected! Activating SOS…');
+      tapTimes = [];
+      if (!sosFlowBusy) beginSOS('TripleTap');
+    }
+    // Clear older taps after a short window
+    setTimeout(()=>{ const t=Date.now(); tapTimes = tapTimes.filter(x => t - x <= 800); }, 850);
+  }
+
+  async function beginSOS(triggeredBy = 'Button'){
+    if (sosFlowBusy) return; // prevent re-entry from multiple triggers
+    sosFlowBusy = true;
+    // Check if user has emergency contacts first
+    try {
+      const contactsResp = await fetch('/api/emergency-contacts');
+      const contactsData = await contactsResp.json();
+      if (!contactsData.contacts || contactsData.contacts.length < 3) {
+        log('⚠️ Please add at least 3 emergency contacts first!');
+        setTimeout(() => {
+          window.location.href = '/emergency-contacts';
+        }, 2000);
+        return;
+      }
+    } catch (e) {
+      console.error('Failed to check contacts:', e);
+    }
+    
+    // Show countdown overlay
+    const overlay = document.getElementById('countdownOverlay');
+    const numberEl = document.getElementById('countdownNumber');
+    
+    overlay.classList.add('active');
+    countdownCancelled = false;
+    resetSlider();
+    slideThumb.textContent = '➜';
+    
+    // Start alarm sound
+    startAlarm();
+    
+    // Countdown from 5 to 1
+    for (let i = 5; i >= 1; i--) {
+      if (countdownCancelled) {
+        overlay.classList.remove('active');
+        stopAlarm();
+        log('SOS cancelled.');
+        sosFlowBusy = false;
+        return;
+      }
+      
+      numberEl.textContent = i;
+      await new Promise(r => setTimeout(r, 1000));
+    }
+    
+    // Countdown complete - stop alarm
+    stopAlarm();
+    overlay.classList.remove('active');
+    
+    log('SOS ACTIVATED!');
+    
+    // Start location tracking (works on HTTP)
+    startLocation(); 
+    startedAt = Date.now();
+    
+    // Get battery level if available
+    let batteryLevel = 'Unknown';
+    try {
+      if ('getBattery' in navigator) {
+        const battery = await navigator.getBattery();
+        batteryLevel = Math.round(battery.level * 100);
+      }
+    } catch (e) {
+      console.log('Battery API not available');
+    }
+    
+    // Log SOS event
+    const resp = await postJSON('/api/sos', { 
+      user: (window.currentUser||'Anonymous'), 
+      time: new Date().toISOString(), 
+      triggeredBy,
+      battery: batteryLevel
+    });
+    sosId = resp && resp.sosId || Date.now();
+    
+    // Try to start recording (only if secure context or localhost)
+    if (isSecure || isLocalhost) {
+      try {
+        await startMedia(); 
+        startRecorder();
+        log('Recording… <span class="recording-dot"></span>');
+      } catch(e) {
+        log('⚠️ SOS Active (recording failed: ' + (e.name || 'error') + ')');
+      }
+    } else {
+      log('⚠️ SOS Active! Location tracked. (Recording requires HTTPS)');
+    }
+    
+    sosBtn.classList.add('d-none'); 
+    stopBtn.classList.remove('d-none');
+
+    // Prompt user to send WhatsApp alerts with live link
+    showWhatsAppModal(sosId, batteryLevel);
+  }
+
+  function stopSOS(){
+    if(recorder && recorder.state !== 'inactive'){ recorder.stop(); log('Stopped. Uploading…'); }
+    else { log('SOS ended.'); uploadStatus.textContent = 'No recording (HTTP mode).'; }
+    if(mediaStream){ mediaStream.getTracks().forEach(t=>t.stop()); mediaStream=null; }
+    if(locTimer){ clearInterval(locTimer); locTimer=null; }
+    stopBtn.classList.add('d-none'); sosBtn.classList.remove('d-none');
+    sosFlowBusy = false;
+  }
+
+  sosBtn.addEventListener('click', () => beginSOS('Button'));
+  stopBtn.addEventListener('click', stopSOS);
+  testBtn.addEventListener('click', async ()=>{ 
+    if (insecureOnLan) { 
+      log('Test mode needs HTTPS for camera. Using location only…'); 
+      startLocation();
+      setTimeout(() => {
+        if(locTimer) clearInterval(locTimer);
+        locTimer = null;
+        log('Test location ended.');
+      }, 5000);
+      return; 
+    }
+    try {
+      await startMedia(); 
+      startRecorder(); 
+      setTimeout(()=>{ if(recorder) recorder.stop(); }, 3000); 
+      log('Test: 3s clip…');
+    } catch(e) {
+      log('Test failed: ' + (e.name || 'error'));
+    }
+  });
+
+  // Shake detection (mobile)
+  const shakeStatusEl = document.getElementById('shakeStatus');
+  const enableShakeBtn = document.getElementById('enableShakeBtn');
+  let shakeEnabled = false;
+  let lastShakeAt = 0;
+  const SHAKE_THRESHOLD = 18; // m/s^2 approximate
+  const SHAKE_COOLDOWN_MS = 8000;
+
+  function setShakeStatus(text) {
+    if (shakeStatusEl) shakeStatusEl.textContent = `Shake trigger: ${text}`;
+  }
+
+  function startShakeListener(){
+    if (shakeEnabled) return;
+    window.addEventListener('devicemotion', onDeviceMotion, { passive: true });
+    shakeEnabled = true;
+    setShakeStatus('On');
+    // If no motion events arrive within 5s (common on Android over HTTP), enable fallback
+    let lastMotion = Date.now();
+    const tmp = (e)=>{ lastMotion = Date.now(); };
+    window.addEventListener('devicemotion', tmp, { passive: true });
+    setTimeout(()=>{
+      if (Date.now() - lastMotion > 4500 && insecureOnLan && isAndroid) {
+        enableTripleTapFallback();
+        log('⚠️ Motion sensors blocked on Android over HTTP. Using triple‑tap fallback.');
+      }
+      window.removeEventListener('devicemotion', tmp, { passive: true });
+    }, 5000);
+  }
+
+  async function requestMotionPermission(){
+    try {
+      if (typeof DeviceMotionEvent !== 'undefined' && typeof DeviceMotionEvent.requestPermission === 'function') {
+        const res = await DeviceMotionEvent.requestPermission();
+        if (res !== 'granted') { setShakeStatus('Denied'); return; }
+        startShakeListener();
+      } else {
+        // Android/desktop usually doesn't need explicit permission
+        if (insecureOnLan && isAndroid) {
+          // Proactively enable fallback for Android over HTTP
+          enableTripleTapFallback();
+        } else {
+          startShakeListener();
+        }
+      }
+    } catch(e) {
+      setShakeStatus('Error');
+      console.warn('Motion permission error:', e);
+    }
+  }
+
+  function onDeviceMotion(e){
+    // Prefer acceleration (without gravity); fallback to includingGravity
+    const a = e.acceleration || e.accelerationIncludingGravity || {};
+    const ax = a.x || 0, ay = a.y || 0, az = a.z || 0;
+    const magnitude = Math.sqrt(ax*ax + ay*ay + az*az);
+    const now = Date.now();
+    if (magnitude > SHAKE_THRESHOLD && (now - lastShakeAt) > SHAKE_COOLDOWN_MS && !sosFlowBusy) {
+      lastShakeAt = now;
+      try { postJSON('/api/shake-intensity', { value: magnitude, t: new Date().toISOString() }).catch(()=>{}); } catch(_){ }
+      log('Shake detected. Activating SOS…');
+      beginSOS('Shake');
+    }
+  }
+
+  if (enableShakeBtn) {
+    enableShakeBtn.addEventListener('click', requestMotionPermission);
+  }
+})();
+</script>
+{% endblock %}

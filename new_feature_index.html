@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emergency SOS + Recording System</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg-0: #0b1220;
+      --bg-1: #0f1724;
+      --card: rgba(255,255,255,0.04);
+      --muted: rgba(255,255,255,0.65);
+      --accent: #ff6b6b;
+      --accent-2: #ff8a7a;
+      --success: #51cf66;
+      --glass: rgba(255,255,255,0.03);
+      --glass-2: rgba(255,255,255,0.06);
+      --radius: 14px;
+      --card-padding: 18px;
+      --font-base: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      --font-heading: 'Poppins', var(--font-base);
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: var(--font-base);
+      background: radial-gradient(1000px 600px at 10% 10%, rgba(255,107,107,0.06), transparent), linear-gradient(135deg, var(--bg-0) 0%, var(--bg-1) 100%);
+      color: #fff;
+      min-height: 100vh;
+      padding: 28px;
+      -webkit-font-smoothing:antialiased;
+    }
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 20px;
+    }
+    h1 {
+      grid-column: 1 / -1;
+      margin: 6px 0 18px 0;
+      color: #fff;
+      font-family: var(--font-heading);
+      font-size: 26px;
+      letter-spacing: 0.2px;
+      display:flex; align-items:center; gap:12px;
+    }
+    h1 .brand-dot{ width:14px; height:14px; border-radius:50%; background:linear-gradient(180deg,var(--accent),var(--accent-2)); box-shadow:0 6px 18px rgba(255,90,90,0.14); }
+    h1 .brand-sub{ color:var(--muted); font-size:13px; margin-left:6px; font-weight:600; }
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius: var(--radius);
+      padding: var(--card-padding);
+      margin-bottom: 12px;
+      backdrop-filter: blur(8px) saturate(120%);
+      border: 1px solid rgba(255,255,255,0.03);
+      box-shadow: 0 12px 30px rgba(2,6,23,0.6), inset 0 1px 0 rgba(255,255,255,0.01);
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .card:hover{ transform: translateY(-4px); box-shadow: 0 18px 48px rgba(2,6,23,0.7); }
+    h2 {
+      margin-bottom: 12px;
+      font-size: 18px;
+      color: #fff;
+    }
+    button { transition: all 180ms ease; }
+    .btn {
+      display:inline-flex; align-items:center; justify-content:center; gap:8px;
+      width:100%; padding:12px 14px; border-radius:10px; border:0; cursor:pointer; font-weight:700;
+      color:#fff;
+    }
+  .btn:hover{ transform: translateY(-3px); filter:brightness(1.02); }
+    .btn-danger{ background: linear-gradient(90deg,#ff6b6b,#ff4d4d); }
+    .btn-primary{ background: linear-gradient(90deg,#5b8cff,#3b6bff); }
+  .btn-success{ background: var(--success); color:#01220a; box-shadow: 0 6px 18px rgba(81,207,102,0.12); }
+    .btn-ghost{ background: transparent; border:1px solid rgba(255,255,255,0.06); }
+    button:disabled{ opacity:0.6; cursor:not-allowed; transform:none; }
+    .btn-success {
+      background: #51cf66;
+    }
+    .btn-success:hover {
+      background: #37b24d;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      font-size: 14px;
+      margin-bottom: 10px;
+      font-family: inherit;
+    }
+    input::placeholder, textarea::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+    #status, .profile-status {
+      text-align: center;
+      padding: 15px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .profile-status {
+      margin-top: 12px;
+    }
+    .contacts-list {
+      margin-top: 15px;
+    }
+    .contact-item {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .contact-info {
+      flex: 1;
+    }
+    .contact-name {
+      font-weight: 600;
+      margin-bottom: 3px;
+    }
+    .contact-phone {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.7);
+    }
+    .btn-remove {
+      background: #ff6b6b;
+      padding: 8px 15px;
+      font-size: 13px;
+      width: auto;
+      margin: 0;
+    }
+    #videoPreview {
+      width: 100%;
+      border-radius: 10px;
+      margin-top: 15px;
+      display: none;
+      max-height: 300px;
+      object-fit: cover;
+    }
+  .controls-row{ display:flex; gap:10px; }
+    .small { padding:8px 10px; font-size:13px; }
+    .recording-indicator {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+      background: rgba(255, 0, 0, 0.2);
+      border-radius: 8px;
+      margin-top: 10px;
+      animation: pulse 1.5s infinite;
+    }
+    .recording-indicator.active {
+      display: flex;
+    }
+    .recording-dot {
+      width: 12px;
+      height: 12px;
+      background: #ff0000;
+      border-radius: 50%;
+      margin-right: 8px;
+      animation: blink 1s infinite;
+    }
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0.3; }
+    }
+    .countdown-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+    .countdown-modal.active {
+      display: flex;
+    }
+    .countdown-content {
+      text-align: center;
+      padding: 60px 50px;
+      background: linear-gradient(135deg, #ff0000 0%, #ff5252 100%);
+      border-radius: 30px;
+      max-width: 400px;
+      width: 90%;
+      animation: pulse 0.8s infinite;
+      box-shadow: 0 0 100px rgba(255, 0, 0, 0.8);
+    }
+
+    .call-actions{ display:flex; gap:10px; }
+    .countdown-number {
+      font-size: 180px;
+      font-weight: 900;
+      line-height: 1;
+      margin: 30px 0;
+      text-shadow: 0 0 40px rgba(255, 255, 255, 0.8);
+      animation: numberPulse 1s infinite;
+    }
+    /* SOS button */
+    .btn-sos{ padding:18px; font-size:18px; border-radius:14px; background: radial-gradient(circle at 30% 30%, rgba(255,120,120,0.12), transparent), linear-gradient(90deg,#ff6b6b,#ff4d4d); box-shadow: 0 12px 34px rgba(255,77,77,0.14); border: none; }
+    .btn-sos.pulse{ animation: pulse-sos 1.6s infinite; }
+    @keyframes pulse-sos { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
+
+    /* decorative blobs */
+    body::before{ content:''; position:fixed; right:-120px; top:-60px; width:420px; height:420px; background: radial-gradient(circle at 30% 30%, rgba(88,107,255,0.12), transparent 40%); filter: blur(60px); z-index:0; pointer-events:none; }
+    body::after{ content:''; position:fixed; left:-120px; bottom:-80px; width:360px; height:360px; background: radial-gradient(circle at 30% 30%, rgba(255,106,106,0.08), transparent 40%); filter: blur(60px); z-index:0; pointer-events:none; }
+
+    /* responsive */
+    @media (max-width:880px){ .container{ grid-template-columns: 1fr; padding:12px; } h1{ font-size:20px; } .call-card{ width:92%; } }
+    .countdown-text {
+      font-size: 28px;
+      margin-bottom: 40px;
+      font-weight: 800;
+      letter-spacing: 2px;
+    }
+    .btn-cancel {
+      background: white;
+      color: #ff0000;
+      font-size: 22px;
+      padding: 25px 50px;
+      font-weight: 900;
+      border-radius: 15px;
+      text-transform: uppercase;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+    }
+    @keyframes numberPulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.2); opacity: 0.9; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🚨 Emergency SOS + Recording System</h1>
+    
+    <div class="card">
+      <h2>👤 My Profile</h2>
+      <input type="text" id="userName" placeholder="Your Full Name*">
+      <input type="text" id="userBloodType" placeholder="Blood Type (Optional)">
+      <textarea id="userMedicalInfo" placeholder="Medical conditions, allergies... (Optional)"></textarea>
+      <textarea id="userEmergencyNote" placeholder="Emergency note for responders (Optional)"></textarea>
+      <button id="saveProfile" class="btn-success">Save Profile</button>
+      <div class="profile-status" id="profileStatus">⚠️ Profile not configured</div>
+    </div>
+
+    <div class="card">
+      <h2>📞 Emergency Contacts</h2>
+      <input type="text" id="contactName" placeholder="Contact Name (e.g., Mom, Dad)">
+      <input type="tel" id="contactPhone" placeholder="Phone Number (+919876543210)">
+      <button id="addContact" class="btn-success">Add Emergency Contact</button>
+      <div class="contacts-list" id="contactsList"></div>
+    </div>
+
+    <div class="card">
+      <h2>📹 Camera & Recording</h2>
+      <div style="display:flex; gap:10px;">
+        <button id="enableCamera" class="btn-success" style="flex:1">Enable Camera</button>
+        <button id="flipCamera" title="Flip camera" style="flex:1">Flip Camera</button>
+      </div>
+      <video id="videoPreview" autoplay muted playsinline></video>
+      <div class="recording-indicator" id="recordingIndicator">
+        <div class="recording-dot"></div>
+        <span id="recordingTime">Recording: 0:00</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>📱 Motion Detection & SOS</h2>
+      <div style="display:flex; gap:10px; flex-direction:column;">
+  <button id="sosButton" class="btn btn-sos pulse">🔴 EMERGENCY SOS</button>
+        <div style="display:flex; gap:10px;">
+          <button id="sendSOS" class="btn btn-ghost small" style="flex:1">Send SOS Manually</button>
+          <button id="voiceToggle" class="btn btn-ghost small" style="flex:1">🎙️ Voice: OFF</button>
+        </div>
+        <div style="display:flex; gap:10px;">
+          <button id="simulatePower" class="btn btn-ghost small" style="flex:1">Simulate Power Press</button>
+          <button id="smsAll" class="btn btn-ghost small" style="flex:1">Send SMS to Contacts</button>
+        </div>
+      </div>
+      <div id="status">🔄 Initializing shake detection...</div>
+    </div>
+
+
+  </div>
+
+  <div class="countdown-modal" id="countdownModal">
+    <div class="countdown-content">
+      <div class="countdown-text">🚨 SOS ALERT IN</div>
+      <div class="countdown-number" id="countdownNumber">3</div>
+      <button class="btn-cancel" id="cancelSOS">CANCEL SOS</button>
+    </div>
+  </div>
+
+  <div class="countdown-modal" id="popupBlockedModal" style="--z:9999">
+    <div class="countdown-content">
+      <div class="countdown-text">⚠️ Popups were blocked</div>
+      <div style="margin:10px 0; color:var(--muted); font-size:14px;">Your browser blocked opening multiple WhatsApp chats. Tap the button below to open them manually.</div>
+      <button class="btn btn-primary" id="openAllWhatsAppBtn">Open WhatsApp Chats</button>
+    </div>
+  </div>
+
+
+
+  <script type="module">
+    // ==================== CAMERA MODULE ====================
+    let mediaStream = null;
+    let mediaRecorder = null;
+    let recordedChunks = [];
+    let isRecording = false;
+    let recordingStartTime = null;
+    let recordingTimer = null;
+    let currentSosId = null;
+    let currentFacingMode = 'user'; // 'user' (front) or 'environment' (back)
+
+    const videoPreview = document.getElementById("videoPreview");
+    const recordingIndicator = document.getElementById("recordingIndicator");
+    const recordingTime = document.getElementById("recordingTime");
+    
+
+
+    async function enableCamera(facing = currentFacingMode) {
+      try {
+        mediaStream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: facing, width: { ideal: 1280 }, height: { ideal: 720 } },
+          audio: true
+        });
+        videoPreview.srcObject = mediaStream;
+        videoPreview.style.display = "block";
+        console.log("✅ Camera enabled");
+        // update current facing mode
+        currentFacingMode = facing;
+        // enable or disable flip button depending on track capabilities
+        try { document.getElementById('flipCamera').disabled = isRecording; } catch(e) {}
+        return true;
+      } catch (err) {
+        console.error("❌ Camera access denied:", err);
+        alert("⚠️ Camera access denied. Please enable camera permissions.");
+        return false;
+      }
+    }
+
+    async function startRecording(sosId = null) {
+      if (!mediaStream) {
+        const enabled = await enableCamera();
+        if (!enabled) return false;
+      }
+      if (isRecording) return false;
+
+      try {
+        recordedChunks = [];
+        currentSosId = sosId;
+        
+  let options = { mimeType: 'video/webm;codecs=vp8,opus', videoBitsPerSecond: 2500000 };
+        if (!MediaRecorder.isTypeSupported(options.mimeType)) options.mimeType = 'video/webm';
+        if (!MediaRecorder.isTypeSupported(options.mimeType)) options.mimeType = 'video/mp4';
+
+        mediaRecorder = new MediaRecorder(mediaStream, options);
+        mediaRecorder.ondataavailable = (event) => {
+          if (event.data.size > 0) recordedChunks.push(event.data);
+        };
+        mediaRecorder.onstop = async () => await uploadRecording();
+        mediaRecorder.start(1000);
+        
+        isRecording = true;
+        recordingStartTime = Date.now();
+        recordingIndicator.classList.add("active");
+  // disable flip while recording to avoid complex stream switching mid-record
+  try { document.getElementById('flipCamera').disabled = true; } catch(e) {}
+        startRecordingTimer();
+
+        console.log("📹 Recording started");
+        return true;
+      } catch (err) {
+        console.error("❌ Failed to start recording:", err);
+        return false;
+      }
+    }
+
+    async function stopRecording() {
+      if (!isRecording || !mediaRecorder) return false;
+      try {
+        mediaRecorder.stop();
+        isRecording = false;
+        recordingIndicator.classList.remove("active");
+        try { document.getElementById('flipCamera').disabled = false; } catch(e) {}
+        stopRecordingTimer();
+        console.log("⏹️ Recording stopped");
+        return true;
+      } catch (err) {
+        console.error("❌ Failed to stop recording:", err);
+        return false;
+      }
+    }
+
+    async function uploadRecording() {
+      if (recordedChunks.length === 0) return;
+      try {
+        const blob = new Blob(recordedChunks, { type: 'video/webm' });
+        const duration = Math.floor((Date.now() - recordingStartTime) / 1000);
+        
+        let location = { latitude: "Unknown", longitude: "Unknown" };
+        try {
+          const pos = await new Promise((resolve, reject) => {
+            navigator.geolocation.getCurrentPosition(resolve, reject, { timeout: 3000 });
+          });
+          location = { latitude: pos.coords.latitude, longitude: pos.coords.longitude };
+        } catch (err) {
+          console.warn("⚠️ Location not available");
+        }
+
+        const userProfile = JSON.parse(localStorage.getItem("userProfile") || "{}");
+        const formData = new FormData();
+        formData.append("recording", blob, `sos-recording-${Date.now()}.webm`);
+        formData.append("sosId", currentSosId || Date.now());
+        formData.append("user", userProfile.name || "Anonymous");
+        formData.append("location", JSON.stringify(location));
+        formData.append("duration", `${duration}s`);
+
+        // Trigger local download of the recorded video
+        try {
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.style.display = 'none';
+          a.href = url;
+          a.download = `sos-recording-${Date.now()}.webm`;
+          document.body.appendChild(a);
+          a.click();
+          setTimeout(() => {
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+          }, 1000);
+        } catch (err) {
+          console.warn('⚠️ Auto-download failed:', err);
+        }
+
+        // Upload to server (optional)
+        try {
+          const response = await fetch("http://localhost:3000/upload-recording", {
+            method: "POST",
+            body: formData
+          });
+          const result = await response.json();
+          console.log("✅ Recording uploaded:", result);
+          alert(`📹 Recording saved locally and uploaded successfully!\nDuration: ${duration}s`);
+          // return upload result so caller can lock the evidence
+          return result;
+        } catch (err) {
+          console.warn('⚠️ Upload failed (server may be offline):', err);
+          alert(`📹 Recording saved locally. (Upload failed or server unavailable)\nDuration: ${duration}s`);
+          return null;
+        }
+      } catch (err) {
+        console.error("❌ Failed to upload recording:", err);
+      }
+    }
+
+    function startRecordingTimer() {
+      recordingTimer = setInterval(() => {
+        const elapsed = Math.floor((Date.now() - recordingStartTime) / 1000);
+        const minutes = Math.floor(elapsed / 60);
+        const seconds = elapsed % 60;
+        recordingTime.textContent = `Recording: ${minutes}:${seconds.toString().padStart(2, '0')}`;
+      }, 1000);
+    }
+
+    function stopRecordingTimer() {
+      if (recordingTimer) {
+        clearInterval(recordingTimer);
+        recordingTimer = null;
+      }
+    }
+
+    // ==================== SOS MODULE ====================
+    const DEFAULT_CONTACTS = [
+      { name: "Mom", phone: "+919481425584" },
+      { name: "Dad", phone: "+918618147776" }
+    ];
+
+    const SOS_SETTINGS = {
+      countdownDuration: 3,
+      autoLoadDefaultContacts: true,
+      allowUIContactManagement: true,
+      allowProfileEditing: true,
+      autoRecordOnSOS: true,
+      recordingDuration: 30000
+    };
+
+    let countdownTimer = null;
+    let contacts = [];
+    let userProfile = {};
+    let recordingTimeout = null;
+
+    function loadUserProfile() {
+      const saved = localStorage.getItem("userProfile");
+      const isFirstVisit = localStorage.getItem("profileInitialized") !== "true";
+      
+      if (isFirstVisit) {
+        userProfile = { name: "", bloodType: "", medicalInfo: "", emergencyNote: "" };
+        localStorage.setItem("userProfile", JSON.stringify(userProfile));
+        localStorage.setItem("profileInitialized", "true");
+      } else if (saved) {
+        userProfile = JSON.parse(saved);
+      } else {
+        userProfile = { name: "", bloodType: "", medicalInfo: "", emergencyNote: "" };
+      }
+      renderProfile();
+    }
+
+    function saveUserProfile() {
+      localStorage.setItem("userProfile", JSON.stringify(userProfile));
+      renderProfile();
+    }
+
+    function renderProfile() {
+      document.getElementById("userName").value = userProfile.name || "";
+      document.getElementById("userBloodType").value = userProfile.bloodType || "";
+      document.getElementById("userMedicalInfo").value = userProfile.medicalInfo || "";
+      document.getElementById("userEmergencyNote").value = userProfile.emergencyNote || "";
+      
+      const statusEl = document.getElementById("profileStatus");
+      if (userProfile.name) {
+        statusEl.textContent = `✅ Profile saved as: ${userProfile.name}`;
+        statusEl.style.color = "#51cf66";
+      } else {
+        statusEl.textContent = "⚠️ Profile not set - please add your name";
+        statusEl.style.color = "#ffa94d";
+      }
+    }
+
+    window.saveProfile = function() {
+      userProfile.name = document.getElementById("userName").value.trim() || "User";
+      userProfile.bloodType = document.getElementById("userBloodType").value.trim();
+      userProfile.medicalInfo = document.getElementById("userMedicalInfo").value.trim();
+      userProfile.emergencyNote = document.getElementById("userEmergencyNote").value.trim();
+      saveUserProfile();
+      alert("✅ Profile saved successfully!");
+    };
+
+    function loadContacts() {
+      const saved = localStorage.getItem("emergencyContacts");
+      const isFirstVisit = localStorage.getItem("contactsInitialized") !== "true";
+      
+      if (isFirstVisit && SOS_SETTINGS.autoLoadDefaultContacts) {
+        contacts = [...DEFAULT_CONTACTS];
+        localStorage.setItem("emergencyContacts", JSON.stringify(contacts));
+        localStorage.setItem("contactsInitialized", "true");
+      } else if (saved) {
+        contacts = JSON.parse(saved);
+      } else {
+        contacts = [...DEFAULT_CONTACTS];
+      }
+      renderContacts();
+    }
+
+    function saveContacts() {
+      localStorage.setItem("emergencyContacts", JSON.stringify(contacts));
+      renderContacts();
+    }
+
+    function renderContacts() {
+      const listEl = document.getElementById("contactsList");
+      if (contacts.length === 0) {
+        listEl.innerHTML = '<p style="text-align: center; color: rgba(255,255,255,0.5); padding: 20px;">No emergency contacts added yet</p>';
+        return;
+      }
+      listEl.innerHTML = contacts.map((contact, index) => `
+        <div class="contact-item">
+          <div class="contact-info">
+            <div class="contact-name">${contact.name}</div>
+            <div class="contact-phone">${contact.phone}</div>
+          </div>
+          ${SOS_SETTINGS.allowUIContactManagement ? 
+            `<button class="btn-remove" onclick="window.removeContact(${index})">Remove</button>` : ''}
+        </div>
+      `).join("");
+    }
+
+    window.addContact = function() {
+      const nameInput = document.getElementById("contactName");
+      const phoneInput = document.getElementById("contactPhone");
+      const name = nameInput.value.trim();
+      const phone = phoneInput.value.trim();
+      
+      if (!name || !phone) {
+        alert("Please enter both name and phone number");
+        return;
+      }
+      if (!phone.startsWith("+")) {
+        alert("Please include country code (e.g., +919876543210)");
+        return;
+      }
+      
+      contacts.push({ name, phone });
+      saveContacts();
+      nameInput.value = "";
+      phoneInput.value = "";
+      alert(`✅ ${name} added as emergency contact`);
+    };
+
+    window.removeContact = function(index) {
+      if (confirm(`Remove ${contacts[index].name} from emergency contacts?`)) {
+        contacts.splice(index, 1);
+        saveContacts();
+      }
+    };
+
+    function startSOSCountdown() {
+      if (contacts.length === 0) {
+        alert("⚠️ No emergency contacts configured! Please add contacts first.");
+        return;
+      }
+
+      // This version allows passing a shake intensity via an argument.
+      const modal = document.getElementById("countdownModal");
+      const numberEl = document.getElementById("countdownNumber");
+      let count = SOS_SETTINGS.countdownDuration;
+      
+      modal.classList.add("active");
+      numberEl.textContent = count;
+      
+      countdownTimer = setInterval(() => {
+        count--;
+        numberEl.textContent = count;
+        if (count <= 0) {
+          clearInterval(countdownTimer);
+          countdownTimer = null;
+          modal.classList.remove("active");
+          // call the full SOS orchestrator with the last recorded shakeIntensity (if any)
+          startFullSOSFlow(shakeIntensity, { autoDial: false });
+        }
+      }, 1000);
+    }
+
+    function cancelCountdown() {
+      if (countdownTimer) {
+        clearInterval(countdownTimer);
+        countdownTimer = null;
+      }
+      document.getElementById("countdownModal").classList.remove("active");
+      document.getElementById("status").textContent = "✅ SOS cancelled. Motion sensors still active.";
+      // stop any auto-recording that may have started due to the shake
+      if (isRecording) {
+        stopRecording();
+        recordedChunks = [];
+      }
+    }
+
+    async function sendWhatsAppSOS(shakeIntensity = null) {
+      console.log("📡 SOS triggered!");
+      const statusEl = document.getElementById("status");
+      statusEl.textContent = "📍 Getting location...";
+
+      const sosId = Date.now();
+      if (SOS_SETTINGS.autoRecordOnSOS && !isRecording) {
+        console.log("📹 Starting automatic recording...");
+        await startRecording(sosId);
+        recordingTimeout = setTimeout(async () => {
+          await stopRecording();
+          console.log("⏹️ Auto-stopped recording");
+        }, SOS_SETTINGS.recordingDuration);
+      }
+        // Get accurate location with better error handling and retries
+      let location = await getBestLocation();
+      
+      // If initial location fails, start a watch to get it ASAP
+      if (location.latitude === "Unknown") {
+        startLiveLocationWatch();
+        // Wait briefly to see if we get a location
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        if (lastKnownLocation && lastKnownLocation.latitude) {
+          location = {
+            latitude: lastKnownLocation.latitude,
+            longitude: lastKnownLocation.longitude,
+            accuracy: lastKnownLocation.accuracy,
+            timestamp: lastKnownLocation.timestamp
+          };
+        }
+      }
+
+      const time = new Date().toLocaleString();
+      let locationText = "";
+      
+      if (location.latitude !== "Unknown") {
+        const mapsLink = `https://www.google.com/maps?q=${location.latitude},${location.longitude}`;
+        locationText = `📍 *Live Location*: ${mapsLink}\n`;
+        if (location.accuracy) {
+          locationText += `📡 Accuracy: ${location.accuracy}m\n`;
+        }
+        if (location.timestamp) {
+          locationText += `⏱️ Location Time: ${new Date(location.timestamp).toLocaleTimeString()}\n`;
+        }
+      } else {
+        locationText = "📍 Location: Not available yet\n";
+      }
+      
+      let message = `🚨 *EMERGENCY SOS ALERT*\n\n`;
+      message += `👤 Name: ${userProfile.name || "Unknown"}\n`;
+      message += `📅 Time: ${time}\n`;
+      message += locationText;
+      if (shakeIntensity) message += `⚠️ Shake Intensity: ${shakeIntensity.toFixed(2)}\n`;
+      if (userProfile.bloodType) message += `🩸 Blood Type: ${userProfile.bloodType}\n`;
+      if (userProfile.medicalInfo) message += `💊 Medical Info: ${userProfile.medicalInfo}\n`;
+      if (userProfile.emergencyNote) message += `\n📝 Note: ${userProfile.emergencyNote}\n`;
+      if (SOS_SETTINGS.autoRecordOnSOS) message += `\n📹 Video recording started automatically\n`;
+      message += `\nThis is an automated emergency alert. Please respond immediately.`;
+
+      try {
+        await fetch("http://localhost:3000/sos", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            user: userProfile.name || "Unknown",
+            time: new Date().toISOString(),
+            triggeredBy: shakeIntensity ? "Shake Detection" : "Manual",
+            location, userProfile,
+            intensity: shakeIntensity ? shakeIntensity.toFixed(2) : "N/A",
+            contactsNotified: contacts.length,
+            recordingStarted: SOS_SETTINGS.autoRecordOnSOS
+          }),
+        });
+      } catch (err) {
+        console.error("❌ Failed to send to server:", err);
+      }
+
+      const encodedMessage = encodeURIComponent(message);
+      statusEl.textContent = `📤 Attempting to open WhatsApp for ${contacts.length} contact(s)...`;
+
+      // NOTE: Browsers restrict opening many windows/tabs when not initiated by a user gesture.
+      // Strategy:
+      // 1) Attempt to open each wa.me link in its own uniquely-named window with a small stagger.
+      // 2) If any call to window.open is blocked (returns null), show a fallback modal with a
+      //    single "Open WhatsApp Chats" button which the user can tap (this is a user gesture)
+      //    and that will open all chats reliably.
+
+      const urls = contacts.map(c => {
+        const phoneNumber = (c.phone || '').replace(/[^0-9]/g, "");
+        return { phone: phoneNumber, url: `https://wa.me/${phoneNumber}?text=${encodedMessage}` };
+      });
+
+      let popupBlocked = false;
+      for (let i = 0; i < urls.length; i++) {
+        const { phone, url } = urls[i];
+        try {
+          const winName = `wa_${phone}_${Date.now()}_${i}`;
+          const opened = window.open(url, winName);
+          if (!opened) { popupBlocked = true; break; }
+        } catch (e) {
+          console.warn('window.open failed for', url, e);
+          popupBlocked = true;
+          break;
+        }
+        // small stagger to avoid overwhelming the OS/app
+        await new Promise(r => setTimeout(r, 220));
+      }
+
+      if (popupBlocked) {
+        statusEl.textContent = '⚠️ Popups blocked — please tap the button to open WhatsApp chats.';
+        const fallback = document.getElementById('popupBlockedModal');
+        if (fallback) {
+          fallback.classList.add('active');
+          const btn = document.getElementById('openAllWhatsAppBtn');
+          btn.onclick = () => {
+            urls.forEach(u => { try { window.open(u.url, '_blank'); } catch (e){ console.warn(e); } });
+            fallback.classList.remove('active');
+            statusEl.textContent = `✅ Opened WhatsApp windows for ${urls.length} contact(s)`;
+          };
+        } else {
+          // If modal isn't present for some reason, at least try opening them in _blank once
+          urls.forEach(u => { try { window.open(u.url, '_blank'); } catch (e){ console.warn(e); } });
+        }
+      } else {
+        statusEl.textContent = `✅ Attempted to open WhatsApp for ${contacts.length} contact(s).`;
+      }
+
+      setTimeout(() => {
+        alert(`🚨 Emergency SOS action initiated!\n\n📹 Recording: ${SOS_SETTINGS.autoRecordOnSOS ? 'Active' : 'Not started'}\n📍 Location: Included\n📞 Contacts: ${contacts.length}`);
+      }, 500);
+    }
+
+    // ==================== SHAKE DETECTION MODULE ====================
+    let lastShakeTime = 0;
+    let shakeThreshold = 15;
+    let statusEl;
+    let shakeIntensity = 0;
+  // Improved sustained-shake detection settings
+  let shakeStartTime = 0;
+  const SHAKE_START_THRESHOLD = 14; // start threshold
+  const SHAKE_END_THRESHOLD = 9; // drop threshold
+  const SHAKE_MIN_DURATION = 1500; // ms required above threshold to count as a deliberate shake
+
+    async function requestMotionPermission() {
+      if (typeof DeviceMotionEvent.requestPermission === "function") {
+        try {
+          const response = await DeviceMotionEvent.requestPermission();
+          if (response === "granted") {
+            initShakeDetection();
+          } else {
+            alert("Permission denied. Please allow motion access in settings.");
+          }
+        } catch (err) {
+          console.error("Error requesting motion permission:", err);
+        }
+      } else {
+        initShakeDetection();
+      }
+    }
+
+    function initShakeDetection() {
+      window.addEventListener("devicemotion", async event => {
+        // prefer non-gravity acceleration if provided
+        const acc = event.acceleration && event.acceleration.x !== null ? event.acceleration : event.accelerationIncludingGravity;
+        const x = acc.x || 0, y = acc.y || 0, z = acc.z || 0;
+        const totalAcceleration = Math.sqrt(x * x + y * y + z * z);
+
+        // log low-level data for server if meaningful
+        if (totalAcceleration > 5) {
+          logShakeIntensity(totalAcceleration, x, y, z);
+        }
+
+        const now = Date.now();
+        if (totalAcceleration >= SHAKE_START_THRESHOLD) {
+          if (shakeStartTime === 0) shakeStartTime = now;
+          // require being above threshold for a minimum duration to avoid false positives
+          if ((now - shakeStartTime) >= SHAKE_MIN_DURATION) {
+            // ensure we don't trigger repeatedly
+            if (now - lastShakeTime > 3000) {
+              lastShakeTime = now;
+              shakeIntensity = totalAcceleration;
+              console.log("🚨 Sustained shake detected! Intensity:", totalAcceleration.toFixed(2));
+              statusEl.textContent = "🚨 Shake detected! Opening camera and recording...";
+              // open camera immediately and start recording
+              try {
+                const sosId = Date.now();
+                await enableCamera();
+                await startRecording(sosId);
+                // start the 3s countdown before sending the WhatsApp SOS
+                startSOSCountdown();
+              } catch (err) {
+                console.error('Error handling shake flow:', err);
+              }
+              // reset
+              shakeStartTime = 0;
+            }
+          }
+        } else if (totalAcceleration < SHAKE_END_THRESHOLD) {
+          // reset start time when motion subsides
+          shakeStartTime = 0;
+        }
+      }, { passive: true });
+      statusEl.textContent = "✅ Motion sensors active. Shake firmly for 1.5s to trigger SOS.";
+    }
+
+    // Flip/switch camera (front/back). Disallowed while recording to keep things simple.
+    async function flipCamera() {
+      if (isRecording) {
+        alert("⚠️ Cannot flip camera while recording. Stop recording first.");
+        return;
+      }
+      currentFacingMode = currentFacingMode === 'user' ? 'environment' : 'user';
+      try {
+        if (mediaStream) mediaStream.getTracks().forEach(t => t.stop());
+      } catch (e) { /* ignore */ }
+      await enableCamera(currentFacingMode);
+    }
+
+    // ========== Torch and Live Location ==========
+
+    let strobeInterval = null;
+    async function startStrobeTorch() {
+      try {
+        if (!mediaStream) await enableCamera();
+        const videoTrack = mediaStream.getVideoTracks()[0];
+        const caps = videoTrack.getCapabilities ? videoTrack.getCapabilities() : {};
+        if (!caps.torch) return;
+        strobeInterval = setInterval(async () => {
+          try {
+            await videoTrack.applyConstraints({ advanced: [{ torch: true }] });
+            setTimeout(async () => {
+              try { await videoTrack.applyConstraints({ advanced: [{ torch: false }] }); } catch (e) {}
+            }, 200);
+          } catch (e) {}
+        }, 400);
+      } catch (e) {
+        console.warn('Strobe not available:', e);
+      }
+    }
+
+    function stopStrobeTorch() {
+      if (strobeInterval) {
+        clearInterval(strobeInterval);
+        strobeInterval = null;
+      }
+      try {
+        if (mediaStream) {
+          const t = mediaStream.getVideoTracks()[0];
+          if (t && t.applyConstraints) t.applyConstraints({ advanced: [{ torch: false }] });
+        }
+      } catch (e) {}
+    }
+
+    // Get the most accurate location possible
+    async function getBestLocation(maxWait = 10000) {
+      const defaultLocation = { latitude: "Unknown", longitude: "Unknown" };
+      
+      try {
+        // Try high accuracy first with a short timeout
+        const highAccuracy = await Promise.race([
+          new Promise((resolve, reject) => {
+            navigator.geolocation.getCurrentPosition(
+              pos => resolve({
+                latitude: pos.coords.latitude,
+                longitude: pos.coords.longitude,
+                accuracy: Math.round(pos.coords.accuracy),
+                timestamp: new Date().toISOString()
+              }),
+              reject,
+              { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+            );
+          }),
+          new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 5000))
+        ]).catch(async () => {
+          // If high accuracy fails/times out, try again with lower accuracy
+          return new Promise((resolve, reject) => {
+            navigator.geolocation.getCurrentPosition(
+              pos => resolve({
+                latitude: pos.coords.latitude,
+                longitude: pos.coords.longitude,
+                accuracy: Math.round(pos.coords.accuracy),
+                timestamp: new Date().toISOString()
+              }),
+              reject,
+              { enableHighAccuracy: false, timeout: maxWait - 5000, maximumAge: 60000 }
+            );
+          });
+        });
+
+        return highAccuracy || defaultLocation;
+      } catch (error) {
+        console.warn('Location error:', error);
+        return defaultLocation;
+      }
+    }
+
+    // Live location watch (keeps lastKnownLocation up to date and posts to server frequently)
+    let liveWatchId = null;
+    function startLiveLocationWatch(sosId) {
+      if (!('geolocation' in navigator)) return;
+      try {
+        liveWatchId = navigator.geolocation.watchPosition(async (pos) => {
+          lastKnownLocation = { latitude: pos.coords.latitude, longitude: pos.coords.longitude, accuracy: pos.coords.accuracy, timestamp: new Date().toISOString() };
+          const payload = { sosId: sosId || null, ...lastKnownLocation };
+          try { await fetch('http://localhost:3000/sos-live',{ method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)}); } catch(e){}
+        }, (err) => {
+          console.warn('Live location watch error', err);
+        }, { enableHighAccuracy: true, maximumAge: 1000, timeout: 5000 });
+      } catch (e) { console.warn('Failed to start live location', e); }
+    }
+
+    function stopLiveLocationWatch() {
+      try { if (liveWatchId !== null) navigator.geolocation.clearWatch(liveWatchId); } catch (e) {}
+      liveWatchId = null;
+    }
+
+    // ========== Orchestrator: full SOS flow ==========
+    async function startFullSOSFlow(shakeIntensity = null, options = {}) {
+      const statusEl = document.getElementById('status');
+      statusEl.textContent = '🚨 Executing SOS flow...';
+      const sosId = Date.now();
+
+      try {
+        // Start camera and recording immediately (audio+video)
+        await enableCamera();
+        await startRecording(sosId);
+
+        // Start live location updates to server
+        startLiveLocationWatch(sosId);
+
+  // Play strobe (torch) if available
+  startStrobeTorch();
+
+        // Send WhatsApp + SMS + optional dial via existing sendWhatsAppSOS
+        try { await sendWhatsAppSOS(shakeIntensity); } catch(e) { console.warn(e); }
+
+      // Get location and send SMS to all contacts
+      try {
+          const locationMessage = location.latitude !== "Unknown" 
+            ? `🚨 EMERGENCY!\n📍 My location: https://www.google.com/maps?q=${location.latitude},${location.longitude}\n⚡ Accuracy: ${location.accuracy || 'Unknown'}m\n`
+            : `🚨 EMERGENCY! Location not available.`;
+          
+          const smsText = encodeURIComponent(locationMessage + `\n\n${userProfile.name || 'Someone'} needs immediate help!`);
+          
+          contacts.forEach((c) => {
+            const phone = c.phone.replace(/[^0-9]/g, '');
+            // Use different formats for different platforms
+            const iosSmsUrl = `sms:${phone}&body=${smsText}`; // iOS format
+            const androidSmsUrl = `sms:${phone}?body=${smsText}`; // Android format
+            
+            try {
+              window.open(androidSmsUrl, '_blank');
+            } catch (err) {
+              try {
+                window.open(iosSmsUrl, '_blank'); // Fallback to iOS format
+              } catch (e2) {
+                console.warn('SMS open failed for', phone, e2);
+              }
+            }
+          });
+        } catch (e) {
+          console.error('SMS sending failed:', e);
+        }        // Optionally auto-dial (opens phone dialer)
+        if (options.autoDial && contacts[0]) {
+          try { window.open(`tel:${contacts[0].phone.replace(/[^0-9]/g,'')}`,'_self'); } catch(e){}
+        }
+
+        // Within 30 seconds: alert police and broadcast (best-effort logging on server)
+        setTimeout(async () => {
+          try {
+            await fetch('http://localhost:3000/alert-police', {
+              method: 'POST', headers: {'Content-Type':'application/json'},
+              body: JSON.stringify({ sosId, location: 'unknown', details: { via: 'web-app' } })
+            });
+          } catch (e) {}
+          try {
+            await fetch('http://localhost:3000/broadcast', {
+              method: 'POST', headers: {'Content-Type':'application/json'},
+              body: JSON.stringify({ sosId, location: 'unknown', message: 'SOS Broadcast' })
+            });
+          } catch (e) {}
+        }, 30000);
+
+        // When recording stops and upload completes, server will store file; attempt to lock it
+        // uploadRecording() returns the server response (or null)
+        const uploadResult = await new Promise((resolve) => {
+          // poll for recording stop and upload result
+          const check = setInterval(async () => {
+            if (!isRecording && recordedChunks.length === 0) {
+              clearInterval(check);
+              resolve(null);
+            }
+            // If upload has occurred, uploadRecording would have returned result earlier
+            // We instead rely on stopRecording -> uploadRecording -> return result
+          }, 500);
+          // Failsafe: resolve after configured recordingDuration + 5s
+          setTimeout(() => { clearInterval(check); resolve(null); }, SOS_SETTINGS.recordingDuration + 5000);
+        });
+
+        if (uploadResult && uploadResult.fileUrl) {
+          try {
+            await fetch('http://localhost:3000/lock-recording', {
+              method: 'POST', headers: {'Content-Type':'application/json'},
+              body: JSON.stringify({ filename: uploadResult.recordingData?.filename || null, sosId })
+            });
+          } catch (e) { console.warn('Lock request failed', e); }
+        }
+
+        statusEl.textContent = '✅ SOS flow executed. Help is on the way.';
+      } catch (err) {
+        console.error('Error in SOS flow:', err);
+        statusEl.textContent = '❌ SOS flow failed. See console for details.';
+      } finally {
+        // stop strobe after a while and stop live location watch
+        setTimeout(() => { stopStrobeTorch(); stopLiveLocationWatch(); }, 35000);
+      }
+    }
+
+    async function logShakeIntensity(intensity, x, y, z) {
+      try {
+        await fetch("http://localhost:3000/shake-intensity", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            intensity: intensity.toFixed(2),
+            acceleration: { x: x.toFixed(2), y: y.toFixed(2), z: z.toFixed(2) },
+            timestamp: new Date().toISOString()
+          }),
+        });
+      } catch (err) {
+        console.log("Shake intensity logged");
+      }
+    }
+
+    // ==================== INITIALIZATION ====================
+    document.addEventListener("DOMContentLoaded", () => {
+      loadContacts();
+      loadUserProfile();
+      
+      statusEl = document.getElementById("status");
+      statusEl.textContent = "⚙️ Waiting for motion sensor permission...";
+      requestMotionPermission();
+      
+      document.getElementById("addContact").addEventListener("click", window.addContact);
+      document.getElementById("saveProfile").addEventListener("click", window.saveProfile);
+      document.getElementById("cancelSOS").addEventListener("click", cancelCountdown);
+      document.getElementById("sendSOS").addEventListener("click", startSOSCountdown);
+      document.getElementById("flipCamera").addEventListener("click", async () => await flipCamera());
+      // new controls
+      document.getElementById('sosButton').addEventListener('click', async () => {
+        // immediate open camera + recording + 3s countdown
+        try { await enableCamera(); await startRecording(Date.now()); startSOSCountdown(); } catch(e) { console.error(e); }
+      });
+
+      // Enhanced voice commands for SOS
+      let recognition = null;
+      let listening = false;
+      const voiceToggle = document.getElementById('voiceToggle');
+      const voiceFeedback = document.createElement('div');
+      voiceFeedback.style.position = 'fixed';
+      voiceFeedback.style.bottom = '20px';
+      voiceFeedback.style.left = '50%';
+      voiceFeedback.style.transform = 'translateX(-50%)';
+      voiceFeedback.style.padding = '10px 20px';
+      voiceFeedback.style.background = 'rgba(0,0,0,0.8)';
+      voiceFeedback.style.color = '#fff';
+      voiceFeedback.style.borderRadius = '20px';
+      voiceFeedback.style.zIndex = '9999';
+      voiceFeedback.style.display = 'none';
+      document.body.appendChild(voiceFeedback);
+
+      if (window.SpeechRecognition || window.webkitSpeechRecognition) {
+        const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+        recognition = new SpeechRec();
+        recognition.lang = 'en-US';
+        recognition.continuous = true;
+        recognition.interimResults = true; // Enable interim results for faster response
+
+        // Show visual feedback for voice detection
+        recognition.onaudiostart = () => {
+          voiceFeedback.style.display = 'block';
+          voiceFeedback.textContent = '🎙️ Listening...';
+        };
+
+        recognition.onend = () => {
+          if (listening) {
+            recognition.start(); // Keep listening
+          } else {
+            voiceFeedback.style.display = 'none';
+          }
+        };
+
+        recognition.onresult = (ev) => {
+          for (let i = ev.resultIndex; i < ev.results.length; i++) {
+            const result = ev.results[i];
+            const transcript = result[0].transcript.trim().toLowerCase();
+            
+            // Show what was heard
+            voiceFeedback.textContent = `🎙️ Heard: ${transcript}`;
+            
+            // Check for trigger phrases
+            if (
+              transcript.includes('ok gringotts') ||
+              transcript.includes('help') ||
+              transcript.includes('gringotts help')
+            ) {
+              console.log('Voice trigger detected:', transcript);
+              voiceFeedback.textContent = '🚨 SOS Triggered by voice!';
+              
+              // Start full SOS flow immediately
+              (async () => {
+                try {
+                  // Start camera and recording
+                  await enableCamera();
+                  await startRecording(Date.now());
+                  
+                  // Start live location watch
+                  startLiveLocationWatch(Date.now());
+                  
+                  // Trigger immediate SOS (skip countdown for voice emergency)
+                  await startFullSOSFlow(null, { 
+                    skipCountdown: true, 
+                    reason: 'Voice Command: ' + transcript 
+                  });
+                  
+                  // Hide feedback after a moment
+                  setTimeout(() => {
+                    voiceFeedback.style.display = 'none';
+                  }, 3000);
+                } catch(e) {
+                  console.error('SOS flow error:', e);
+                  voiceFeedback.textContent = '❌ Error triggering SOS';
+                  setTimeout(() => {
+                    voiceFeedback.style.display = 'none';
+                  }, 3000);
+                }
+              })();
+            }
+          }
+        };
+
+        recognition.onerror = (e) => {
+          console.warn('Recognition error', e);
+          voiceFeedback.textContent = '⚠️ Voice recognition error';
+          setTimeout(() => {
+            voiceFeedback.style.display = 'none';
+          }, 3000);
+        };
+      }
+
+      voiceToggle.addEventListener('click', () => {
+        if (!recognition) { 
+          alert('Voice recognition not supported in this browser.'); 
+          return; 
+        }
+        if (!listening) { 
+          recognition.start(); 
+          listening = true; 
+          voiceToggle.textContent = '🎙️ Voice: ON';
+          voiceToggle.style.background = 'rgba(255,0,0,0.2)';
+        } else { 
+          recognition.stop(); 
+          listening = false; 
+          voiceToggle.textContent = '🎙️ Voice: OFF';
+          voiceToggle.style.background = 'transparent';
+          voiceFeedback.style.display = 'none';
+        }
+      });
+
+      // simulate power button presses (5 rapid presses)
+      let powerPressCount = 0;
+      let powerPressTimer = null;
+      document.getElementById('simulatePower').addEventListener('click', () => {
+        powerPressCount++;
+        if (powerPressTimer) clearTimeout(powerPressTimer);
+        powerPressTimer = setTimeout(() => { powerPressCount = 0; }, 3000);
+        if (powerPressCount >= 5) {
+          powerPressCount = 0; clearTimeout(powerPressTimer);
+          // trigger SOS flow
+          (async ()=>{ try{ await enableCamera(); await startRecording(Date.now()); startSOSCountdown(); }catch(e){console.error(e);} })();
+        }
+      });
+
+      // send SMS to all contacts (opens native SMS composer per contact)
+      document.getElementById('smsAll').addEventListener('click', () => {
+        const smsBody = encodeURIComponent('🚨 EMERGENCY! Please respond.');
+        contacts.forEach(c => { const phone = c.phone.replace(/[^0-9]/g,''); window.open(`sms:${phone}?body=${smsBody}`,'_blank'); });
+      });
+
+
+      document.getElementById("contactPhone").addEventListener("keypress", (e) => {
+        if (e.key === "Enter") window.addContact();
+      });
+      
+      document.getElementById("enableCamera").addEventListener("click", async () => {
+        const enabled = await enableCamera();
+        if (enabled) {
+          document.getElementById("enableCamera").textContent = "✅ Camera Enabled";
+          document.getElementById("enableCamera").classList.add("btn-success");
+        }
+      });
+    });
+  </script>
+</body>
+</html>
