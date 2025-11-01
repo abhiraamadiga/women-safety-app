@@ -255,7 +255,7 @@
                         <!-- Question 6: Evidence Upload -->
                         <div class="question-section">
                             <label class="form-label">
-                                <span class="icon-wrapper icon-shield" style="width: 36px; height: 36px; font-size: 1.2rem; margin-bottom: 0; margin-right: 0.5rem;">📎</span>
+                                <span class="icon-wrapper icon-shield" style="width: 36px; height: 36px; font-size: 1.2rem; margin-bottom: 0; margin-right: 0.5rem;"></span>
                                 6. Upload Evidence (Optional)
                                 <span class="tooltip-icon" title="Screenshots, photos, or documents">?</span>
                             </label>
@@ -401,7 +401,7 @@ function displayFilePreviews() {
         } else {
             const icon = document.createElement('div');
             icon.style.cssText = 'width:100%;height:120px;display:flex;align-items:center;justify-content:center;background:#EDF2F7;font-size:2rem;';
-            icon.textContent = '📄';
+            icon.textContent = 'File';
             fileItem.appendChild(icon);
         }
         
@@ -740,7 +740,7 @@ function showToast(message, type = 'success') {
     const toastHTML = `
         <div class="toast custom-toast show" role="alert">
             <div class="toast-body d-flex align-items-center gap-2">
-                <span>${type === 'success' ? '✅' : 'ℹ️'}</span>
+                <span>${type === 'success' ? 'Success' : 'Info'}</span>
                 <span>${message}</span>
             </div>
         </div>

@@ -479,7 +479,15 @@ def my_reports():
 
 @bp.route('/fake-call')
 def fake_call():
-    """Emergency fake call feature"""
+    """AI-powered Fake Call (main). Use ?basic=1 to load legacy template as backup."""
+    basic = request.args.get('basic', '').lower() in ('1', 'true', 'yes')
+    if basic:
+        return render_template('fake_call.html')
+    return render_template('fake_call_ai.html')
+
+@bp.route('/fake-call-basic')
+def fake_call_basic():
+    """Legacy/basic fake call kept as backup"""
     return render_template('fake_call.html')
 
 @bp.route('/sos-center')
@@ -1865,7 +1873,12 @@ def _composite_score(safety_score: float, duration_min: float, distance_km: floa
 
 @bp.route('/safe-routes')
 def safe_routes():
-    """Render safe routes page - simplified standalone version"""
+    """Render Safe Routes inside the app shell with navbar (via iframe wrapper)."""
+    return render_template('safe_routes_container.html')
+
+@bp.route('/safe-routes-standalone')
+def safe_routes_standalone():
+    """Standalone Safe Routes UI (original full-screen version) used inside iframe wrapper."""
     return render_template('safe_routes_simple.html')
 
 @bp.route('/safe-routes-full')

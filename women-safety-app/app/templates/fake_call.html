@@ -287,37 +287,35 @@
 {% block content %}
 <div class="fake-call-container">
     <div class="fake-call-card">
-        <h1>🚨 Emergency Fake Call</h1>
+    <h1>Emergency Fake Call</h1>
         <p class="lead">Create a believable incoming call to help you leave an uncomfortable or unsafe situation discreetly.</p>
 
         <div class="controls">
             <input id="callerName" type="text" placeholder="Caller name (e.g., Mom, Friend)" value="Mom">
-            <input id="delay" type="number" min="0" placeholder="Delay (sec)" value="0">
         </div>
 
         <div class="buttons">
-            <button id="nowBtn" class="btn-fake-call">📞 Receive Now</button>
-            <button id="scheduleBtn" class="btn-schedule">⏰ Schedule Call</button>
+            <button id="nowBtn" class="btn-fake-call">Receive Now</button>
         </div>
 
         <div class="hint">
-            <strong>💡 How it works:</strong> Simulates a realistic incoming call with ringtone and voice conversation. Perfect for escaping uncomfortable situations. You can decline at any time or let it end naturally.
+            <strong>How it works:</strong> Simulates a realistic incoming call with ringtone and voice conversation. Perfect for escaping uncomfortable situations. You can decline at any time or let it end naturally.
         </div>
     </div>
 </div>
 
 <div class="call-screen" id="callScreen" aria-hidden="true">
     <div class="call-panel" role="dialog" aria-label="Incoming call">
-        <div class="avatar" id="avatar">👤</div>
+    <div class="avatar" id="avatar"></div>
         <div class="caller-name" id="displayName">Mom</div>
         <div class="call-status" id="callStatus">WhatsApp voice call...</div>
 
         <div class="call-actions">
             <button class="action-btn action-decline" id="declineBtn" title="Decline" aria-label="Decline call">
-                ✕
+                Decline
             </button>
             <button class="action-btn action-accept" id="answerBtn" title="Answer" aria-label="Answer call">
-                ✓
+                Answer
             </button>
         </div>
 
@@ -336,9 +334,8 @@
 <script>
     // Elements
     const nowBtn = document.getElementById('nowBtn');
-    const scheduleBtn = document.getElementById('scheduleBtn');
     const callerNameInput = document.getElementById('callerName');
-    const delayInput = document.getElementById('delay');
+    
 
     const callScreen = document.getElementById('callScreen');
     const displayName = document.getElementById('displayName');
@@ -414,37 +411,7 @@
         showCall(callerNameInput.value.trim() || 'Mom');
     });
 
-    scheduleBtn.addEventListener('click', () => {
-        const seconds = Math.max(0, parseInt(delayInput.value) || 0);
-        
-        if(scheduleTimer) clearTimeout(scheduleTimer);
-        clearCountdown();
-        
-        if(seconds === 0) {
-            showCall(callerNameInput.value.trim() || 'Mom');
-            return;
-        }
-
-        // Show countdown in the main card
-        let remaining = seconds;
-        countdownArea.textContent = `Call scheduled in ${remaining}s`;
-        
-        countdownTimer = setInterval(() => {
-            remaining -= 1;
-            countdownArea.textContent = `Call scheduled in ${remaining}s`;
-            
-            if(remaining <= 0) {
-                clearInterval(countdownTimer);
-                countdownTimer = null;
-                countdownArea.textContent = '';
-            }
-        }, 1000);
-
-        scheduleTimer = setTimeout(() => {
-            scheduleTimer = null;
-            showCall(callerNameInput.value.trim() || 'Mom');
-        }, seconds * 1000);
-    });
+    // Removed schedule feature
 
     declineBtn.addEventListener('click', () => {
         hideCall();
@@ -460,9 +427,9 @@
         const callActions = document.querySelector('.call-actions');
         callActions.innerHTML = '';
         
-        const endCallBtn = document.createElement('button');
-        endCallBtn.className = 'action-btn action-decline';
-        endCallBtn.innerHTML = '📞';
+    const endCallBtn = document.createElement('button');
+    endCallBtn.className = 'action-btn action-decline';
+    endCallBtn.innerHTML = 'End';
         endCallBtn.title = 'End Call';
         endCallBtn.style.width = '80px';
         endCallBtn.style.height = '80px';
@@ -471,12 +438,8 @@
             hideCall();
             // Restore original buttons
             callActions.innerHTML = `
-                <button class="action-btn action-decline" id="declineBtn" title="Decline" aria-label="Decline call">
-                    ✕
-                </button>
-                <button class="action-btn action-accept" id="answerBtn" title="Answer" aria-label="Answer call">
-                    ✓
-                </button>
+                <button class=\"action-btn action-decline\" id=\"declineBtn\" title=\"Decline\" aria-label=\"Decline call\">\n                    Decline\n                </button>
+                <button class=\"action-btn action-accept\" id=\"answerBtn\" title=\"Answer\" aria-label=\"Answer call\">\n                    Answer\n                </button>
             `;
             // Re-attach event listeners
             document.getElementById('declineBtn').addEventListener('click', () => hideCall());
@@ -490,7 +453,7 @@
             // If conversation couldn't autoplay, show manual start
             callStatus.textContent = 'Tap to start conversation';
             const startBtn = document.createElement('button');
-            startBtn.textContent = '▶ Start Conversation';
+            startBtn.textContent = 'Start Conversation';
             startBtn.className = 'btn-fake-call';
             startBtn.style.marginTop = '16px';
             startBtn.onclick = async () => {
@@ -510,9 +473,9 @@
         const callActions = document.querySelector('.call-actions');
         callActions.innerHTML = '';
         
-        const endCallBtn = document.createElement('button');
-        endCallBtn.className = 'action-btn action-decline';
-        endCallBtn.innerHTML = '📞';
+    const endCallBtn = document.createElement('button');
+    endCallBtn.className = 'action-btn action-decline';
+    endCallBtn.innerHTML = 'End';
         endCallBtn.title = 'End Call';
         endCallBtn.style.width = '80px';
         endCallBtn.style.height = '80px';
@@ -520,12 +483,8 @@
         endCallBtn.onclick = () => {
             hideCall();
             callActions.innerHTML = `
-                <button class="action-btn action-decline" id="declineBtn" title="Decline" aria-label="Decline call">
-                    ✕
-                </button>
-                <button class="action-btn action-accept" id="answerBtn" title="Answer" aria-label="Answer call">
-                    ✓
-                </button>
+                <button class=\"action-btn action-decline\" id=\"declineBtn\" title=\"Decline\" aria-label=\"Decline call\">\n                    Decline\n                </button>
+                <button class=\"action-btn action-accept\" id=\"answerBtn\" title=\"Answer\" aria-label=\"Answer call\">\n                    Answer\n                </button>
             `;
             document.getElementById('declineBtn').addEventListener('click', () => hideCall());
             document.getElementById('answerBtn').addEventListener('click', answerCall);
@@ -536,7 +495,7 @@
         if(!ok) {
             callStatus.textContent = 'Tap to start conversation';
             const startBtn = document.createElement('button');
-            startBtn.textContent = '▶ Start Conversation';
+            startBtn.textContent = 'Start Conversation';
             startBtn.className = 'btn-fake-call';
             startBtn.style.marginTop = '16px';
             startBtn.onclick = async () => {

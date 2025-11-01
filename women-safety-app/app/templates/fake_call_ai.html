@@ -1,0 +1,299 @@
+{% extends 'base.html' %}
+
+{% block title %}AI Fake Call - SafeSpace{% endblock %}
+
+{% block extra_css %}
+<style>
+  .fake-call-container { max-width: 700px; margin: 2rem auto; }
+  .card { background: #fff; border-radius: 16px; padding: 24px; box-shadow: 0 12px 30px rgba(0,0,0,0.08); }
+  .controls { display: flex; gap: 12px; flex-wrap: wrap; }
+  .controls input { flex: 1; min-width: 180px; padding: 12px 16px; border: 2px solid #E2E8F0; border-radius: 10px; }
+  .controls input:focus { outline: none; border-color: #6366F1; box-shadow: 0 0 0 3px rgba(99,102,241,0.1); }
+  .btn-main { background: linear-gradient(135deg, #22C55E 0%, #16A34A 100%); color: #fff; border: none; padding: 14px 18px; border-radius: 12px; font-weight: 700; font-size: 16px; cursor: pointer; transition: all 0.3s ease; }
+  .btn-main:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(34,197,94,0.4); }
+  .btn-alt { background: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%); color: #fff; border: none; padding: 14px 18px; border-radius: 12px; font-weight: 700; font-size: 16px; cursor: pointer; transition: all 0.3s ease; }
+  .btn-alt:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(139,92,246,0.4); }
+  .hint { margin-top: 12px; background: #F8FAFC; border: 1px solid #E2E8F0; padding: 12px 14px; border-radius: 10px; }
+  .call-overlay { display: none; position: fixed; inset: 0; z-index: 9999; background: radial-gradient(1200px 600px at 50% -10%, #1e293b 0%, #0f172a 60%); }
+  .call-panel { width: 95%; max-width: 420px; margin: 8vh auto; background: #fff; border-radius: 24px; padding: 28px 22px; text-align: center; box-shadow: 0 30px 60px rgba(0,0,0,0.5); }
+  .avatar { width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, #667eea, #764ba2); display: inline-flex; align-items: center; justify-content: center; font-size: 56px; color: #fff; margin-bottom: 12px; }
+  .status { color: #64748B; font-weight: 600; margin: 8px 0 16px; }
+  .actions { display: flex; justify-content: center; gap: 24px; margin-top: 18px; }
+  .round { width: 72px; height: 72px; border-radius: 50%; border: none; display: grid; place-items: center; color: #fff; font-size: 28px; cursor: pointer; transition: all 0.3s ease; }
+  .round:hover { transform: scale(1.1); }
+  .accept { background: linear-gradient(135deg, #22C55E, #16A34A); box-shadow: 0 10px 24px rgba(22,163,74,0.35); }
+  .decline { background: linear-gradient(135deg, #EF4444, #DC2626); box-shadow: 0 10px 24px rgba(239,68,68,0.35); }
+  .end-btn { background: linear-gradient(135deg, #EF4444, #DC2626); }
+  .pill { display: inline-flex; align-items: center; gap: 8px; background: #F1F5F9; border-radius: 999px; padding: 6px 12px; font-size: 12px; color: #334155; }
+  .mini { font-size: 12px; color: #64748B; }
+  .transcript { margin-top: 10px; background: #F8FAFC; border: 1px dashed #CBD5E1; border-radius: 12px; padding: 10px 12px; max-height: 180px; overflow: auto; font-size: 13px; }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="fake-call-container">
+  <div class="card">
+  <h1 class="mb-2" style="font-weight: 800; color: #6366F1;">AI-Powered Fake Call</h1>
+    <p class="mini" style="font-size: 14px; line-height: 1.6;">This simulates a realistic incoming call with <strong>AI voice conversation</strong>. Once answered, an AI voice will talk naturally and respond to you. Your original fake call remains available as backup.</p>
+
+    <div class="controls mt-3 mb-3">
+      <input id="callerName" type="text" placeholder="Caller name (e.g., Mom, Friend)" value="Mom" />
+    </div>
+
+    <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px;">
+  <button id="btnNow" class="btn-main" style="flex: 1; min-width: 150px; cursor: pointer;">Receive Now</button>
+    </div>
+    <a class="btn btn-outline-secondary" href="{{ url_for('main.fake_call', basic=1) }}" style="display: inline-block; padding: 10px 16px; text-decoration: none;">Backup fake call</a>
+
+    <div class="hint mt-3">
+      <div class="pill">Tip</div>
+      Works best in Chrome/Edge. Allow microphone for voice input. If speech recognition isn’t supported, you can type your side during the call.
+    </div>
+  </div>
+</div>
+
+<!-- Call overlay -->
+<div class="call-overlay" id="overlay" aria-hidden="true">
+  <div class="call-panel" role="dialog" aria-label="Incoming call">
+  <div class="avatar"></div>
+    <div style="font-weight:800; font-size:28px;" id="displayName">Mom</div>
+    <div class="status" id="callStatus">WhatsApp voice call…</div>
+
+    <div class="actions" id="actionRow">
+  <button class="round decline" id="btnDecline" aria-label="Decline">Decline</button>
+  <button class="round accept" id="btnAnswer" aria-label="Answer">Answer</button>
+    </div>
+
+    <div class="mt-3"><span class="pill" id="timer">00:00</span></div>
+
+    <div class="transcript mt-3" id="transcript" style="display:none"></div>
+    <div class="mt-2" id="typeFallback" style="display:none">
+      <label class="mini" for="typedInput">Type your response (speech recognition not available)</label>
+      <div class="d-flex gap-2 mt-1">
+        <input id="typedInput" class="form-control" placeholder="Type and press Send" />
+        <button class="btn btn-sm btn-primary" id="btnSendTyped">Send</button>
+      </div>
+    </div>
+
+    <audio id="ringtone" loop preload="auto">
+      <source src="{{ url_for('static', filename='audio/whatsapp-ringtone.mp3') }}" type="audio/mp3" />
+    </audio>
+  </div>
+</div>
+
+<span class="sr-only" aria-live="polite" id="ariaLive"></span>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('DOM loaded, initializing AI Fake Call...');
+  
+  const overlay = document.getElementById('overlay');
+  const callStatus = document.getElementById('callStatus');
+  const displayName = document.getElementById('displayName');
+  const timerEl = document.getElementById('timer');
+  const transcriptEl = document.getElementById('transcript');
+  const ariaLive = document.getElementById('ariaLive');
+  const typeFallback = document.getElementById('typeFallback');
+  const typedInput = document.getElementById('typedInput');
+  const btnSendTyped = document.getElementById('btnSendTyped');
+
+  const ringtone = document.getElementById('ringtone');
+  const btnNow = document.getElementById('btnNow');
+  
+  const btnAnswer = document.getElementById('btnAnswer');
+  const btnDecline = document.getElementById('btnDecline');
+  const actionRow = document.getElementById('actionRow');
+
+  const callerNameInput = document.getElementById('callerName');
+  
+  
+  console.log('Elements found:', {
+    btnNow: !!btnNow,
+    overlay: !!overlay,
+    ringtone: !!ringtone
+  });
+
+  let connected = false;
+  let timerId = null;
+  let seconds = 0;
+  let recognition = null;
+  let listening = false;
+  let conversationOpen = false;
+  let lastUser = '';
+
+  const BACKEND_CHAT = '/api/chat'; // uses the same Google Gemini API on the backend
+
+  // Voice selection
+  function pickVoice() {
+    const voices = window.speechSynthesis ? window.speechSynthesis.getVoices() : [];
+    // Prefer a female English voice when available
+    const preferred = voices.find(v => /en-?US/i.test(v.lang) && /zira|aria|female|jenna|jenny|sara|zoe/i.test(v.name))
+                   || voices.find(v => /en/i.test(v.lang));
+    return preferred || voices[0] || null;
+  }
+
+  function speak(text){
+    if(!window.speechSynthesis) return;
+    const u = new SpeechSynthesisUtterance(text);
+    const v = pickVoice();
+    if(v) u.voice = v;
+    u.rate = 1.05; u.pitch = 1.02; u.volume = 1.0;
+    window.speechSynthesis.speak(u);
+  }
+
+  function logTurn(who, text){
+    transcriptEl.style.display = 'block';
+    const line = document.createElement('div');
+    line.innerHTML = `<strong>${who}:</strong> ${escapeHtml(text)}`;
+    transcriptEl.appendChild(line);
+    transcriptEl.scrollTop = transcriptEl.scrollHeight;
+  }
+
+  function escapeHtml(s){ const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+  function safePlay(audio){ return audio.play().catch(_ => {}); }
+
+  function showOverlay(name){
+    displayName.textContent = name || 'Unknown';
+    overlay.style.display = 'block';
+    overlay.setAttribute('aria-hidden', 'false');
+    callStatus.textContent = 'Incoming WhatsApp call…';
+    safePlay(ringtone);
+    if('vibrate' in navigator){ navigator.vibrate([200, 100, 200]); }
+  }
+
+  function hideOverlay(){
+    overlay.style.display = 'none';
+    overlay.setAttribute('aria-hidden', 'true');
+    ringtone.pause(); ringtone.currentTime = 0;
+    stopTimer();
+    stopRecognition();
+    connected = false;
+    conversationOpen = false;
+    transcriptEl.innerHTML = '';
+    transcriptEl.style.display = 'none';
+    typeFallback.style.display = 'none';
+    // restore buttons
+    actionRow.innerHTML = '';
+    actionRow.appendChild(btnDecline); actionRow.appendChild(btnAnswer);
+    btnDecline.onclick = onDecline; btnAnswer.onclick = onAnswer;
+  }
+
+  function startTimer(){
+    seconds = 0; updateTimer();
+    timerId = setInterval(()=>{ seconds++; updateTimer(); }, 1000);
+  }
+  function stopTimer(){ if(timerId){ clearInterval(timerId); timerId=null; } }
+  function updateTimer(){
+    const m = String(Math.floor(seconds/60)).padStart(2,'0');
+    const s = String(seconds%60).padStart(2,'0');
+    timerEl.textContent = `${m}:${s}`;
+  }
+
+  // Speech recognition (if available)
+  function initRecognition(){
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if(!SR){ typeFallback.style.display = 'block'; return null; }
+    const r = new SR();
+    r.lang = 'en-US'; r.interimResults = false; r.continuous = true;
+    r.onresult = (e)=>{
+      const txt = Array.from(e.results).slice(-1)[0][0].transcript.trim();
+      if(!txt) return;
+      lastUser = txt;
+      logTurn('You', txt);
+      // Send to AI
+      converse(txt);
+    };
+    r.onend = ()=>{ if(connected && listening){ r.start(); } };
+    r.onerror = ()=>{};
+    return r;
+  }
+
+  function startRecognition(){
+    if(!recognition){ recognition = initRecognition(); }
+    if(recognition){ listening = true; try{ recognition.start(); }catch{} }
+  }
+  function stopRecognition(){ listening = false; if(recognition){ try{ recognition.stop(); }catch{} } }
+
+  async function converse(userText){
+    if(conversationOpen) return; // avoid overlap
+    conversationOpen = true;
+    callStatus.textContent = 'AI is thinking...';
+    console.log('Sending to AI:', userText || 'Initial greeting');
+    try {
+      const priming = "Please roleplay as my close family member calling me. Keep replies short (5-12 words), warm, and natural, like a quick real phone call. Add tiny pauses implied in tone. Do NOT mention being an AI or chat.";
+      const msg = lastUser ? `${priming}\nUser said: ${userText}` : `${priming}\nStart the call with a natural opener asking if I'm okay.`;
+      const res = await fetch(BACKEND_CHAT, {
+        method: 'POST', headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ message: msg })
+      });
+      const data = await res.json();
+      console.log('AI response:', data);
+      const reply = (data && (data.message || data.error)) || "I'm here for you. Are you okay?";
+      callStatus.textContent = 'Connected…';
+      logTurn(displayName.textContent, reply);
+      ariaLive.textContent = reply; // accessibility
+      speak(reply);
+    } catch(e){
+      console.error('AI error:', e);
+      callStatus.textContent = 'Connected…';
+      const fallback = "I'm here for you. Want me to call you out?";
+      logTurn(displayName.textContent, fallback);
+      speak(fallback);
+    } finally {
+      conversationOpen = false;
+    }
+  }
+
+  // UI handlers
+  function onNow(){ 
+    console.log('Receive Now clicked');
+    showOverlay(callerNameInput.value.trim() || 'Mom'); 
+  }
+  function onDecline(){ 
+    console.log('Call declined');
+    hideOverlay(); 
+  }
+  function onAnswer(){
+    console.log('Call answered - starting AI conversation');
+    ringtone.pause(); ringtone.currentTime=0; connected = true; callStatus.textContent = 'Connected…';
+    // replace with End Call button
+    actionRow.innerHTML = '';
+  const endBtn = document.createElement('button'); endBtn.className = 'round end-btn'; endBtn.innerHTML = 'End'; endBtn.onclick = hideOverlay; actionRow.appendChild(endBtn);
+    startTimer();
+    // Start conversation: brief opener
+    lastUser = '';
+    converse('');
+    // Start mic if supported
+    startRecognition();
+  }
+
+  // Type fallback
+  btnSendTyped && btnSendTyped.addEventListener('click', ()=>{
+    const txt = (typedInput.value||'').trim(); if(!txt) return;
+    logTurn('You', txt); typedInput.value='';
+    converse(txt);
+  });
+
+  // Attach event listeners
+  console.log('AI Fake Call initialized');
+  if(btnNow) {
+    btnNow.addEventListener('click', onNow);
+    console.log('Receive Now button attached');
+  }
+  if(btnDecline) btnDecline.addEventListener('click', onDecline);
+  if(btnAnswer) btnAnswer.addEventListener('click', onAnswer);
+  
+  // Load voices on page load
+  if(window.speechSynthesis) {
+    window.speechSynthesis.onvoiceschanged = pickVoice;
+  }
+  
+  console.log('AI Fake Call fully initialized and ready');
+});
+</script>
+{% endblock %}
