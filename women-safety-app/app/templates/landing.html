@@ -1,8 +1,14 @@
 {% extends "base.html" %}
 
-{% block title %}SafeSpace - Your Voice Matters{% endblock %}
+{% block title %}Gringotts - Your Voice Matters{% endblock %}
 
 {% block extra_css %}
+<script>
+    // Check if onboarding has been completed
+    if (!localStorage.getItem('gringotts_onboarding_complete')) {
+        window.location.href = '/onboarding';
+    }
+</script>
 <style>
     /* Landing Page Styles */
     body {
@@ -354,7 +360,7 @@
             <div class="col-lg-6 hero-content">
                 <h1 class="hero-title">Your Voice Matters, Your Safety First</h1>
                 <p class="hero-subtitle">
-                    SafeSpace is a secure, anonymous platform empowering women to report incidents, 
+                    Gringotts is a secure, anonymous platform empowering women to report incidents, 
                     find support, and build a safer community together.
                 </p>
                 <div class="hero-cta">
@@ -383,7 +389,7 @@
 <div class="features-section">
     <div class="container">
         <div class="text-center mb-4">
-            <h2 class="section-title">Why Choose SafeSpace?</h2>
+            <h2 class="section-title">Why Choose Gringotts?</h2>
             <p style="font-size: 1.2rem; color: #4A5568; max-width: 700px; margin: 0 auto;">
                 Built with your safety, privacy, and empowerment in mind
             </p>
@@ -431,7 +437,7 @@
                 </div>
                 <h3 class="feature-title">Mobile Friendly</h3>
                 <p class="feature-description">
-                    Access SafeSpace anytime, anywhere from your mobile device or computer.
+                    Access Gringotts anytime, anywhere from your mobile device or computer.
                 </p>
             </div>
             <div class="feature-card">
@@ -465,7 +471,7 @@
 <div class="how-it-works-section">
     <div class="container">
         <div class="text-center mb-5">
-            <h2 class="section-title">How SafeSpace Works</h2>
+            <h2 class="section-title">How Gringotts Works</h2>
             <img src="https://illustrations.popsy.co/violet/work-from-home.svg" alt="How it works" style="max-width: 400px; width: 100%; margin: 2rem auto; display: block;">
         </div>
         <div class="steps-container">
@@ -536,7 +542,7 @@
             <div class="col-lg-6">
                 <h2 style="font-size: 2.5rem; font-weight: 800; color: #2D3748; margin-bottom: 1.5rem;">You're Not Alone</h2>
                 <p style="font-size: 1.2rem; color: #4A5568; line-height: 1.8; margin-bottom: 2rem;">
-                    SafeSpace provides a judgment-free zone where you can share your story, connect with others who understand, 
+                    Gringotts provides a judgment-free zone where you can share your story, connect with others who understand, 
                     and access resources to take action. Every voice matters, every story counts.
                 </p>
                 <div class="trust-badges">

@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Gringotts</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .onboarding-container {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 1000px;
+        }
+
+        .scroll-stack {
+            position: relative;
+            width: 90%;
+            max-width: 400px;
+            height: 600px;
+        }
+
+        .scroll-stack-item {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            transform-origin: center center;
+        }
+
+        .scroll-stack-item.active {
+            transform: translateY(0) scale(1) rotateY(0deg);
+            opacity: 1;
+            z-index: 10;
+        }
+
+        .scroll-stack-item.prev {
+            transform: translateY(-20px) scale(0.95) rotateY(-5deg);
+            opacity: 0;
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        .scroll-stack-item.next {
+            transform: translateY(20px) scale(0.95) rotateY(5deg);
+            opacity: 0.5;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .card-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .card-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 15px;
+        }
+
+        .card-description {
+            font-size: 16px;
+            color: #4a5568;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .permission-list {
+            list-style: none;
+            margin: 20px 0;
+            text-align: left;
+            width: 100%;
+        }
+
+        .permission-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: #f7fafc;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #2d3748;
+        }
+
+        .permission-item::before {
+            content: '✓';
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            background: #48bb78;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 24px;
+            margin-right: 12px;
+            font-weight: bold;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #667eea;
+            border: 2px solid #667eea;
+            padding: 14px 40px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .progress-dots {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 100;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            background: white;
+            width: 30px;
+            border-radius: 5px;
+        }
+
+        .permission-status {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .permission-status.success {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+
+        .permission-status.error {
+            background: #fed7d7;
+            color: #742a2a;
+        }
+
+        .permission-status.pending {
+            background: #feebc8;
+            color: #7c2d12;
+        }
+
+        @media (max-width: 480px) {
+            .scroll-stack {
+                width: 95%;
+                height: 550px;
+            }
+
+            .scroll-stack-item {
+                padding: 30px 20px;
+            }
+
+            .card-icon {
+                font-size: 60px;
+            }
+
+            .card-title {
+                font-size: 24px;
+            }
+
+            .card-description {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="onboarding-container">
+        <div class="scroll-stack" id="scrollStack">
+            <!-- Card 1: Welcome -->
+            <div class="scroll-stack-item active" data-index="0">
+                <div class="card-icon">🏛️</div>
+                <h2 class="card-title">Welcome to Gringotts</h2>
+                <p class="card-description">
+                    Your trusted guardian for personal safety. We keep you secure, protected, and connected to help when you need it most.
+                </p>
+                <button class="btn-primary" onclick="nextCard()">Get Started</button>
+            </div>
+
+            <!-- Card 2: Permissions -->
+            <div class="scroll-stack-item next" data-index="1">
+                <div class="card-icon">🔐</div>
+                <h2 class="card-title">Security Permissions</h2>
+                <p class="card-description">
+                    To protect you effectively, Gringotts needs access to:
+                </p>
+                <ul class="permission-list">
+                    <li class="permission-item">📍 Location - Track your safe routes</li>
+                    <li class="permission-item">📸 Camera - Capture evidence</li>
+                    <li class="permission-item">🎤 Microphone - Record emergencies</li>
+                </ul>
+                <button class="btn-primary" onclick="requestPermissions()">Grant Permissions</button>
+                <div id="permissionStatus" class="permission-status" style="display: none;"></div>
+            </div>
+
+            <!-- Card 3: Safe Routes -->
+            <div class="scroll-stack-item next" data-index="2">
+                <div class="card-icon">🗺️</div>
+                <h2 class="card-title">Smart Safe Routes</h2>
+                <p class="card-description">
+                    AI-powered route planning analyzes crime data, lighting, and population density to recommend the safest paths to your destination.
+                </p>
+                <button class="btn-primary" onclick="nextCard()">Continue</button>
+            </div>
+
+            <!-- Card 4: SOS Features -->
+            <div class="scroll-stack-item next" data-index="3">
+                <div class="card-icon">🚨</div>
+                <h2 class="card-title">Instant SOS Alert</h2>
+                <p class="card-description">
+                    One-tap emergency alerts with live location sharing. Shake detection automatically notifies your trusted contacts in danger.
+                </p>
+                <button class="btn-primary" onclick="nextCard()">Continue</button>
+            </div>
+
+            <!-- Card 5: Incident Reports -->
+            <div class="scroll-stack-item next" data-index="4">
+                <div class="card-icon">📝</div>
+                <h2 class="card-title">Report Incidents</h2>
+                <p class="card-description">
+                    Document incidents safely with AI-powered summaries. Share anonymously with the community to help others stay informed.
+                </p>
+                <button class="btn-primary" onclick="nextCard()">Continue</button>
+            </div>
+
+            <!-- Card 6: Community Support -->
+            <div class="scroll-stack-item next" data-index="5">
+                <div class="card-icon">🤝</div>
+                <h2 class="card-title">Community Support</h2>
+                <p class="card-description">
+                    Connect with others, share experiences, and access AI-powered emotional support. You're never alone.
+                </p>
+                <button class="btn-primary" onclick="completeOnboarding()">Enter Gringotts</button>
+                <button class="btn-secondary" onclick="skipOnboarding()">Skip Tour</button>
+            </div>
+        </div>
+
+        <div class="progress-dots" id="progressDots">
+            <div class="dot active"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+    </div>
+
+    <script>
+        let currentIndex = 0;
+        const cards = document.querySelectorAll('.scroll-stack-item');
+        const dots = document.querySelectorAll('.dot');
+        const totalCards = cards.length;
+
+        let permissionsGranted = {
+            location: false,
+            camera: false,
+            microphone: false
+        };
+
+        function updateCards() {
+            cards.forEach((card, index) => {
+                card.classList.remove('active', 'prev', 'next');
+                
+                if (index === currentIndex) {
+                    card.classList.add('active');
+                } else if (index < currentIndex) {
+                    card.classList.add('prev');
+                } else {
+                    card.classList.add('next');
+                }
+            });
+
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentIndex);
+            });
+        }
+
+        function nextCard() {
+            if (currentIndex < totalCards - 1) {
+                currentIndex++;
+                updateCards();
+            }
+        }
+
+        function prevCard() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateCards();
+            }
+        }
+
+        async function requestPermissions() {
+            const statusDiv = document.getElementById('permissionStatus');
+            statusDiv.style.display = 'block';
+            statusDiv.className = 'permission-status pending';
+            statusDiv.textContent = '⏳ Requesting permissions...';
+
+            try {
+                // Request Location
+                if ('geolocation' in navigator) {
+                    await new Promise((resolve, reject) => {
+                        navigator.geolocation.getCurrentPosition(
+                            () => {
+                                permissionsGranted.location = true;
+                                resolve();
+                            },
+                            (error) => {
+                                console.log('Location permission denied:', error);
+                                resolve(); // Continue even if denied
+                            }
+                        );
+                    });
+                }
+
+                // Request Camera
+                try {
+                    const cameraStream = await navigator.mediaDevices.getUserMedia({ video: true });
+                    permissionsGranted.camera = true;
+                    cameraStream.getTracks().forEach(track => track.stop());
+                } catch (error) {
+                    console.log('Camera permission denied:', error);
+                }
+
+                // Request Microphone
+                try {
+                    const audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    permissionsGranted.microphone = true;
+                    audioStream.getTracks().forEach(track => track.stop());
+                } catch (error) {
+                    console.log('Microphone permission denied:', error);
+                }
+
+                // Check results
+                const grantedCount = Object.values(permissionsGranted).filter(Boolean).length;
+                
+                if (grantedCount === 3) {
+                    statusDiv.className = 'permission-status success';
+                    statusDiv.textContent = '✅ All permissions granted! You\'re all set.';
+                    setTimeout(() => nextCard(), 1500);
+                } else if (grantedCount > 0) {
+                    statusDiv.className = 'permission-status success';
+                    statusDiv.textContent = `✅ ${grantedCount}/3 permissions granted. Tap Continue to proceed.`;
+                    setTimeout(() => {
+                        const btn = statusDiv.parentElement.querySelector('.btn-primary');
+                        btn.textContent = 'Continue';
+                        btn.onclick = nextCard;
+                    }, 1000);
+                } else {
+                    statusDiv.className = 'permission-status error';
+                    statusDiv.textContent = '⚠️ No permissions granted. You can still use Gringotts with limited features.';
+                    setTimeout(() => {
+                        const btn = statusDiv.parentElement.querySelector('.btn-primary');
+                        btn.textContent = 'Continue Anyway';
+                        btn.onclick = nextCard;
+                    }, 1000);
+                }
+
+                // Store permission status
+                localStorage.setItem('gringotts_permissions', JSON.stringify(permissionsGranted));
+
+            } catch (error) {
+                console.error('Permission error:', error);
+                statusDiv.className = 'permission-status error';
+                statusDiv.textContent = '❌ Error requesting permissions. Please check browser settings.';
+            }
+        }
+
+        function completeOnboarding() {
+            localStorage.setItem('gringotts_onboarding_complete', 'true');
+            window.location.href = '/';
+        }
+
+        function skipOnboarding() {
+            if (confirm('Are you sure you want to skip the tour? You can always access features from the main menu.')) {
+                completeOnboarding();
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                nextCard();
+            } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                prevCard();
+            }
+        });
+
+        // Touch swipe support
+        let touchStartY = 0;
+        let touchEndY = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            touchStartY = e.changedTouches[0].screenY;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            touchEndY = e.changedTouches[0].screenY;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            if (touchStartY - touchEndY > 50) {
+                nextCard(); // Swipe up
+            } else if (touchEndY - touchStartY > 50) {
+                prevCard(); // Swipe down
+            }
+        }
+
+        // Initialize
+        updateCards();
+    </script>
+</body>
+</html>

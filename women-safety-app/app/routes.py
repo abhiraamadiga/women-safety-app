@@ -768,9 +768,14 @@ def api_sos_deactivate():
         db.session.rollback()
         return jsonify({'success': False, 'error': str(e)}), 500
 
+@bp.route('/onboarding')
+def onboarding():
+    """Onboarding page with permission requests for first-time users"""
+    return render_template('onboarding.html')
+
 @bp.route('/')
 def index():
-    """Landing page with introduction to SafeSpace"""
+    """Landing page with introduction to Gringotts"""
     return render_template('landing.html')
 
 @bp.route('/report')
