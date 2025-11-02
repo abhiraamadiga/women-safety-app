@@ -1,14 +1,8 @@
 {% extends "base.html" %}
 
-{% block title %}Gringotts - Your Voice Matters{% endblock %}
+{% block title %}SafeSpace - Your Voice Matters{% endblock %}
 
 {% block extra_css %}
-<script>
-    // Check if onboarding has been completed
-    if (!localStorage.getItem('gringotts_onboarding_complete')) {
-        window.location.href = '/onboarding';
-    }
-</script>
 <style>
     /* Landing Page Styles */
     body {
@@ -26,6 +20,24 @@
         padding: 4rem 1rem;
         position: relative;
         overflow: hidden;
+    }
+    /* Aurora overlay container (top of hero) */
+    .aurora-wrapper {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 38vh;
+        pointer-events: none; /* allow clicking hero buttons */
+        z-index: 0; /* below hero content (which has z-index:1) */
+        /* soft fade-out towards bottom */
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.7) 60%, rgba(0,0,0,0) 100%);
+                mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.7) 60%, rgba(0,0,0,0) 100%);
+    }
+    .aurora-wrapper canvas {
+        width: 100%;
+        height: 100%;
+        display: block;
     }
     .hero-section::before {
         content: '';
@@ -355,12 +367,14 @@
 {% block content %}
 <!-- Hero Section -->
 <div class="hero-section">
+    <!-- Interactive aurora animation overlay -->
+    <div class="aurora-wrapper"><canvas id="auroraCanvas" aria-hidden="true"></canvas></div>
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-6 hero-content">
                 <h1 class="hero-title">Your Voice Matters, Your Safety First</h1>
                 <p class="hero-subtitle">
-                    Gringotts is a secure, anonymous platform empowering women to report incidents, 
+                    SafeSpace is a secure, anonymous platform empowering women to report incidents, 
                     find support, and build a safer community together.
                 </p>
                 <div class="hero-cta">
@@ -389,7 +403,7 @@
 <div class="features-section">
     <div class="container">
         <div class="text-center mb-4">
-            <h2 class="section-title">Why Choose Gringotts?</h2>
+            <h2 class="section-title">Why Choose SafeSpace?</h2>
             <p style="font-size: 1.2rem; color: #4A5568; max-width: 700px; margin: 0 auto;">
                 Built with your safety, privacy, and empowerment in mind
             </p>
@@ -437,7 +451,7 @@
                 </div>
                 <h3 class="feature-title">Mobile Friendly</h3>
                 <p class="feature-description">
-                    Access Gringotts anytime, anywhere from your mobile device or computer.
+                    Access SafeSpace anytime, anywhere from your mobile device or computer.
                 </p>
             </div>
             <div class="feature-card">
@@ -471,7 +485,7 @@
 <div class="how-it-works-section">
     <div class="container">
         <div class="text-center mb-5">
-            <h2 class="section-title">How Gringotts Works</h2>
+            <h2 class="section-title">How SafeSpace Works</h2>
             <img src="https://illustrations.popsy.co/violet/work-from-home.svg" alt="How it works" style="max-width: 400px; width: 100%; margin: 2rem auto; display: block;">
         </div>
         <div class="steps-container">
@@ -542,7 +556,7 @@
             <div class="col-lg-6">
                 <h2 style="font-size: 2.5rem; font-weight: 800; color: #2D3748; margin-bottom: 1.5rem;">You're Not Alone</h2>
                 <p style="font-size: 1.2rem; color: #4A5568; line-height: 1.8; margin-bottom: 2rem;">
-                    Gringotts provides a judgment-free zone where you can share your story, connect with others who understand, 
+                    SafeSpace provides a judgment-free zone where you can share your story, connect with others who understand, 
                     and access resources to take action. Every voice matters, every story counts.
                 </p>
                 <div class="trust-badges">
@@ -579,4 +593,118 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    (function(){
+        const hero = document.querySelector('.hero-section');
+        const canvas = document.getElementById('auroraCanvas');
+        if (!hero || !canvas) return;
+        const ctx = canvas.getContext('2d');
+
+        let dpr = Math.max(1, window.devicePixelRatio || 1);
+        let w = 0, h = 0;
+        const mouse = { x: 0.5, y: 0.12, targetX: 0.5, targetY: 0.12 };
+        let running = true;
+
+        function resize(){
+            const rect = hero.getBoundingClientRect();
+            const wrapper = canvas.parentElement;
+            const ww = wrapper.clientWidth || rect.width;
+            const hh = wrapper.clientHeight || Math.max(220, rect.height * 0.42);
+            dpr = Math.max(1, window.devicePixelRatio || 1);
+            w = Math.floor(ww * dpr);
+            h = Math.floor(hh * dpr);
+            canvas.width = w;
+            canvas.height = h;
+        }
+
+        function lerp(a,b,t){ return a + (b-a)*t; }
+
+        function drawAurora(t){
+            if (!w || !h) return;
+            ctx.clearRect(0,0,w,h);
+
+            // Subtle vertical gradient background to blend with hero
+            const bg = ctx.createLinearGradient(0,0,0,h);
+            bg.addColorStop(0, 'rgba(118,75,162,0.22)');
+            bg.addColorStop(1, 'rgba(102,126,234,0.10)');
+            ctx.fillStyle = bg;
+            ctx.fillRect(0,0,w,h);
+
+            // Accumulate light
+            ctx.globalCompositeOperation = 'lighter';
+
+            const bands = 3;
+            const mx = mouse.x * w;
+            const my = mouse.y * h;
+            for (let i=0; i<bands; i++){
+                const phase = t*0.25 + i*1.7;
+                const baseX = w*0.5 + (mx - w*0.5) * (0.25 + i*0.15);
+                const amp = (0.06 + i*0.035) * h;
+                const freq = (0.004 + i*0.0018) * (w/1000);
+
+                ctx.beginPath();
+                for (let y=0; y<=h; y+=Math.max(2, Math.floor(4*dpr))){
+                    const wave = Math.sin(y*freq + phase) + 0.6*Math.sin(y*freq*0.7 + phase*1.5);
+                    const mouseShift = Math.exp(-Math.pow((y - my)/ (0.35*h), 2)) * (mx - w*0.5) * 0.25;
+                    const x = baseX + wave*amp + mouseShift;
+                    if (y===0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+                }
+
+                const hue = i===0 ? 165 : (i===1 ? 285 : 210); // aqua, purple, blue
+                ctx.strokeStyle = `hsla(${hue}, 100%, 70%, ${0.08 + i*0.05})`;
+                ctx.lineWidth = Math.max(40, 70 - i*12) * dpr;
+                ctx.shadowBlur = 60 * dpr;
+                ctx.shadowColor = `hsla(${hue}, 100%, 70%, 0.35)`;
+                ctx.stroke();
+                ctx.shadowBlur = 0;
+            }
+
+            // Cursor/touch glow
+            const glow = ctx.createRadialGradient(mx, my, 0, mx, my, Math.min(w,h)*0.35);
+            glow.addColorStop(0, 'rgba(160,255,230,0.22)');
+            glow.addColorStop(0.35, 'rgba(140,200,255,0.16)');
+            glow.addColorStop(1, 'rgba(0,0,0,0)');
+            ctx.fillStyle = glow;
+            ctx.fillRect(0,0,w,h);
+
+            ctx.globalCompositeOperation = 'source-over';
+        }
+
+        function animate(){
+            if (!running) return;
+            mouse.x = lerp(mouse.x, mouse.targetX, 0.08);
+            mouse.y = lerp(mouse.y, mouse.targetY, 0.08);
+            const t = performance.now()/1000;
+            drawAurora(t);
+            requestAnimationFrame(animate);
+        }
+
+        function updateMouseFromEvent(e){
+            const rect = hero.getBoundingClientRect();
+            const clientX = (e.touches && e.touches[0] ? e.touches[0].clientX : e.clientX);
+            const clientY = (e.touches && e.touches[0] ? e.touches[0].clientY : e.clientY);
+            const x = (clientX - rect.left) / Math.max(1, rect.width);
+            const y = Math.max(0, (clientY - rect.top) / Math.max(1, rect.height * 0.45));
+            mouse.targetX = Math.min(1, Math.max(0, x));
+            mouse.targetY = Math.min(1, Math.max(0, y));
+        }
+
+        // Events & lifecycle
+        window.addEventListener('resize', resize, { passive: true });
+        hero.addEventListener('mousemove', updateMouseFromEvent, { passive: true });
+        hero.addEventListener('touchmove', updateMouseFromEvent, { passive: true });
+        hero.addEventListener('mouseleave', () => { mouse.targetX = 0.5; mouse.targetY = 0.12; }, { passive: true });
+
+        document.addEventListener('visibilitychange', () => {
+            running = document.visibilityState === 'visible';
+            if (running) requestAnimationFrame(animate);
+        });
+
+        resize();
+        requestAnimationFrame(animate);
+    })();
+</script>
 {% endblock %}
